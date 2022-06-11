@@ -38,9 +38,9 @@ xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"))
 
 * Methodology: seconds
 
-* Optimize parameters: 100 to 1000 X methodology
+* Optimize parameters: 100 to 1000 $\times$ methodology
 
-* Bootstrap uncertainty in optimization: 100 to 1000 X optimization
+* Bootstrap uncertainty in optimization: 100 to 1000 $\times$ optimization
 
 ### Faster code can do more
 ---
@@ -51,7 +51,6 @@ xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"))
 ## Part IV: Parallel Software
 ## Part V: Shared Memory Tools
 ## Part VI: Distributed Memory Tools
-## Appendix: Finding resources
 ---
 
 ## Part I: <br> <br> Software Installatons on a Laptop for work with a Cluster
