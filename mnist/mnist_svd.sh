@@ -5,7 +5,7 @@
 #PBS -e mnist_svd.e
 #PBS -o mnist_svd.o
 
-cd ~/KPMS-IT4I-EX/mnist
+cd ~/ROBUST2022/mnist
 pwd
 
 module load R
