@@ -17,6 +17,11 @@ output:
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"))
+hook_source <- knitr::knit_hooks$get('source')
+knitr::knit_hooks$set(source = function(x, options) {
+  x <- stringr::str_replace(x, "^[[:blank:]]?([^*].+?)[[:blank:]]*#<<[[:blank:]]*$", "*\\1")
+  hook_source(x, options)
+})
 ```
 # Get this presentation:
 `https://github.com/RBigData/ROBUST2022/archive/refs/heads/main.zip`
