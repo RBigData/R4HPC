@@ -561,7 +561,11 @@ background-size: 95%
 ---
 # Random Forest Classification
 
-### Build many decision trees from random subsets of variables and resampled (with replacement) data
+### Build many decision trees. Each tree from
+
+* random subset of variables
+
+* resampled (with replacement) data
 
 ### Use their majority votes to classify
 
@@ -597,7 +601,7 @@ background-size: 80%
 ```{r eval=FALSE, code = readLines("code/rf_mc.r")}
 ```
 ---
-# Demo ... mclapply
+# Demo ... <br><br> Random Forest via mclapply
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
 background-position: bottom
