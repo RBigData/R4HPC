@@ -703,7 +703,7 @@ $D$ is a $p\times p$ diagonal matrix of singular values
 Suppose we have $n$ images, each with $p$ pixel values. The well known MNIST data set of digit images is an example with $n = 60\, 000$ and $p = 784\,\, (28\times 28)$.
 
 ```{r echo=FALSE, out.height=300}
-knitr::include_graphics("pics/mnist/MnistExamples.png")
+knitr::include_graphics("mnist/RplotsDigits.png")
 ```
 
 Let $A$ be the matrix of $n_A$ images of a single digit, say digit zero, the pixel values of each image as a column.

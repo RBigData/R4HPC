@@ -9,36 +9,33 @@ y = x %*% beta + err
 data = as.data.frame(cbind(y, x))
 names(data) = c("y", paste0("x", 1:ncol(x)))
 
-elo = 2
-ehi = 7
-
 setback("OPENBLAS")
 # qr --------------------------------------
-for(i in elo:ehi) {
+for(i in 0:4) {
   setthreads(2^i, "qr")
   print(system.time((qr(x, LAPACK = TRUE))))
 }
 
 # prcomp --------------------------------------
-for(i in elo:ehi) {
+for(i in 0:5) {
   setthreads(2^i, "prcomp")
   print(system.time((prcomp(x))))
 }
 
 # princomp --------------------------------------
-for(i in elo:ehi) {
+for(i in 0:6) {
   setthreads(2^i, "princomp")
   print(system.time((princomp(x))))
 }
 
 # crossprod --------------------------------------
-for(i in elo:ehi) {
+for(i in 0:7) {
   setthreads(2^i, "crossprod")
   print(system.time((crossprod(x))))
 }
 
 # %*% --------------------------------------------
-for(i in elo:ehi) {
+for(i in 0:7) {
   setthreads(2^i, "%*%")
   print(system.time((t(x) %*% x)))
 }
