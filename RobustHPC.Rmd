@@ -789,9 +789,9 @@ background-size: 20%
 #### No manager, it is all cooperation
 #### Explicit point-to-point communications are an advanced topic
 ---
-background-image: url(pics/01-intro/RHistory3sub.png)
-background-position: bottom
-background-size: 90%
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
 
 # High-level Collective Communications
 
@@ -800,8 +800,15 @@ $$\bf A = \sum_{i=1}^nX_i$$
 #### `pbdMPI`: $\qquad$ **reduce(X)** $\qquad$ $\qquad$ $\qquad$ **allreduce(X**)
 $$\bf A = \left[ X_1 | X_2 | \cdots | X_n \right]$$
 #### `pbdMPI`: $\qquad$ **gather(X)** $\qquad$ $\qquad$ $\qquad$ **allgather(X**)
+```{r echo=FALSE, out.height=250, fig.align='left'}
+knitr::include_graphics("pics/01-intro/RHistory3sub.png")
+```
 
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
 # Demo ... <br><br> MPI communication in SPMD programming
 
 ---
@@ -828,6 +835,10 @@ knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
    * `pbdDMAT` and `pbdML` R packages - most matrix operations identical to serial through overloading operators and `ddmatrix` class
 
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
 ## Constructing a Distributed Matrix from Data
 
 * Each MPI rank reads different data in a contiguous block
@@ -853,6 +864,10 @@ Fortran, R, Matlab  $\quad$ **Column-Block**
 * Each MPI rank adds attributes for global context
 
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
 # Demo ... <br><br> ScaLAPACK via pbdDMAT
 
 ---
@@ -865,6 +880,10 @@ Randomized sketching algorithms $\small^*$, such as rsvd above, are fast new alt
 Martinsson, P., & Tropp, J. (2020). Randomized numerical linear algebra: Foundations and algorithms. Acta Numerica, 29, 403-572. [https://doi.org/10.48550/arXiv.2002.01387](https://doi.org/10.48550/arXiv.2002.01387)
 ]
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
 ## Randomized SVD via subspace embedding
 Given an $n\times p$ matrix $X$ and $k = r + 10$, where $r$ is the *effective rank* of $X$:  
 1. Construct a $p\times k$ random matrix $\Omega$
@@ -878,6 +897,10 @@ $Q$ is an orthogonal basis for the columnspace of $Y$, which with high probabili
 4. Truncate factorization to $r$ columns
 
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
 ## Randomized SVD via subspace embedding
 Given an $n\times p$ matrix $X$ and $k = r + 10$, where $r$ is the *effective rank* of $X$:  
 1. Construct a $p\times k$ random matrix $\Omega$
