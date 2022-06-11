@@ -18,7 +18,14 @@ output:
 options(htmltools.dir.version = FALSE)
 xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"))
 ```
+# Get this presentation:
+`https://github.com/RBigData/ROBUST2022/archive/refs/heads/main.zip`
 
+* Unzip
+
+* Open <br><br>`ROBUST2022-main/Robust2022.html` <br><br> in your web browser
+
+---
 # Why HPSC?
 
 * More memory  
@@ -140,15 +147,6 @@ Building R 4+ for Windows with OpenBLAS    [link](https://www.r-bloggers.com/202
 ```{r echo=FALSE, out.height=500}
 knitr::include_graphics("pics/01-intro/Workflow.jpg")
 ```
-
-???
-
-* Interactive vs Batch
-* Familiar environment for editing code
-* Uniform environment for running code
-
-* git in cloud - GitHub, GitLab, BiBucket
-  * version control, collaboration, multiple systems
 
 ---
 background-image: url(pics/01-intro//Workflow.jpg)
