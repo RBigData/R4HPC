@@ -641,6 +641,8 @@ background-size: 20%
 * Implementations: OpenBLAS, Intel MKL, Nvidia nvBLAS, Apple vecLib, AMD BLIS, Arm Performance Libraries
 
 * **FlexiBLAS**: A BLAS and LAPACK wrapper library with runtime exchangeable backends
+   * Great for benchmarking implementations
+   * Great for dynamic core assignment
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
@@ -653,7 +655,7 @@ OpenBLAS is an optimized BLAS library based on GotoBLAS2 (2010, Kazushige Goto).
 
 * [openblas.net](https://www.openblas.net)
 
-* Optimizes algorithm to chip architecture details such as cache size
+* Optimizes algorithm to chip microarchitecture details of memory hierarchies (L1 cache, L2 cache, etc.) and register vector length
 
 * IT4I FlexiBLAS: "OPENBLAS" backend
 
