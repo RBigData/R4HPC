@@ -75,7 +75,7 @@ xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"))
 
 * IT4Innovations:
    * [Get Project](https://docs.it4i.cz/general/applying-for-resources/)
-      * [Example application]()
+      * [Example application](pics/IT4I/DD-form.pdf)
 
    * [Access](https://docs.it4i.cz/general/shell-and-data-access/)
    
@@ -124,30 +124,13 @@ xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"))
 ---
 ## For faster R on your Windows laptop
 
+
 Assessing R performance with optimized BLAS across three operating systems   [link](https://thomasmcrow.com/blog/2021-08-optimized-blas-in-r/)
+
+<br>
 
 Building R 4+ for Windows with OpenBLAS    [link](https://www.r-bloggers.com/2020/05/building-r-4-for-windows-with-openblas/)
 
-<br><br>
-
-Note 8.2 from *R for Windows FAQ*:
-
-> Note that fast BLAS implementations may give different (and often slightly less accurate) results than the reference BLAS included in R. 
-
-In my opinion, these are very extreme situations that normally do not come up.
----
-# Monolithic parallelization
-
-* On a laptop, Unix, Mac, or Windows
-   * only parallelization across cores is available
-   * Unix and Mac: choose multicore or MPI (socket)
-   * Windows: MPI (socket)
-* On a cluster
-   * If only one node, same as laptop
-   * More nodes, at least two levels available
-      * Not a choice, rather ability to use both appropriately
-      * Chosing a backend not optimal
-      * Need to use two levels
 ---
 
 # Part II:  <br> <br> Workflow from Laptop to Cluster
