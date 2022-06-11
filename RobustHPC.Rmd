@@ -25,6 +25,7 @@ xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"))
 
 * Open <br><br>`ROBUST2022-main/Robust2022.html` <br><br> in your web browser
 
+* In this class, we will also show how to get it more directly with **git**
 ---
 # Why HPSC?
 
