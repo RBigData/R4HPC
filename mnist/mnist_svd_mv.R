@@ -91,9 +91,29 @@ model_report = function(models, kplot = 0) {
 
 #setthreads(4)
 setthreads(1)
+system.time({
 models = svdmod(train, train_lab, pct = 95)
 model_report(models, kplot = 9)
 predicts = predict_svdmod(test, models)
+})
+setthreads(2)
+system.time({
+  models = svdmod(train, train_lab, pct = 95)
+  model_report(models, kplot = 9)
+  predicts = predict_svdmod(test, models)
+})
+setthreads(4)
+system.time({
+  models = svdmod(train, train_lab, pct = 95)
+  model_report(models, kplot = 9)
+  predicts = predict_svdmod(test, models)
+})
+setthreads(8)
+system.time({
+  models = svdmod(train, train_lab, pct = 95)
+  model_report(models, kplot = 9)
+  predicts = predict_svdmod(test, models)
+})
 
 correct <- sum(predicts == test_lab)
 cat("Proportion Correct:", correct/nrow(test), "\n")
