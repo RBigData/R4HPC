@@ -656,6 +656,8 @@ background-size: 20%
 [https://github.com/Enchufa2/r-flexiblas](https://github.com/Enchufa2/r-flexiblas)  
 [https://cran.r-project.org/package=flexiblas](https://cran.r-project.org/package=flexiblas)
 ]
+---
+# Demo ... <br><br> FlexiBLAS
 
 ---
 # The Singular Value Decomposition
@@ -705,11 +707,14 @@ We can now look at classification of a new image of a digit by regressing it ont
 The tuning parameter $k$ can be optimized with crossvalidation.
 
 ---
+# Demo ... <br><br> MNIST svd regression
+
+---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7distributed.jpg)
 background-position: bottom
 background-size: 90%
 
-# Part VI:  <br> <br> Distributed Memory Tools
+# Part VI:  $\qquad$  Distributed Memory Tools
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
@@ -721,20 +726,16 @@ background-size: 90%
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
-# pbdR-ScaLAPACK-MPI
+# pbdR - MPI
 ```{r echo=FALSE, out.height=100, fig.align='left'}
 knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
 ```
 
 * MPI: Message Passing Interface - *de facto* standard for distributed communication in supercomputing
-   * Used for data mostly via collective communication - high level
-   * `pbdMPI`, `kazaam`, and `cop` R packages
 
-* ScaLAPACK: Scalable LAPACK - Distributed version of LAPACK (uses PBLAS/BLAS but not LAPACK)
-   * 2d Block-Cyclic data layout - mostly automated in `pbdDMAT` package
-   * BLACS: Communication collectives for distributed matrix computation
-   * PBLAS: BLAS - distributed BLAS (uses shared memory BLAS within blocks)
-   * `pbdDMAT` and `pbdML` R packages - most matrix operations identical to serial through overloading operators and `ddmatrix` class
+   * Used for data mostly via collective communication - high level
+
+   * `pbdMPI`, `kazaam`, and `cop` R packages
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
@@ -764,14 +765,27 @@ $$\bf A = \sum_{i=1}^nX_i$$
 #### `pbdMPI`: $\qquad$ **reduce(X)** $\qquad$ $\qquad$ $\qquad$ **allreduce(X**)
 $$\bf A = \left[ X_1 | X_2 | \cdots | X_n \right]$$
 #### `pbdMPI`: $\qquad$ **gather(X)** $\qquad$ $\qquad$ $\qquad$ **allgather(X**)
+
 ---
-## Distributed Matrix Objects
+# Demo ... <br><br> MPI communication in SPMD programming
 
-* **shaq**: tall, skinny, dense matrix, row-block partition (package kazaam)
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+# pbdR - ScaLAPACK - MPI
+```{r echo=FALSE, out.height=100, fig.align='left'}
+knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
+```
 
-* **tshaq**: horizontal, skinny, dense matrix, column-block partition (package kazaam)
+* ScaLAPACK: Scalable LAPACK - Distributed version of LAPACK (uses PBLAS/BLAS but not LAPACK)
 
-* **ddmatrix**: general, dense matrix, block-cyclic partition (package pbdDMAT)
+   * 2d Block-Cyclic data layout - mostly automated in `pbdDMAT` package
+   
+   * BLACS: Communication collectives for distributed matrix computation
+   * PBLAS: BLAS - distributed BLAS (uses shared memory BLAS within blocks)
+
+   * `pbdDMAT` and `pbdML` R packages - most matrix operations identical to serial through overloading operators and `ddmatrix` class
 
 ---
 ## Constructing a Distributed Matrix from Data
@@ -797,6 +811,9 @@ Fortran, R, Matlab  $\quad$ **Column-Block**
 ]
 
 * Each MPI rank adds attributes for global context
+
+---
+# Demo ... <br><br> ScaLAPACK via pbdDMAT
 
 ---
 `mnist_rsvd.R`
