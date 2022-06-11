@@ -13,4 +13,4 @@ cyclic_train = as.blockcyclic(dmat_train)
 rsvd_train = rsvd(cyclic_train, k = 10, q = 3, retu = FALSE, retv = FALSE)
 comm.cat("rsvd top 10 singular values:", rsvd_train$d, "\n")
 
-suppressMessages(finalize())
+finalize()
