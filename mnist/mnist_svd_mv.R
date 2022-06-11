@@ -89,7 +89,8 @@ model_report = function(models, kplot = 0) {
   }
 }
 
-setthreads(4)
+#setthreads(4)
+setthreads(1)
 models = svdmod(train, train_lab, pct = 95)
 model_report(models, kplot = 9)
 predicts = predict_svdmod(test, models)
