@@ -515,6 +515,10 @@ knitr::include_graphics("pics/MC/Fork/Slide1.png")
 * 16 forks write = 16 copies of memory
 
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
+background-position: top right
+background-size: 20%
+
 # Mapping Threads to Cores
 ### Theory and Reality
 
@@ -534,6 +538,10 @@ knitr::include_graphics("pics/WSC/iDVTstR_reality.jpg")
 ]
 
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
+background-position: top right
+background-size: 20%
+
 ### `R`: Drop-in replacements (almost) <br> for `lapply`, `mapply`, and `Map`
 
 `mclapply(X, FUN, ...,`
@@ -550,15 +558,22 @@ knitr::include_graphics("pics/WSC/iDVTstR_reality.jpg")
 `mcMap(f, ...)`
 
 ---
-background-image: url(pics/MC/ML_FreySlate1991.png)
-background-position: center
-background-size: 95%
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
+background-position: top right
+background-size: 20%
 
 # Example Random forest Code
 #### Letter recognition data ( $20\,000 \times 17$ )
+```{r echo=FALSE, out.height=350, fig.align='center'}
+knitr::include_graphics("pics/MC/ML_FreySlate1991.png")
+```
 
 .footnote[*Parallel Statistical Computing with R: An Illustration on Two Architectures [ 	arXiv:1709.01195](https://arxiv.org/abs/1709.01195)]
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
+background-position: top right
+background-size: 20%
+
 # Random Forest Classification
 
 ### Build many decision trees. Each tree from
@@ -589,7 +604,7 @@ background-position: bottom
 background-size: 80%
 
 # Example Random Forest Classification Code
-#### Letter recognition data ( $20\,000 \times 17$ )
+#### Letter recognition data ( $20\,000 \times 17$ ) - Scaling graph example
 
 ---
 ### `ROBUST2022/code/rf_serial.r`
@@ -615,14 +630,6 @@ background-position: top right
 background-size: 20%
 
 # R-LAPACK-BLAS
-.pull-left[
-```{r echo=FALSE, out.height=100, fig.align='left'}
-knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
-```
-]
-.pull-right[
-**pbdr.org**
-]
 
 * BLAS: Basic Linear Algebra Subroutines - A matrix multiplication library
   * `%*%`, `crossprod()`, `sweep()`, `scale()`, and many more
@@ -669,6 +676,10 @@ background-size: 20%
 [https://cran.r-project.org/package=flexiblas](https://cran.r-project.org/package=flexiblas)
 ]
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
+background-position: top right
+background-size: 20%
+
 # Demo ... <br><br> FlexiBLAS
 
 ---
@@ -786,9 +797,14 @@ background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
 # pbdR - ScaLAPACK - MPI
+.pull-left[
 ```{r echo=FALSE, out.height=100, fig.align='left'}
 knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
 ```
+]
+.pull-right[
+**pbdr.org**
+]
 
 * ScaLAPACK: Scalable LAPACK - Distributed version of LAPACK (uses PBLAS/BLAS but not LAPACK)
 
