@@ -10,7 +10,10 @@ dmat_train = new("ddmatrix", Data = my_train, dim = gdim,
                  ldim = dim(my_train), bldim = bldim, ICTXT = 2)
 cyclic_train = as.blockcyclic(dmat_train)
 
+print(comm.size())
+system.time({
 rsvd_train = rsvd(cyclic_train, k = 10, q = 3, retu = FALSE, retv = FALSE)
+})
 comm.cat("rsvd top 10 singular values:", rsvd_train$d, "\n")
 
 finalize()
