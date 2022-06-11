@@ -871,14 +871,20 @@ background-size: 20%
 # Demo ... <br><br> ScaLAPACK via pbdDMAT
 
 ---
+## Randomized sketching algorithms
+<br><br>
+Fast new alternatives to classical numerical linear algebra computations. 
+
+<br>
+Guarantees are given with probability statements instead of classical error analysis.
+
+<br> <br>
+Martinsson, P., & Tropp, J. (2020). Randomized numerical linear algebra: Foundations and algorithms. Acta Numerica, 29, 403-572. [https://doi.org/10.48550/arXiv.2002.01387](https://doi.org/10.48550/arXiv.2002.01387)
+---
 `mnist_rsvd.R`
 ```{r eval=FALSE, code = readLines("mpi/mnist_rsvd.R")}
 ```
-Randomized sketching algorithms $\small^*$, such as rsvd above, are fast new alternatives to classical numerical linear algebra computations. Guarantees are given with probability statements instead of classical error analysis.
 
-.footnote[ $^*$
-Martinsson, P., & Tropp, J. (2020). Randomized numerical linear algebra: Foundations and algorithms. Acta Numerica, 29, 403-572. [https://doi.org/10.48550/arXiv.2002.01387](https://doi.org/10.48550/arXiv.2002.01387)
-]
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right

@@ -510,6 +510,10 @@ background-size: 20%
 * 16 forks write = 16 copies of memory
 
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
+background-position: top right
+background-size: 20%
+
 # Mapping Threads to Cores
 ### Theory and Reality
 
@@ -525,6 +529,10 @@ background-size: 20%
 ]
 
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
+background-position: top right
+background-size: 20%
+
 ### `R`: Drop-in replacements (almost) &lt;br&gt; for `lapply`, `mapply`, and `Map`
 
 `mclapply(X, FUN, ...,`
@@ -541,18 +549,27 @@ background-size: 20%
 `mcMap(f, ...)`
 
 ---
-background-image: url(pics/MC/ML_FreySlate1991.png)
-background-position: center
-background-size: 95%
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
+background-position: top right
+background-size: 20%
 
 # Example Random forest Code
 #### Letter recognition data ( `\(20\,000 \times 17\)` )
+&lt;img src="pics/MC/ML_FreySlate1991.png" height="350" style="display: block; margin: auto;" /&gt;
 
 .footnote[*Parallel Statistical Computing with R: An Illustration on Two Architectures [ 	arXiv:1709.01195](https://arxiv.org/abs/1709.01195)]
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
+background-position: top right
+background-size: 20%
+
 # Random Forest Classification
 
-### Build many decision trees from random subsets of variables and resampled (with replacement) data
+### Build many decision trees. Each tree from
+
+* random subset of variables
+
+* resampled (with replacement) data
 
 ### Use their majority votes to classify
 
@@ -576,7 +593,7 @@ background-position: bottom
 background-size: 80%
 
 # Example Random Forest Classification Code
-#### Letter recognition data ( `\(20\,000 \times 17\)` )
+#### Letter recognition data ( `\(20\,000 \times 17\)` ) - Scaling graph example
 
 ---
 ### `ROBUST2022/code/rf_serial.r`
@@ -630,7 +647,7 @@ correct &lt;- sum(pred == test$lettr)
 cat("Proportion Correct:", correct/(n_test), "\n")
 ```
 ---
-# Demo ... mclapply
+# Demo ... &lt;br&gt;&lt;br&gt; Random Forest via mclapply
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
 background-position: bottom
@@ -644,12 +661,6 @@ background-position: top right
 background-size: 20%
 
 # R-LAPACK-BLAS
-.pull-left[
-&lt;img src="pics/01-intro/pbdRlib.jpg" height="100" style="display: block; margin: auto auto auto 0;" /&gt;
-]
-.pull-right[
-**pbdr.org**
-]
 
 * BLAS: Basic Linear Algebra Subroutines - A matrix multiplication library
   * `%*%`, `crossprod()`, `sweep()`, `scale()`, and many more
@@ -661,6 +672,8 @@ background-size: 20%
 * Implementations: OpenBLAS, Intel MKL, Nvidia nvBLAS, Apple vecLib, AMD BLIS, Arm Performance Libraries
 
 * **FlexiBLAS**: A BLAS and LAPACK wrapper library with runtime exchangeable backends
+   * Great for benchmarking implementations
+   * Great for dynamic core assignment
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
@@ -673,7 +686,7 @@ OpenBLAS is an optimized BLAS library based on GotoBLAS2 (2010, Kazushige Goto).
 
 * [openblas.net](https://www.openblas.net)
 
-* Optimizes algorithm to chip architecture details such as cache size
+* Optimizes algorithm to chip microarchitecture details of memory hierarchies (L1 cache, L2 cache, etc.) and register vector length
 
 * IT4I FlexiBLAS: "OPENBLAS" backend
 
@@ -715,6 +728,10 @@ setback = function(backend, label = "") {
 [https://cran.r-project.org/package=flexiblas](https://cran.r-project.org/package=flexiblas)
 ]
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
+background-position: top right
+background-size: 20%
+
 # Demo ... &lt;br&gt;&lt;br&gt; FlexiBLAS
 
 ---
@@ -735,7 +752,7 @@ For `\(n \geq p\)`,
 
 Suppose we have `\(n\)` images, each with `\(p\)` pixel values. The well known MNIST data set of digit images is an example with `\(n = 60\, 000\)` and `\(p = 784\,\, (28\times 28)\)`.
 
-&lt;img src="pics/mnist/MnistExamples.png" height="300" /&gt;
+&lt;img src="mnist/RplotsDigits.png" height="300" /&gt;
 
 Let `\(A\)` be the matrix of `\(n_A\)` images of a single digit, say digit zero, the pixel values of each image as a column.
 
@@ -763,8 +780,14 @@ We can now look at classification of a new image of a digit by regressing it ont
 The tuning parameter `\(k\)` can be optimized with crossvalidation.
 
 ---
-# Demo ... &lt;br&gt;&lt;br&gt; MNIST svd regression
+# Demo ... MNIST svd regression
 
+.pull-left[
+&lt;img src="mnist/one_basis95.png" height="400" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+.pull-right[
+&lt;img src="mnist/five_basis95.png" height="400" style="display: block; margin: auto auto auto 0;" /&gt;
+]
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7distributed.jpg)
 background-position: bottom
@@ -818,9 +841,9 @@ finalize()
 #### No manager, it is all cooperation
 #### Explicit point-to-point communications are an advanced topic
 ---
-background-image: url(pics/01-intro/RHistory3sub.png)
-background-position: bottom
-background-size: 90%
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
 
 # High-level Collective Communications
 
@@ -829,8 +852,13 @@ background-size: 90%
 #### `pbdMPI`: `\(\qquad\)` **reduce(X)** `\(\qquad\)` `\(\qquad\)` `\(\qquad\)` **allreduce(X**)
 `$$\bf A = \left[ X_1 | X_2 | \cdots | X_n \right]$$`
 #### `pbdMPI`: `\(\qquad\)` **gather(X)** `\(\qquad\)` `\(\qquad\)` `\(\qquad\)` **allgather(X**)
+&lt;img src="pics/01-intro/RHistory3sub.png" height="250" style="display: block; margin: auto auto auto 0;" /&gt;
 
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
 # Demo ... &lt;br&gt;&lt;br&gt; MPI communication in SPMD programming
 
 ---
@@ -838,7 +866,12 @@ background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
 # pbdR - ScaLAPACK - MPI
+.pull-left[
 &lt;img src="pics/01-intro/pbdRlib.jpg" height="100" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+.pull-right[
+**pbdr.org**
+]
 
 * ScaLAPACK: Scalable LAPACK - Distributed version of LAPACK (uses PBLAS/BLAS but not LAPACK)
 
@@ -850,6 +883,10 @@ background-size: 20%
    * `pbdDMAT` and `pbdML` R packages - most matrix operations identical to serial through overloading operators and `ddmatrix` class
 
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
 ## Constructing a Distributed Matrix from Data
 
 * Each MPI rank reads different data in a contiguous block
@@ -875,8 +912,22 @@ Fortran, R, Matlab  `\(\quad\)` **Column-Block**
 * Each MPI rank adds attributes for global context
 
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
 # Demo ... &lt;br&gt;&lt;br&gt; ScaLAPACK via pbdDMAT
 
+---
+## Randomized sketching algorithms
+&lt;br&gt;&lt;br&gt;
+Fast new alternatives to classical numerical linear algebra computations. 
+
+&lt;br&gt;
+Guarantees are given with probability statements instead of classical error analysis.
+
+&lt;br&gt; &lt;br&gt;
+Martinsson, P., &amp; Tropp, J. (2020). Randomized numerical linear algebra: Foundations and algorithms. Acta Numerica, 29, 403-572. [https://doi.org/10.48550/arXiv.2002.01387](https://doi.org/10.48550/arXiv.2002.01387)
 ---
 `mnist_rsvd.R`
 
@@ -893,17 +944,24 @@ dmat_train = new("ddmatrix", Data = my_train, dim = gdim,
                  ldim = dim(my_train), bldim = bldim, ICTXT = 2)
 cyclic_train = as.blockcyclic(dmat_train)
 
+comm.print(comm.size())
+t1 = as.numeric(Sys.time())
 rsvd_train = rsvd(cyclic_train, k = 10, q = 3, retu = FALSE, retv = FALSE)
+t2 = as.numeric(Sys.time())
+t1 = allreduce(t1, op = "min")
+t2 = allreduce(t2, op = "max")
+comm.cat("Time:", t2 - t1, "seconds\n")
+
 comm.cat("rsvd top 10 singular values:", rsvd_train$d, "\n")
 
 finalize()
 ```
-Randomized sketching algorithms `\(\small^*\)`, such as rsvd above, are fast new alternatives to classical numerical linear algebra computations. Guarantees are given with probability statements instead of classical error analysis.
 
-.footnote[ `\(^*\)`
-Martinsson, P., &amp; Tropp, J. (2020). Randomized numerical linear algebra: Foundations and algorithms. Acta Numerica, 29, 403-572. [https://doi.org/10.48550/arXiv.2002.01387](https://doi.org/10.48550/arXiv.2002.01387)
-]
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
 ## Randomized SVD via subspace embedding
 Given an `\(n\times p\)` matrix `\(X\)` and `\(k = r + 10\)`, where `\(r\)` is the *effective rank* of `\(X\)`:  
 1. Construct a `\(p\times k\)` random matrix `\(\Omega\)`
@@ -917,6 +975,10 @@ Given an `\(n\times p\)` matrix `\(X\)` and `\(k = r + 10\)`, where `\(r\)` is t
 4. Truncate factorization to `\(r\)` columns
 
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
 ## Randomized SVD via subspace embedding
 Given an `\(n\times p\)` matrix `\(X\)` and `\(k = r + 10\)`, where `\(r\)` is the *effective rank* of `\(X\)`:  
 1. Construct a `\(p\times k\)` random matrix `\(\Omega\)`
