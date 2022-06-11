@@ -561,7 +561,7 @@ background-size: 95%
 ---
 # Random Forest Classification
 
-### Build many decision trees from random subsets of variables
+### Build many decision trees from random subsets of variables and resampled (with replacement) data
 
 ### Use their majority votes to classify
 
