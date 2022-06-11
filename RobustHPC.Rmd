@@ -732,8 +732,18 @@ We can now look at classification of a new image of a digit by regressing it ont
 The tuning parameter $k$ can be optimized with crossvalidation.
 
 ---
-# Demo ... <br><br> MNIST svd regression
+# Demo ... MNIST svd regression
 
+.pull-left[
+```{r echo=FALSE, out.height=400, fig.align='left'}
+knitr::include_graphics("mnist/one_basis95.png")
+```
+]
+.pull-right[
+```{r echo=FALSE, out.height=400, fig.align='left'}
+knitr::include_graphics("mnist/five_basis95.png")
+```
+]
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7distributed.jpg)
 background-position: bottom
