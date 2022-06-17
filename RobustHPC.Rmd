@@ -247,14 +247,14 @@ background-size: 20%
 #### PBS (Karolina, Barbora)
 <mark>qsub   *script.sh* 
 
-<mark>qqstat -u *uid*
+<mark>qstat -u *uid*
 
-<mark>qqdel  *jobname*</mark>
+<mark>qdel  *jobname*</mark>
 
 ]
 .pull-right[
 #### Slurm (Sněhurka, Chimera)
-<mark>qsbatch  *script.sh* </mark> 
+<mark>sbatch  *script.sh* </mark> 
 
 <mark>squeue  -u *uid*</mark>
 
