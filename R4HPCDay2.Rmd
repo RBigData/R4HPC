@@ -1,8 +1,8 @@
 ---
-title: "High Performance Statistical Computing <br> with R"
+title: "Part 2 &emsp;&emsp;&emsp;&emsp; Using R on HPC Clusters"
 author: "George Ostrouchov"
-institute: "Oak Ridge National Laboratory, University of Tennessee,<br> and Charles University"
-date: "<br> Robust22 <br><br> Volyně, CZ, June 12, 2022 <br><br><span style = 'font-size: 50%;'> Background Image: FRONTIER, First Top500 exascale system, announced June 2022</span>"
+institute: "Oak Ridge National Laboratory"
+date: "<br><br><br><br><br><br> August 19, 2022 <br><br><span style = 'font-size: 50%;'> Background Image: FRONTIER, First Top500 exascale system, announced June 2022</span>"
 output:
   xaringan::moon_reader:
     css: ["default", "default-fonts", "my-theme.css", "widths.css"]
