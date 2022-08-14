@@ -1,5 +1,5 @@
 ---
-title: "Part 1 &emsp;&emsp;&emsp;&emsp; Using R on HPC Clusters"
+title: "Using R on HPC Clusters &emsp;&emsp;&emsp;&emsp; Part 1"
 author: "George Ostrouchov"
 institute: "Oak Ridge National Laboratory"
 date: "<br><br><br><br><br><br> August 17, 2022 <br><br><span style = 'font-size: 50%;'> Background Image: FRONTIER, First Top500 exascale system, announced June 2022</span>"
@@ -7,6 +7,8 @@ output:
   xaringan::moon_reader:
     css: ["default", "default-fonts", "my-theme.css", "widths.css"]
     lib_dir: libs
+    includes:
+      after_body: insert-logo.html
     nature:
       titleSlideClass: ["right", "inverse"]
       highlightStyle: github
@@ -23,144 +25,110 @@ knitr::knit_hooks$set(source = function(x, options) {
   hook_source(x, options)
 })
 ```
-# Get this presentation:
-`https://github.com/RBigData/ROBUST2022/archive/refs/heads/main.zip`
+# Get this presentation: 
+`git clone https://github.com/RBigData/R4HPC.git`
 
-* Unzip
-
-* Open <br><br>`ROBUST2022-main/Robust2022.html` <br><br> in your web browser
-
-* In this class, we will also show how to get it more directly with **git**
----
-# Why HPSC?
-
-* More memory  
-
-* Faster code
-
-* Statisticians are needed in HPC
-
-# What is Fast Enough?
-
-* Methodology: seconds
-
-* Optimize parameters: 100 to 1000 $\times$ methodology
-
-* Bootstrap uncertainty in optimization: 100 to 1000 $\times$ optimization
-
-### Faster code can do more
----
-
-## Part I: Software Installatons on Laptop
-## Part II: Workflow from Laptop to Cluster
-## Part III: Parallel Hardware
-## Part IV: Parallel Software
-## Part V: Shared Memory Tools
-## Part VI: Distributed Memory Tools
----
-
-## Part I: <br> <br> Software Installatons on a Laptop for work with a Cluster
----
-### For work with a cluster
-* Mac
-   * R, RStudio
-   
-   * terminal, git (in Xcode app)
-   
-* Windows
-   * R, RStudio
-   
-   * putty
-   
-   * git
-   
-   * WinSCP
----
-
-## Links for Software on Laptop and Access
-
-* RStudio:  [RStudio Desktop Free](https://www.rstudio.com/products/rstudio/download/) 
-
-* git: [RStudio with Git](https://support.rstudio.com/hc/en-us/articles/200532077-Version-Control-with-Git-and-SVN)
-
-* ssh: [Wikipedia ssh](https://en.wikipedia.org/wiki/Secure_Shell)
-
-* IT4Innovations:
-   * [Get Project](https://docs.it4i.cz/general/applying-for-resources/)
-      * [Example application](pics/IT4I/DD-form.pdf)
-
-   * [Access](https://docs.it4i.cz/general/shell-and-data-access/)
-   
-   * [ssh](https://docs.it4i.cz/general/accessing-the-clusters/shell-access-and-data-transfer/ssh-key-management/)
-
-   * [Windows](https://docs.it4i.cz/general/accessing-the-clusters/shell-access-and-data-transfer/putty/)
-
-* Karlova Universita MFF:
-
-   * [Sněhurka](https://cluster.karlin.mff.cuni.cz/pouziti-clusteru/)
-
-   * [Chiméra](https://www.mff.cuni.cz/cs/verejnost/aktuality/otevreni-fakultniho-hpc-clusteru)
-
----
-## For faster R on your macOS laptop
-
-```{r eval=FALSE}
-## Default BLAS from Netlib
-> x = matrix(rnorm(1e7), nrow = 1e4)
-> system.time(crossprod(x))
-   user  system elapsed 
-  6.752   0.023   6.801 
-```
-* Apple vecLib (via Xcode) can be swapped in  
-
-`ln -sf /Library/Frameworks/R.framework/Resources/lib/libRblas.veclib.dylib /Library/Frameworks/R.framework/Resources/lib/libRblas.dylib`
-* Or `brew install openblas`, and link OpenBLAS to R
-
-`ln -sf /usr/local/opt/openblas/lib/libopenblas.dylib /Library/Frameworks/R.framework/Resources/lib/libRblas.dylib`
-.pull-left[
-```{r eval=FALSE}
-## vecLib
-> system.time(crossprod(x))
-   user  system elapsed 
-  0.666   0.003   0.120 
-```
-]
-.pull-right[
-```{r eval=FALSE}
-## OpenBLAS
-   > system.time(crossprod(x))
-      user  system elapsed 
-     0.822   0.042   0.121 
-```
-]
----
-## For faster R on your Windows laptop
-
-
-Assessing R performance with optimized BLAS across three operating systems   [link](https://thomasmcrow.com/blog/2021-08-optimized-blas-in-r/)
+* Open <br><br>`R4HPC_Part1.html` <br><br> in your web browser
 
 <br>
 
-Building R 4+ for Windows with OpenBLAS    [link](https://www.r-bloggers.com/2020/05/building-r-4-for-windows-with-openblas/)
+Many thanks to my colleagues and former colleagues who contributed to the software and ideas presented here and who are listed in the RBigData Organization on Github: https://github.com/RBigData. Also, many thanks to all R developers of packages used in this presentation.
+
+Any errors are mine alone.
 
 ---
+# Using R on HPC Clusters Webinar
 
-# Part II:  <br> <br> Workflow from Laptop to Cluster
+* A basic workflow for how to use R on an HPC cluster
+* Speed up R scripts with parallel computing concepts
+* Many packages in R offer parallel computing abstractions, yet they use a much smaller set of underlying approaches: 
+   * multithreading in compiled code, the unix fork, and MPI
+* We take a narrow path to focus on the direct approaches
+* Targeted for current users of OLCF, CADES, ALCF and NERSC
+* Others are welcome to the lecture portions but will not be able to participate in all of the hands-on activities
+
+#### Objectives 
+
+* Learn a workflow to edit R code on your laptop and run it on an HPC cluster
+
+* Learn how to use multicore and distributed parallel concepts in R on an HPC cluster system
+
+???
+* The workflow is half the battle to manage frustration of new users
+* HPC cluster has several parallel resources used simulatneously
+* On a laptop, often one choice among approaches is made
+* Many abstractions are a layer above the basics
+   * foreach, dopar, futures
+   * Understanding basics helps understanding the abstractions 
+   * Add another layer to a complex situation - harder debug
+   * Basics are closer to HPC community (largely C and C++) terminology
+      * Helps understanding HPC language
+
+* Some of the exercises can be done on a laptop but miss the important workflow socialization
+
+---
+background-image: url(pics/01-intro/WorkflowCluster.jpg)
+background-position: top right
+background-size: 20%
+
+## The Clusters
+
+OLCF Andes
+* 704 nodes, each with two 16-core 3.0 GHz AMD EPYC processors
+
+CADES SHPC Condos
+* ~650 nodes, a mix of x86_64 processors with 32 to 128 cores
+
+NERSC Cori
+* 9,688 nodes, each an Intel Xeon Phi with 64 cores 
+* 2,388 nodes, Intel Xeon "Haswell" processor with 32 cores
+
+ACLF Theta KNL- Intel-Cray XC40
+* 4,392 nodes, each with a 64-core, 1.3-GHz Intel Xeon Phi 7230
+
+---
+# Access to HPC Clusters
+
+* DOE OLCF https://docs.olcf.ornl.gov/accounts/accounts_and_projects.html
+* DOE ORNL CADES https://cades.ornl.gov/
+* DOE ALCF https://www.alcf.anl.gov/support-center/account-and-project-management/allocations
+
+* DOE NERSC https://www.nersc.gov/users/accounts/allocations/
+* NSF XSEDE to ACCESS https://www.xsede.org/
+
+* EU PRACE https://prace-ri.eu/hpc-access/ (for example IT4I.cz https://www.it4i.cz/en/for-users/computing-resources-allocation) 
+
+* Institutional Clusters 
+
+ 
+---
+
+## Part I: **Environment and Workflow**
+## Part II: Parallel Hardware and Software Overview
+## Part III: Shared Memory Tools
+## Part IV: Distributed Memory Tools
 ---
 ## Working with a remote cluster using R
 
 ```{r echo=FALSE, out.height=500}
 knitr::include_graphics("pics/01-intro/Workflow.jpg")
 ```
+???
 
+* Please excuse my art
+* Conveys what's needed but could be a LOT better
+   * If someone has better skills, I'd be very grateful for a better pic
+   
+* A workflow that I've settled-on last few years
+   * manages frustration with interactive - batch transition
+   * I see it mostly from a macOS perspective but works in Windows too
+   
 ---
 background-image: url(pics/01-intro//Workflow.jpg)
 background-position: top right
 background-size: 20%
 
-## Why?
-
-### Laptop RStudio
+### Laptop RStudio (Posit in October, 2022)
 * Familiar custom editing environment (Windows, Mac, Unix)
 * Interactive Syntax checking
 
@@ -173,12 +141,16 @@ background-size: 20%
 * Same environment for all
 * Batch job submission
 
-<br><br>
+#### Advanced: interactive multinode development and debugging
+* Available now (packages: launchr, pbdCS, pbdRPC, remoter)
+* Needs further development (particularly launchr) and standardization
 
-#### Advanced: interactive multinode development and debugging in RStudio
-* Available now, but unstable (launchr, pbdCS, pbdRPC, remoter)
-* Needs further development and standardization
-
+???
+* Portability - in your basement or on another continent - remorely in EU
+* RStudio on cluster:
+  * Installs difficult: legacy OS on HPC
+  * Bandwidth
+  * Minor RStudio differences due to OS
 ---
 background-image: url(pics/01-intro//WorkflowRunning.jpg)
 background-position: top right
@@ -189,7 +161,111 @@ background-size: 20%
 ```{r echo=FALSE, out.height=500}
 knitr::include_graphics("pics/01-intro/BatchRonCluster.jpg")
 ```
+???
+Ultimate goal of workshop
+* Pic of cluster use with R: 32 R sessions collaborating on 8 nodes
+   * Laptop - login node - resource script - multi R session collaboration
+   * BIG data on parallel file system - not on laptop!
+   * Can monitor a longer run with logins to compute nodes
+   * Batch
+---
+background-image: url(pics/01-intro//WorkflowLaptop.jpg)
+background-position: top right
+background-size: 20%
 
+### Software Needed on Laptop
+* Mac
+   * R, RStudio
+   
+   * terminal, git (in Xcode)
+   
+* Windows
+   * R, RStudio
+   
+   * putty
+   
+   * git
+   
+   * WinSCP
+---
+background-image: url(pics/01-intro/WorkflowCluster.jpg)
+background-position: top right
+background-size: 20%
+
+## Software on Cluster
+
+* OpenBLAS
+* FlexiBLAS
+* OpenMPI
+* HDF5 (for parallel I/O)
+* R (>= 4.0)
+
+**Packages:** (from CRAN, or if prefixed with RBigData use `remotes::install_github("RBigData/packagename")` ) <br>
+Day 1: flexiblas, <br>
+Day 2: RBigData/pbdMPI, RBigData/kazaam, RBigData/pbdDMAT
+
+#### R vs conda-R Deployment
+* Direct R is preferred
+* CRAN and Anaconda differ in package management philosophy
+* Can end up with conflicts if mixing
+* Conda adds a layer of complexity
+* If already used to Conda, you may find it useful
+
+???
+* Complexity without obvious benefit if using current CRAN packages
+---
+background-image: url(pics/01-intro/WorkflowGit.jpg)
+background-position: top left
+background-size: 20%
+
+# <font size="+2">2</font> $\qquad$ GitHub and git (laptop to cluster)
+
+.w80.pull-left[
+```{r echo=FALSE, out.height=400}
+knitr::include_graphics("pics/01-intro/Git_operations.svg")
+```
+<font size="-6">*By Daniel Kinzler - Own work, CC BY 3.0, https://commons.wikimedia.org/w/index.php?curid=25223536</font>
+]
+.w20.pull-right[
+<br>
+```{r echo=FALSE, out.height=80}
+knitr::include_graphics("pics/01-intro/WorkflowCluster.jpg")
+```
+3
+<br><br><br><br><br><br><br><br><br><br>
+
+```{r echo=FALSE, out.height=80}
+knitr::include_graphics("pics/01-intro/WorkflowLaptop.jpg")
+```
+1
+]
+---
+background-image: url(pics/01-intro/WorkflowPushPull.jpg)
+background-position: top right
+background-size: 20%
+
+# Making **git** easy: set ssh keys
+
+.w80.pull-left[
+```{r echo=FALSE, out.height=400, out.width=450}
+knitr::include_graphics("pics/01-intro/ssh-key-based-authentication.png")
+```
+<font size="-4">Graphic from </font>
+```{r echo=FALSE, out.height=10, out.width=280}
+knitr::include_graphics("pics/01-intro/ssh-credit.png")
+```
+]
+.w20.pull-right[
+A message encrypted by public key is decrypted by private key
+<br><br><br>
+Works like a single-use password generator and authenticator
+<br><br><br>
+Your private keys are protected in your account (laptop and cluster)
+
+<br><br><br><br>
+
+Put your public key on GitHub to enable easy access
+]
 ---
 background-image: url(pics/01-intro//WorkflowCluster.jpg)
 background-position: top right
@@ -208,31 +284,14 @@ background-size: 20%
    * *command1* **|** *command2* pipes standard output1 to standard input2
    * Commands are looked up in directories listed in your PATH variable (try "echo $PATH")
    * $ means substitute variable value
-   * *export* lists (or sets) all your variables and their values
+   * *export* lists (or sets) shell variables and their values
 
 * There are many resources on the web to learn Linux basics
 
----
-background-image: url(pics/01-intro//WorkflowCluster.jpg)
-background-position: top right
-background-size: 20%
+???
+Just some things to know
 
-# Some useful Linux commands
-* <mark>pwd</mark>  Show curent directory
-* <mark>ls</mark>  List files in current directory
-  * <mark>ls -a</mark> Include files that start with <mark>.<mark>
-  * <mark>ls -l</mark> Long listing with *permissions*, *owners*, and *last change time*
-* <mark>cd *dir_name* </mark> Change directory to dir_name
-* <mark>mkdir *dir_name*</mark> Creates directory dir_name
-* <mark>rmdir *dir_name*</mark> Deletes directory (must be empty)
-* <mark>rm *file_name*</mark> Deletes file_name
-* <mark>cat *file_name*</mark> Displays content of entire file_name
-* <mark>less *file_name*</mark> Displays content of file_name with paging
-* <mark>man *command*</mark> Displays the manual page for *command* with paging
-* <mark>which *command*</mark> Returns location of command
-* <mark>exit</mark> Quit shell and logout
-* Much advanced power comes from learning *regular expressions*
-
+We will not cover these
 ---
 background-image: url(pics/01-intro/WorkflowCluster.jpg)
 background-position: top right
@@ -241,94 +300,42 @@ background-size: 20%
 ## Job Submission on Cluster
 
 * Command line submission
-* Write a shell script to request resources and submit a batch job (preferred)
+* Shell script submission (preferred)
 
 .pull-left[
-#### PBS (Karolina, Barbora)
-<mark>qsub   *script.sh* 
-
-<mark>qstat -u *uid*
-
-<mark>qdel  *jobname*</mark>
-
-]
-.pull-right[
-#### Slurm (Sněhurka, Chimera)
-<mark>sbatch  *script.sh* </mark> 
+#### Slurm (Andes, CADES, )
+<mark>sbatch  *your-shell-script.sh* </mark>
 
 <mark>squeue  -u *uid*</mark>
 
 <mark>scancel  *jobnumber*</mark>
+]
+.pull-right[
+#### PBS (Theta, )
+<mark>qsub   *your-shell-script.sh* 
 
+<mark>qstat -u *uid*
+
+<mark>qdel  *jobname*</mark>
 ]  
 <br>
 * **module** to set software environment (PATH)
-  * <mark>*module load R*</mark>
-  * <mark>*module load r*</mark>
+  * <mark>*module load R*</mark> (Theta ALCF, )
+  * <mark>*module load r*</mark> (Andes OLCF, )
   * <mark>*module list*</mark>
   * <mark>*module avail*</mark>
   
 ---
-background-image: url(pics/01-intro/WorkflowGit.jpg)
-background-position: top left
-background-size: 20%
-
-.right[ 
-# GitHub and git (laptop to cluster)
-]
-
-.w80.pull-left[
-```{r echo=FALSE, out.height=450}
-knitr::include_graphics("pics/01-intro/Git_operations.svg")
-```
-
-<font size="-4">*By Daniel Kinzler - Own work, CC BY 3.0, https://commons.wikimedia.org/w/index.php?curid=25223536</font>
-]
-.w20.pull-right[
-<br>
-```{r echo=FALSE, out.height=80}
-knitr::include_graphics("pics/01-intro/WorkflowCluster.jpg")
-```
-<br><br><br><br><br><br><br><br><br><br>
-
-```{r echo=FALSE, out.height=80}
-knitr::include_graphics("pics/01-intro/WorkflowLaptop.jpg")
-```
-
-]
----
-# Making it easy: set ssh keys
-
-* A message encrypted by public key can be decrypted by private key
-* Works like a single-use password generator and authenticator
-.w80.pull-left[
-```{r echo=FALSE, out.height=400, out.width=450}
-knitr::include_graphics("pics/01-intro/ssh-key-based-authentication.png")
-```
-
-<font size="-4">Graphic from </font>
-```{r echo=FALSE, out.height=10, out.width=300}
-knitr::include_graphics("pics/01-intro/ssh-credit.png")
-```
-]
-.w20.pull-right[
-Your private key is protected on your local resource
-
-<br><br><br><br>
-
-Put your public key on the remote resource to enable easy access
-]
----
-## Demo ... $\qquad$ Workflow
-* Fork ROBUST2022 to your GitHub account
+## Hands-on Session 1
+* Fork R4HPCcode to your GitHub account
    * Login to GitHub
-   * Navigate to RBigData/ROBUST2022
+   * Navigate to RBigData/R4HPCcode repository
    * Click Fork button near top-right
-* clone to New Project in RStudio
+* Clone to New Project in RStudio
 * Open Terminal window (ssh or putty)
 * Login to cluster
-* clone your ROBUST2022 (git clone ...)
-* You are ready for development loop: 
+* clone your R4HPCcode (git clone ...)
+* You are ready for the development loop: 
    * edit -> commit -> push -> pull -> run -> examine output
    
 .pull-left[
@@ -427,7 +434,7 @@ background-image: url(pics/Mangalore/ParallelSoftware/Slide4.png)
 background-position: bottom
 background-size: 90%
 
-# 35+ Years of Parallel Computing Research
+# 35+ Years of Practical Parallel Computing
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide5.png)
@@ -521,18 +528,16 @@ background-size: 20%
 
 # Mapping Threads to Cores
 ### Theory and Reality
-
 * Operating system manages core affinity
-* Operating system tasks can compete
-* Core switching occurs frequently
+* OS tasks can compete and core switching occurs frequently
 
 .pull-left[
-```{r echo=FALSE, out.height=350, fig.align='center'}
+```{r echo=FALSE, out.height=300, fig.align='center', fig.alt="Photo used in many HPC presentations and seems to originate on Reddit"}
 knitr::include_graphics("pics/WSC/iDVTstR_theory.jpg")
 ```
 ]
 .pull-right[
-```{r echo=FALSE, out.height=350, fig.align='center'}
+```{r echo=FALSE, out.height=300, fig.align='center', fig.align='center', fig.alt="Photo used in many HPC presentations and seems to originate on Reddit"}
 knitr::include_graphics("pics/WSC/iDVTstR_reality.jpg")
 ```
 ]
@@ -584,20 +589,6 @@ background-size: 20%
 
 ### Use their majority votes to classify
 
----
-background-image: url(pics/MC/Fork/Slide6.png)
-background-position: bottom
-background-size: 100%
-
-# Pseudo Random Number Generators (RNG)
-.pull-left[
-* Guaranteed reproducibility
-* Possibly overlapping streams
-]
-.pull-right[
-* Reproducibility for same number of streams
-* Guaranteed independent streams 
-]
 ---
 background-image: url(pics/MC/benchmark_mc.png)
 background-position: bottom
@@ -685,6 +676,61 @@ background-size: 20%
 # Demo ... <br><br> FlexiBLAS
 
 ---
+
+## Faster BLAS For Faster R on your macOS Laptop
+
+```{r eval=FALSE}
+## Default BLAS from Netlib
+> x = matrix(rnorm(1e7), nrow = 1e4)
+> system.time(crossprod(x))
+   user  system elapsed 
+  6.752   0.023   6.801 
+```
+```{r eval=FALSE}
+## vecLib
+> system.time(crossprod(x))
+   user  system elapsed 
+  0.666   0.003   0.120 
+```
+```{r eval=FALSE}
+## OpenBLAS
+   > system.time(crossprod(x))
+      user  system elapsed 
+     0.822   0.042   0.121 
+```
+---
+## FlexiBLAS For BLAS Control on your macOS Laptop
+
+* Install Xcode and command line tools
+* Install Homebrew: https://brew.sh/
+* In a terminal window:
+  * `brew install cmake`
+  * `brew install openblas`
+* cmake needs to be told about OpenBLAS: 
+     * `export CMAKE_PREFIX_PATH=/usr/local/opt/openblas:$CMAKE_PREFIX_PATH`
+* Install FlexiBLAS: https://www.mpi-magdeburg.mpg.de/projects/flexiblas
+  * See Install section in its README.md
+* After installation, link to R (terminal window):
+  * `ln -sf /usr/local/lib/libflexiblas.dylib /Library/Frameworks/R.framework/Resources/lib/libRblas.dylib`
+* In R, `install.packages("flexiblas")` and test if it works:
+  * `flexiblas_avail()`
+  * `flexiblas_list()`
+
+R can now swap OpenBLAS and APPLE vecLib dynamically. <br>
+Dynamically control number of cores used in OpenBLAS. <br>
+Control vecLib threads with VECLIB_MAXIMUM_THREADS before starting R.
+
+---
+## For faster R on your Windows laptop
+
+
+Assessing R performance with optimized BLAS across three operating systems   [link](https://thomasmcrow.com/blog/2021-08-optimized-blas-in-r/)
+
+<br>
+
+Building R 4+ for Windows with OpenBLAS    [link](https://www.r-bloggers.com/2020/05/building-r-4-for-windows-with-openblas/)
+
+---
 # The Singular Value Decomposition
 
 $$X = UDV^T$$
@@ -744,183 +790,4 @@ knitr::include_graphics("mnist/one_basis95.png")
 knitr::include_graphics("mnist/five_basis95.png")
 ```
 ]
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7distributed.jpg)
-background-position: bottom
-background-size: 90%
-
-# Part VI:  $\qquad$  Distributed Memory Tools
-
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: bottom
-background-size: 90%
-
-# Message Passing Interface (MPI)
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-# pbdR - MPI
-```{r echo=FALSE, out.height=100, fig.align='left'}
-knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
-```
-
-* MPI: Message Passing Interface - *de facto* standard for distributed communication in supercomputing
-
-   * Used for data mostly via collective communication - high level
-
-   * `pbdMPI`, `kazaam`, and `cop` R packages
-
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-
-# Single Program Multiple Data (SPMD)
-#### Hello world!
-
-```{r eval = FALSE, code = readLines("mpi/hello_world.R")}
-```
-
-#### One code and a parallel mindset
-#### A generalization of a serial code
-#### Many rank-aware operations are automated
-#### No manager, it is all cooperation
-#### Explicit point-to-point communications are an advanced topic
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-
-# High-level Collective Communications
-
-$$\bf A = \sum_{i=1}^nX_i$$
-
-#### `pbdMPI`: $\qquad$ **reduce(X)** $\qquad$ $\qquad$ $\qquad$ **allreduce(X**)
-$$\bf A = \left[ X_1 | X_2 | \cdots | X_n \right]$$
-#### `pbdMPI`: $\qquad$ **gather(X)** $\qquad$ $\qquad$ $\qquad$ **allgather(X**)
-```{r echo=FALSE, out.height=250, fig.align='left'}
-knitr::include_graphics("pics/01-intro/RHistory3sub.png")
-```
-
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-
-# Demo ... <br><br> MPI communication in SPMD programming
-
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-# pbdR - ScaLAPACK - MPI
-.pull-left[
-```{r echo=FALSE, out.height=100, fig.align='left'}
-knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
-```
-]
-.pull-right[
-**pbdr.org**
-]
-
-* ScaLAPACK: Scalable LAPACK - Distributed version of LAPACK (uses PBLAS/BLAS but not LAPACK)
-
-   * 2d Block-Cyclic data layout - mostly automated in `pbdDMAT` package
-   
-   * BLACS: Communication collectives for distributed matrix computation
-   * PBLAS: BLAS - distributed BLAS (uses shared memory BLAS within blocks)
-
-   * `pbdDMAT` and `pbdML` R packages - most matrix operations identical to serial through overloading operators and `ddmatrix` class
-
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-
-## Constructing a Distributed Matrix from Data
-
-* Each MPI rank reads different data in a contiguous block
-
-.pull-left[
-$$\large\left[\begin{array}{ccc}a_{11}&a_{12}&a_{13}\\[1ex]a_{21}&a_{22}&a_{23}\\[1ex] a_{31}&a_{32}&a_{33}\end{array}\right]$$  
-$$\large\left[\begin{array}{ccc}a_{11}&a_{12}&a_{13}\\[1ex]a_{21}&a_{22}&a_{23}\\[1ex] a_{31}&a_{32}&a_{33}\end{array}\right]$$
-]
-.pull-right[
-$$\qquad$$  
-
-$\large a_{11}\;a_{12}\;a_{13}\;a_{21}\;a_{22}\;a_{23}\;a_{31}\;a_{32}\;a_{33}$  
-
-C, C++, NumPy $\quad$ **Row-Block**
-
-$$\qquad$$  
-$$\qquad$$  
-$\large a_{11}\;a_{21}\;a_{31}\;a_{12}\;a_{22}\;a_{32}\;a_{13}\;a_{23}\;a_{33}$  
-
-Fortran, R, Matlab  $\quad$ **Column-Block**
-]
-
-* Each MPI rank adds attributes for global context
-
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-
-# Demo ... <br><br> ScaLAPACK via pbdDMAT
-
----
-## Randomized sketching algorithms
-<br><br>
-Fast new alternatives to classical numerical linear algebra computations. 
-
-<br>
-Guarantees are given with probability statements instead of classical error analysis.
-
-<br> <br>
-Martinsson, P., & Tropp, J. (2020). Randomized numerical linear algebra: Foundations and algorithms. Acta Numerica, 29, 403-572. [https://doi.org/10.48550/arXiv.2002.01387](https://doi.org/10.48550/arXiv.2002.01387)
----
-`mnist_rsvd.R`
-```{r eval=FALSE, code = readLines("mpi/mnist_rsvd.R")}
-```
-
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-
-## Randomized SVD via subspace embedding
-Given an $n\times p$ matrix $X$ and $k = r + 10$, where $r$ is the *effective rank* of $X$:  
-1. Construct a $p\times k$ random matrix $\Omega$
-2. Form $Y = X \Omega$
-3. Decompose $Y = QR$
-
-$Q$ is an orthogonal basis for the columnspace of $Y$, which with high probability is the columnspace of $X$. To get the SVD of $X$:  
-1. Compute $C= Q^TX$
-2. Decompose $C = \hat{U}\Sigma V^T$
-3. Compute $U = Q\hat{U}$
-4. Truncate factorization to $r$ columns
-
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-
-## Randomized SVD via subspace embedding
-Given an $n\times p$ matrix $X$ and $k = r + 10$, where $r$ is the *effective rank* of $X$:  
-1. Construct a $p\times k$ random matrix $\Omega$
-2. Let $Y_0 = \Omega$
-3. For $i$ in $1:q$
-   2. Decompose $Y_{i-1} = Q_{i}R_{i}$
-   1. $Y_i = X(X^TQ_i)$
-4. Decompose $Y_q = QR$
-
-$Q$ is an orthogonal basis for the columnspace of $Y$, which with high probability is the columnspace of $X$. To get the SVD of $X$:  
-1. Compute $C= Q^TX$
-2. Decompose $C = \hat{U}\Sigma V^T$
-3. Compute $U = Q\hat{U}$
-4. Truncate factorization to $r$ columns
-
-
 
