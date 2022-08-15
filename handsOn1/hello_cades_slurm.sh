@@ -9,7 +9,7 @@
 #SBATCH -e ./balance.e
 #SBATCH -o ./balance.o
 
-cd ~/mpi_balance
+cd ~/R4HPC/handsOn1
 pwd
 
 ## module names can vary on different platforms

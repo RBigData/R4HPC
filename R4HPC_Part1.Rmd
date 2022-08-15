@@ -103,10 +103,10 @@ ACLF Theta KNL- Intel-Cray XC40
  
 ---
 
-## Part I: **Environment and Workflow**
-## Part II: Parallel Hardware and Software Overview
-## Part III: Shared Memory Tools
-## Part IV: Distributed Memory Tools
+## Section I: **Environment and Workflow**
+## Section II: Parallel Hardware and Software Overview
+## Section III: Shared Memory Tools
+## Section IV: Distributed Memory Tools
 ---
 ## Working with a remote cluster using R
 
@@ -351,7 +351,7 @@ knitr::include_graphics("pics/01-intro/BatchRonCluster.jpg")
 ]
 
 ---
-# Part III:  <br> <br> Parallel Hardware
+# Section II:  <br> <br> Parallel Hardware
 
 ---
 background-image: url(pics/Mangalore/ParallelHardware/Slide7.png)
@@ -414,7 +414,7 @@ background-position: bottom
 background-size: 90%
 
 ---
-# Part IV:  <br> <br> Parallel Software
+# Section III:  <br> <br> Parallel Software
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide2.png)
@@ -458,7 +458,7 @@ background-size: 90%
 
 # R Interfaces to Low-Level Native Tools
 ---
-# Part V:  <br> <br> Shared Memory Tools
+# Section IV:  <br> <br> Shared Memory Tools
 ## Working with a single node
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7shared.jpg)
