@@ -12,13 +12,12 @@
 cd ~/R4HPC/handsOn1
 pwd
 
+## module names can vary on different platforms
 source /software/cades-open/spack-envs/base/root/linux-centos7-x86_64/gcc-6.3.0/lmod-8.5.6-wdngv4jylfvg2j6jt7xrtugxggh5lpm5/lmod/lmod/init/bash
 export MODULEPATH=/software/cades-open/spack-envs/base/modules/site/Core:/software/cades-open/modulefiles/core
-
-## module names can vary on different platforms
-module load PE-gnu/3.0     # cades condo
-module load R/3.6.0        # cades condo
-echo "loaded R"
+module load gcc
+module load r/4.1.0-py3-X-flexiblas 
+echo "loaded R with flexiblas"
 module list
 
 ## prevent warning when fork is used with MPI
@@ -35,3 +34,4 @@ export OMPI_MCA_mpi_warn_on_fork=0
 #
 # nodes and mapping picked up from slurm by openmpi
 mpirun --mca btl tcp,self Rscript hello_balance.R
+>>> /usr/bin/git push origin HEAD:refs/heads/main
