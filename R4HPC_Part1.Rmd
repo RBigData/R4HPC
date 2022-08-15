@@ -73,18 +73,18 @@ background-size: 20%
 
 ## The Clusters
 
-OLCF Andes
+ORNL OLCF Andes
 * 704 nodes, each with two 16-core 3.0 GHz AMD EPYC processors
 
-CADES SHPC Condos
+ORNL CADES SHPC Condos
 * ~650 nodes, a mix of x86_64 processors with 32 to 128 cores
-* New LMOD software stack (see https://code.ornl.gov/2ff/cades-sw-test)
+* New LMOD software stack (see https://docs.cades.ornl.gov/#condos/software/bash-env/#new-software-stack)
 
-NERSC Cori
+LBL NERSC Cori
 * 9,688 nodes, each an Intel Xeon Phi with 64 cores 
 * 2,388 nodes, Intel Xeon "Haswell" processor with 32 cores
 
-ACLF Theta KNL- Intel-Cray XC40
+ANL ACLF Theta KNL- Intel-Cray XC40
 * 4,392 nodes, each with a 64-core, 1.3-GHz Intel Xeon Phi 7230
 
 ---
