@@ -78,6 +78,7 @@ OLCF Andes
 
 CADES SHPC Condos
 * ~650 nodes, a mix of x86_64 processors with 32 to 128 cores
+* New LMOD software stack (see https://code.ornl.gov/2ff/cades-sw-test)
 
 NERSC Cori
 * 9,688 nodes, each an Intel Xeon Phi with 64 cores 
