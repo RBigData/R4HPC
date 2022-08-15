@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH -J balance
+#SBATCH -J hello
 #SBATCH -A CSC489
 #SBATCH -p batch
 #SBATCH --nodes=4
 #SBATCH --mem=0
 #SBATCH -t 00:00:10
-#SBATCH -e ./balance.e
-#SBATCH -o ./balance.o
+#SBATCH -e ./hello.e
+#SBATCH -o ./hello.o
 #SBATCH --open-mode=truncate
 
 ## above we request 4 nodes and all memory on the nodes
@@ -22,6 +22,8 @@ flexiblas add OpenBLAS $OLCF_OPENBLAS_ROOT/lib/libopenblas.so
 export LD_PRELOAD=$OLCF_FLEXIBLAS_ROOT/lib64/libflexiblas.so
 module load r
 echo -e "loaded R with FlexiBLAS"
+module list
+
 ## above supplies your R code with FlexiBLAS-OpenBLAS on Andes
 ## but matrix computation is not used in the R illustration below
 

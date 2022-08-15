@@ -2,12 +2,13 @@
 #SBATCH -J hello
 #SBATCH -A ccsd
 #SBATCH -p batch
-#SBATCH -N 4
-#SBATCH --ntasks-per-node 4
+#SBATCH --nodes=4
 #SBATCH --mem=0
 #SBATCH -t 00:00:10
 #SBATCH -e ./hello.e
 #SBATCH -o ./hello.o
+
+## above we request 4 nodes and all memory on the nodes
 
 cd ~/R4HPC/handsOn1
 pwd
@@ -20,6 +21,9 @@ module load r/4.1.0-py3-X-flexiblas
 echo "loaded R with flexiblas"
 module list
 
+## above supplies your R code with FlexiBLAS-OpenBLAS on Andes
+## but matrix computation is not used in the R illustration below
+
 ## prevent warning when fork is used with MPI
 export OMPI_MCA_mpi_warn_on_fork=0
 
@@ -27,11 +31,10 @@ export OMPI_MCA_mpi_warn_on_fork=0
 # This runs 4 R sessions on each of 4 nodes (for a total of 16).
 #
 # Each of the 16 hello_world.R scripts will calculate how many cores are
-# available per R session from PBS environment variables and use that many
+# available per R session from environment variables and use that many
 # in mclapply.
 # 
 # NOTE: center policies may require dfferent parameters
 #
-# nodes and mapping picked up from slurm by openmpi
-mpirun --mca btl tcp,self Rscript hello_balance.R
->>> /usr/bin/git push origin HEAD:refs/heads/main
+# runs 4 R sessions per node
+mpirun --map-by ppr:4:node Rscript hello_balance.R
