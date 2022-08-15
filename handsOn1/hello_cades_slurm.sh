@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J hello_balance
+#SBATCH -J balance
 #SBATCH -A ccsd
 #SBATCH -p batch
 #SBATCH -N 4
@@ -8,8 +8,6 @@
 #SBATCH -t 00:00:10
 #SBATCH -e ./balance.e
 #SBATCH -o ./balance.o
-#SBATCH --mail-user=ost@ornl.gov
-#SBATCH --mail-type=FAIL
 
 cd ~/mpi_balance
 pwd

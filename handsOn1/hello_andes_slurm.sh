@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -J hello_balance
+#SBATCH -J balance
 #SBATCH -A CSC489
 #SBATCH -p batch
 #SBATCH --nodes=4
