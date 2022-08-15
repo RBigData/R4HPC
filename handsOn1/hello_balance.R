@@ -1,5 +1,5 @@
 suppressMessages(library(pbdMPI))
-sessionInfo()
+comm.print(sessionInfo())
 
 ## get node name
 host = system("hostname", intern = TRUE)
