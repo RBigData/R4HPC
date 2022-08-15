@@ -327,14 +327,15 @@ background-size: 20%
   
 ---
 ## Hands-on Session 1
-* Fork R4HPCcode to your GitHub account
+* Fork R4HPC to your GitHub account
    * Login to GitHub
-   * Navigate to RBigData/R4HPCcode repository
+   * Navigate to RBigData/R4HPC repository
    * Click Fork button near top-right
+   * Copy forked repo green Code url
 * Clone to New Project in RStudio
 * Open Terminal window (ssh or putty)
 * Login to cluster
-* clone your R4HPCcode (git clone ...)
+* clone your R4HPC (git clone ...)
 * You are ready for the development loop: 
    * edit -> commit -> push -> pull -> run -> examine output
    
