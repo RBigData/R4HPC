@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -J hello
 #SBATCH -A ccsd
-#SBATCH -p batch
+#SBATCH -p burst
 #SBATCH --nodes=4
 #SBATCH --mem=0
 #SBATCH -t 00:00:10
