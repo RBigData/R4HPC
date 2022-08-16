@@ -3,7 +3,6 @@
 #SBATCH -A ccsd
 #SBATCH -p burst
 #SBATCH --nodes=4
-#SBATCH --oversubscribe
 #SBATCH --mem=0
 #SBATCH -t 00:00:10
 #SBATCH -e ./hello.e
@@ -39,4 +38,4 @@ export OMPI_MCA_mpi_warn_on_fork=0
 # NOTE: center policies may require dfferent parameters
 #
 # runs 4 R sessions per node
-mpirun --map-by ppr:4:node Rscript hello_balance.R
+mpirun --map-by ppr:4:node --oversubscribe Rscript hello_balance.R
