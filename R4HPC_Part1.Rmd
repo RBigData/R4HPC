@@ -201,9 +201,9 @@ background-size: 20%
 * HDF5 (for parallel I/O)
 * R (>= 4.0)
 
-**Packages:** (from CRAN, or if prefixed with RBigData use `remotes::install_github("RBigData/packagename")` ) <br>
-Day 1: flexiblas, <br>
-Day 2: RBigData/pbdMPI, RBigData/kazaam, RBigData/pbdDMAT
+**Packages:** <br>
+Day 1: `flexiblas`, `remotes`, `RBigData/pbdMPI` <br>
+Day 2: `RBigData/kazaam`, `RBigData/pbdDMAT`
 
 #### R vs conda-R Deployment
 * Direct R is preferred
@@ -321,13 +321,12 @@ background-size: 20%
 ]  
 <br>
 * **module** to set software environment (PATH)
-  * <mark>*module load R*</mark> (Theta ALCF, )
-  * <mark>*module load r*</mark> (Andes OLCF, )
-  * <mark>*module list*</mark>
-  * <mark>*module avail*</mark>
+  * <mark>*module list*</mark> - list what is loaded
+  * <mark>*module avail*</mark> - list what is available
+  * <mark>*module load r*</mark>
   
 ---
-## Hands-on Session 1
+## Hands-on Session 1 - Fork and clone your R4HPC
 * Fork R4HPC to your GitHub account
    * Login to GitHub
    * Navigate to RBigData/R4HPC repository
@@ -350,6 +349,27 @@ knitr::include_graphics("pics/01-intro/Workflow.jpg")
 knitr::include_graphics("pics/01-intro/BatchRonCluster.jpg")
 ```
 ]
+
+---
+## Hands-on Session 1 - On Login Node
+* Go to `R4HPC/handsOn_1` directory
+
+* `cat hello_MACHINE_slurm.sh` to see what modules to load and do so
+
+* Start R and install needed packages:
+  * `install.pacages("remotes")`
+  * `install.packages("flexiblas")`
+  * `remotes::install_github("RBigData/pbdMPI")`
+
+* Submit the hello_MACHINE_slurm.sh
+
+* Examine output in `hello.e` and `hello.o` and notice that:
+  * 4 nodes are involved
+  * 4 R sessions were running on each node
+  * Each R session ran `mclapply` on several cores
+  * All `mclapply` process id's are reported
+  * The code figured out how many cores in total
+  * Only one R session wrote the output
 
 ---
 # Section II:  <br> <br> Parallel Hardware
@@ -550,11 +570,12 @@ background-position: top right
 background-size: 20%
 
 ### `R`: Drop-in replacements (almost) <br> for `lapply`, `mapply`, and `Map`
-
+<mark>
 `mclapply(X, FUN, ...,`
 `         mc.preschedule = TRUE, mc.set.seed = TRUE,`
 `         mc.silent = FALSE, mc.cores = getOption("mc.cores", 2L),`
 `         mc.cleanup = TRUE, mc.allow.recursive = TRUE, affinity.list = NULL)`
+</mark>
 
 `mcmapply(FUN, ...,`
 `         MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE,`
@@ -583,11 +604,11 @@ background-size: 20%
 
 # Random Forest Classification
 
-### Build many decision trees. Each tree from
+### Build many decision trees. Each tree built from
 
-* random subset of variables
+* random subset of variables: subset of columns
 
-* resampled (with replacement) data
+* resampled (with replacement) data: same number of rows
 
 ### Use their majority votes to classify
 
