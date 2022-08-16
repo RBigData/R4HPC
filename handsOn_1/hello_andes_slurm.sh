@@ -12,7 +12,7 @@
 ## above we request 4 nodes and all memory on the nodes
 
 ## assumes this repository was cloned in your home area
-cd ~/R4HPC/handsOn1
+cd ~/R4HPC/handsOn_1
 pwd
 
 ## modules are specific to andes.olcf.ornl.gov

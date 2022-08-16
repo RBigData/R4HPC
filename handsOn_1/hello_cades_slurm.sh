@@ -11,7 +11,7 @@
 
 ## above we request 4 nodes and all memory on the nodes
 
-cd ~/R4HPC/handsOn1
+cd ~/R4HPC/handsOn_1
 pwd
 
 ## module names can vary on different platforms
