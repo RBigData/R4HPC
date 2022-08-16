@@ -30,6 +30,8 @@ knitr::knit_hooks$set(source = function(x, options) {
 
 * Open <br><br>`R4HPC_Part1.html` <br><br> in your web browser
 
+* Navigation help is the question mark: ?
+
 <br>
 
 Many thanks to my colleagues and former colleagues who contributed to the software and ideas presented here and who are listed in the RBigData Organization on Github: https://github.com/RBigData. Also, many thanks to all R developers of packages used in this presentation.
