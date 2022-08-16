@@ -21,10 +21,10 @@ module list
 
 time Rscript rf_serial.r
 time Rscript rf_mc.r --args 1
-time Rscript rf_mc.r --args 2
-time Rscript rf_mc.r --args 4
-time Rscript rf_mc.r --args 8
-time Rscript rf_mc.r --args 16
-time Rscript rf_mc.r --args 32
-time Rscript rf_mc.r --args 64
+#time Rscript rf_mc.r --args 2
+#time Rscript rf_mc.r --args 4
+#time Rscript rf_mc.r --args 8
+#time Rscript rf_mc.r --args 16
+#time Rscript rf_mc.r --args 32
+#time Rscript rf_mc.r --args 64
 

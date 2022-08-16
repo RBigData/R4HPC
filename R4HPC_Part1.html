@@ -1,36 +1,46 @@
----
-title: "Using R on HPC Clusters &emsp;&emsp;&emsp;&emsp; Part 1"
-author: "George Ostrouchov"
-institute: "Oak Ridge National Laboratory"
-date: "<br><br><br><br><br><br> August 17, 2022 <br><br><span style = 'font-size: 50%;'> Background Image: FRONTIER, First Top500 exascale system, announced June 2022</span>"
-output:
-  xaringan::moon_reader:
-    css: ["default", "default-fonts", "my-theme.css", "widths.css"]
-    lib_dir: libs
-    includes:
-      after_body: insert-logo.html
-    nature:
-      titleSlideClass: ["right", "inverse"]
-      highlightStyle: github
-      highlightLines: true
-      countIncrementalSlides: false
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Using R on HPC Clusters      Part 1</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="George Ostrouchov" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="my-theme.css" type="text/css" />
+    <link rel="stylesheet" href="widths.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: right, inverse, title-slide
+
+.title[
+# Using R on HPC Clusters      Part 1
+]
+.author[
+### George Ostrouchov
+]
+.institute[
+### Oak Ridge National Laboratory
+]
+.date[
+### <br><br><br><br><br><br> August 17, 2022 <br><br><span style="font-size: 50%;"> Background Image: FRONTIER, First Top500 exascale system, announced June 2022</span>
+]
+
 ---
 
-```{r setup, include=FALSE}
-options(htmltools.dir.version = FALSE)
-xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"))
-hook_source <- knitr::knit_hooks$get('source')
-knitr::knit_hooks$set(source = function(x, options) {
-  x <- stringr::str_replace(x, "^[[:blank:]]?([^*].+?)[[:blank:]]*#<<[[:blank:]]*$", "*\\1")
-  hook_source(x, options)
-})
-```
+
+
 # Get this presentation: 
 `git clone https://github.com/RBigData/R4HPC.git`
 
-* Open <br><br>`R4HPC_Part1.html` <br><br> in your web browser
+* Open &lt;br&gt;&lt;br&gt;`R4HPC_Part1.html` &lt;br&gt;&lt;br&gt; in your web browser
 
-<br>
+&lt;br&gt;
 
 Many thanks to my colleagues and former colleagues who contributed to the software and ideas presented here and who are listed in the RBigData Organization on Github: https://github.com/RBigData. Also, many thanks to all R developers of packages used in this presentation.
 
@@ -111,9 +121,7 @@ ANL ACLF Theta KNL- Intel-Cray XC40
 ---
 ## Working with a remote cluster using R
 
-```{r echo=FALSE, out.height=500}
-knitr::include_graphics("pics/01-intro/Workflow.jpg")
-```
+&lt;img src="pics/01-intro/Workflow.jpg" height="500" /&gt;
 ???
 
 * Please excuse my art
@@ -159,9 +167,7 @@ background-size: 20%
 
 ## Running Distributed on a Cluster
 
-```{r echo=FALSE, out.height=500}
-knitr::include_graphics("pics/01-intro/BatchRonCluster.jpg")
-```
+&lt;img src="pics/01-intro/BatchRonCluster.jpg" height="500" /&gt;
 ???
 Ultimate goal of workshop
 * Pic of cluster use with R: 32 R sessions collaborating on 8 nodes
@@ -199,10 +205,10 @@ background-size: 20%
 * FlexiBLAS
 * OpenMPI
 * HDF5 (for parallel I/O)
-* R (>= 4.0)
+* R (&gt;= 4.0)
 
-**Packages:** <br>
-Day 1: `flexiblas`, `remotes`, `RBigData/pbdMPI`, `randomForest`, `mlbench` <br>
+**Packages:** &lt;br&gt;
+Day 1: `flexiblas`, `remotes`, `RBigData/pbdMPI`, `randomForest`, `mlbench` &lt;br&gt;
 Day 2: `RBigData/kazaam`, `RBigData/pbdDMAT`
 
 #### R vs conda-R Deployment
@@ -219,25 +225,19 @@ background-image: url(pics/01-intro/WorkflowGit.jpg)
 background-position: top left
 background-size: 20%
 
-# <font size="+2">2</font> $\qquad$ GitHub and git (laptop to cluster)
+# &lt;font size="+2"&gt;2&lt;/font&gt; `\(\qquad\)` GitHub and git (laptop to cluster)
 
 .w80.pull-left[
-```{r echo=FALSE, out.height=400}
-knitr::include_graphics("pics/01-intro/Git_operations.svg")
-```
-<font size="-6">*By Daniel Kinzler - Own work, CC BY 3.0, https://commons.wikimedia.org/w/index.php?curid=25223536</font>
+&lt;img src="pics/01-intro/Git_operations.svg" height="400" /&gt;
+&lt;font size="-6"&gt;*By Daniel Kinzler - Own work, CC BY 3.0, https://commons.wikimedia.org/w/index.php?curid=25223536&lt;/font&gt;
 ]
 .w20.pull-right[
-<br>
-```{r echo=FALSE, out.height=80}
-knitr::include_graphics("pics/01-intro/WorkflowCluster.jpg")
-```
+&lt;br&gt;
+&lt;img src="pics/01-intro/WorkflowCluster.jpg" height="80" /&gt;
 3
-<br><br><br><br><br><br><br><br><br><br>
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
 
-```{r echo=FALSE, out.height=80}
-knitr::include_graphics("pics/01-intro/WorkflowLaptop.jpg")
-```
+&lt;img src="pics/01-intro/WorkflowLaptop.jpg" height="80" /&gt;
 1
 ]
 ---
@@ -248,22 +248,18 @@ background-size: 20%
 # Making **git** easy: set ssh keys
 
 .w80.pull-left[
-```{r echo=FALSE, out.height=400, out.width=450}
-knitr::include_graphics("pics/01-intro/ssh-key-based-authentication.png")
-```
-<font size="-4">Graphic from </font>
-```{r echo=FALSE, out.height=10, out.width=280}
-knitr::include_graphics("pics/01-intro/ssh-credit.png")
-```
+&lt;img src="pics/01-intro/ssh-key-based-authentication.png" width="450" height="400" /&gt;
+&lt;font size="-4"&gt;Graphic from &lt;/font&gt;
+&lt;img src="pics/01-intro/ssh-credit.png" width="280" height="10" /&gt;
 ]
 .w20.pull-right[
 A message encrypted by public key is decrypted by private key
-<br><br><br>
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
 Works like a single-use password generator and authenticator
-<br><br><br>
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
 Your private keys are protected in your account (laptop and cluster)
 
-<br><br><br><br>
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
 
 Put your public key on GitHub to enable easy access
 ]
@@ -281,7 +277,7 @@ background-size: 20%
 
    * Each command can have a list of *options* and a list of *arguments*
    * *Standard input* and *standard output* of a command is the terminal but can be redirected
-   * **<**, **<<**, **>**, **>>** redirect standard input and output
+   * **&lt;**, **&lt;&lt;**, **&gt;**, **&gt;&gt;** redirect standard input and output
    * *command1* **|** *command2* pipes standard output1 to standard input2
    * Commands are looked up in directories listed in your PATH variable (try "echo $PATH")
    * $ means substitute variable value
@@ -305,25 +301,25 @@ background-size: 20%
 
 .pull-left[
 #### Slurm (Andes, CADES, )
-<mark>sbatch  *your-shell-script.sh* </mark>
+&lt;mark&gt;sbatch  *your-shell-script.sh* &lt;/mark&gt;
 
-<mark>squeue  -u *uid*</mark>
+&lt;mark&gt;squeue  -u *uid*&lt;/mark&gt;
 
-<mark>scancel  *jobnumber*</mark>
+&lt;mark&gt;scancel  *jobnumber*&lt;/mark&gt;
 ]
 .pull-right[
 #### PBS (Theta, )
-<mark>qsub   *your-shell-script.sh* 
+&lt;mark&gt;qsub   *your-shell-script.sh* 
 
-<mark>qstat -u *uid*
+&lt;mark&gt;qstat -u *uid*
 
-<mark>qdel  *jobname*</mark>
+&lt;mark&gt;qdel  *jobname*&lt;/mark&gt;
 ]  
-<br>
+&lt;br&gt;
 * **module** to set software environment (PATH)
-  * <mark>*module list*</mark> - list what is loaded
-  * <mark>*module avail*</mark> - list what is available
-  * <mark>*module load r*</mark>
+  * &lt;mark&gt;*module list*&lt;/mark&gt; - list what is loaded
+  * &lt;mark&gt;*module avail*&lt;/mark&gt; - list what is available
+  * &lt;mark&gt;*module load r*&lt;/mark&gt;
   
 ---
 ## Hands-on Session 1 - Fork and clone your R4HPC
@@ -337,17 +333,13 @@ background-size: 20%
 * Login to cluster
 * clone your R4HPC (git clone ...)
 * You are ready for the development loop: 
-   * edit -> commit -> push -> pull -> run -> examine output
+   * edit -&gt; commit -&gt; push -&gt; pull -&gt; run -&gt; examine output
    
 .pull-left[
-```{r echo=FALSE, out.height=250}
-knitr::include_graphics("pics/01-intro/Workflow.jpg")
-```
+&lt;img src="pics/01-intro/Workflow.jpg" height="250" /&gt;
 ]
 .pull-right[
-```{r echo=FALSE, out.height=250}
-knitr::include_graphics("pics/01-intro/BatchRonCluster.jpg")
-```
+&lt;img src="pics/01-intro/BatchRonCluster.jpg" height="250" /&gt;
 ]
 
 ---
@@ -372,7 +364,7 @@ knitr::include_graphics("pics/01-intro/BatchRonCluster.jpg")
   * Only one R session wrote the output
 
 ---
-# Section II:  <br> <br> Parallel Hardware
+# Section II:  &lt;br&gt; &lt;br&gt; Parallel Hardware
 
 ---
 background-image: url(pics/Mangalore/ParallelHardware/Slide7.png)
@@ -435,7 +427,7 @@ background-position: bottom
 background-size: 90%
 
 ---
-# Section III:  <br> <br> Parallel Software
+# Section III:  &lt;br&gt; &lt;br&gt; Parallel Software
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide2.png)
@@ -479,7 +471,7 @@ background-size: 90%
 
 # R Interfaces to Low-Level Native Tools
 ---
-# Section IV:  <br> <br> Shared Memory Tools
+# Section IV:  &lt;br&gt; &lt;br&gt; Shared Memory Tools
 ## Working with a single node
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7shared.jpg)
@@ -533,9 +525,7 @@ background-size: 20%
 
 # Copy-on-write
 
-```{r echo=FALSE, out.height=500, fig.align='center'}
-knitr::include_graphics("pics/MC/Fork/Slide1.png")
-```
+&lt;img src="pics/MC/Fork/Slide1.png" height="500" style="display: block; margin: auto;" /&gt;
 ???
 * All done with pointers
 * Memory is in pages
@@ -554,14 +544,10 @@ background-size: 20%
 * OS tasks can compete and core switching occurs frequently
 
 .pull-left[
-```{r echo=FALSE, out.height=300, fig.align='center', fig.alt="Photo used in many HPC presentations and seems to originate on Reddit"}
-knitr::include_graphics("pics/WSC/iDVTstR_theory.jpg")
-```
+&lt;img src="pics/WSC/iDVTstR_theory.jpg" title="Photo used in many HPC presentations and seems to originate on Reddit" alt="Photo used in many HPC presentations and seems to originate on Reddit" height="300" style="display: block; margin: auto;" /&gt;
 ]
 .pull-right[
-```{r echo=FALSE, out.height=300, fig.align='center', fig.align='center', fig.alt="Photo used in many HPC presentations and seems to originate on Reddit"}
-knitr::include_graphics("pics/WSC/iDVTstR_reality.jpg")
-```
+&lt;img src="pics/WSC/iDVTstR_reality.jpg" title="Photo used in many HPC presentations and seems to originate on Reddit" alt="Photo used in many HPC presentations and seems to originate on Reddit" height="300" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -569,13 +555,13 @@ background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
 background-position: top right
 background-size: 20%
 
-### `R`: Drop-in replacements (almost) <br> for `lapply`, `mapply`, and `Map`
-<mark>
+### `R`: Drop-in replacements (almost) &lt;br&gt; for `lapply`, `mapply`, and `Map`
+&lt;mark&gt;
 `mclapply(X, FUN, ...,`
 `         mc.preschedule = TRUE, mc.set.seed = TRUE,`
 `         mc.silent = FALSE, mc.cores = getOption("mc.cores", 2L),`
 `         mc.cleanup = TRUE, mc.allow.recursive = TRUE, affinity.list = NULL)`
-</mark>
+&lt;/mark&gt;
 
 `mcmapply(FUN, ...,`
 `         MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE,`
@@ -598,10 +584,8 @@ background-position: top right
 background-size: 20%
 
 ## Hands-on Session 2 - Example Random forest Code
-#### Letter recognition data ( $20\,000 \times 17$ )
-```{r echo=FALSE, out.height=350, fig.align='center'}
-knitr::include_graphics("pics/MC/ML_FreySlate1991.png")
-```
+#### Letter recognition data ( `\(20\,000 \times 17\)` )
+&lt;img src="pics/MC/ML_FreySlate1991.png" height="350" style="display: block; margin: auto;" /&gt;
 
 .footnote[*Parallel Statistical Computing with R: An Illustration on Two Architectures [ 	arXiv:1709.01195](https://arxiv.org/abs/1709.01195)]
 ---
@@ -623,12 +607,54 @@ background-size: 20%
 
 ---
 ### Hands-on Session 2 - `R4HPC/code_2/rf_serial.R`
-```{r eval=FALSE, code = readLines("code_2/rf_serial.R")}
+
+```r
+suppressMessages(library(randomForest))
+data(LetterRecognition, package = "mlbench")
+set.seed(seed = 123)
+
+n = nrow(LetterRecognition)
+n_test = floor(0.2 * n)
+i_test = sample.int(n, n_test)
+train = LetterRecognition[-i_test, ]
+test = LetterRecognition[i_test, ]
+
+rf.all = randomForest(lettr ~ ., train, ntree = 500, norm.votes = FALSE)
+pred = predict(rf.all, test)
+
+correct = sum(pred == test$lettr)
+cat("Proportion Correct:", correct/(n_test), "\n")
 ```
 
 ---
 ### Hands-on Session 2 - `R4HPC/code_2/rf_mc.R`
-```{r eval=FALSE, code = readLines("code_2/rf_mc.R")}
+
+```r
+*library(parallel)
+library(randomForest)
+data(LetterRecognition, package = "mlbench")
+*set.seed(seed = 123, "L'Ecuyer-CMRG")
+
+n = nrow(LetterRecognition)
+n_test = floor(0.2 * n)
+i_test = sample.int(n, n_test)
+train = LetterRecognition[-i_test, ]
+test = LetterRecognition[i_test, ]
+
+*nc = as.numeric(commandArgs(TRUE)[2])
+*ntree = lapply(splitIndices(500, nc), length)
+*rf = function(x, train) randomForest(lettr ~ ., train, ntree=x,
+*                                    norm.votes = FALSE)
+*rf.out = mclapply(ntree, rf, train = train, mc.cores = nc)
+*rf.all = do.call(combine, rf.out)
+
+*crows = splitIndices(nrow(test), nc)
+*rfp = function(x) as.vector(predict(rf.all, test[x, ]))
+*cpred = mclapply(crows, rfp, mc.cores = nc)
+*pred = do.call(c, cpred)
+
+correct &lt;- sum(pred == test$lettr)
+cat("Proportion Correct:", correct/(n_test), "\n")
 ```
 
 ---
@@ -688,7 +714,26 @@ background-size: 20%
 ### FlexiBLAS
 
 `flexiblas_setup.r`
-```{r eval=FALSE, code = readLines("code_3/flexiblas_setup.r", n = 19)}
+
+```r
+library(flexiblas)
+flexiblas_avail()
+flexiblas_version()
+flexiblas_current_backend()
+flexiblas_list()
+flexiblas_list_loaded()
+
+getthreads = function() {
+  flexiblas_get_num_threads()
+}
+setthreads = function(thr, label = "") {
+  cat(label, "Setting", thr, "threads\n")
+  flexiblas_set_num_threads(thr)
+}
+setback = function(backend, label = "") {
+  cat(label, "Setting", backend, "backend\n")
+  flexiblas_switch(flexiblas_load_backend(backend))
+}
 ```
 
 .footnote[
@@ -708,22 +753,25 @@ background-size: 20%
 
 ## Appendix: Faster BLAS For Faster R on your macOS Laptop
 
-```{r eval=FALSE}
+
+```r
 ## Default BLAS from Netlib
-> x = matrix(rnorm(1e7), nrow = 1e4)
-> system.time(crossprod(x))
+&gt; x = matrix(rnorm(1e7), nrow = 1e4)
+&gt; system.time(crossprod(x))
    user  system elapsed 
   6.752   0.023   6.801 
 ```
-```{r eval=FALSE}
+
+```r
 ## vecLib
-> system.time(crossprod(x))
+&gt; system.time(crossprod(x))
    user  system elapsed 
   0.666   0.003   0.120 
 ```
-```{r eval=FALSE}
+
+```r
 ## OpenBLAS
-   > system.time(crossprod(x))
+   &gt; system.time(crossprod(x))
       user  system elapsed 
      0.822   0.042   0.121 
 ```
@@ -745,8 +793,8 @@ background-size: 20%
   * `flexiblas_avail()`
   * `flexiblas_list()`
 
-R can now swap OpenBLAS and APPLE vecLib dynamically. <br>
-Dynamically control number of cores used in OpenBLAS. <br>
+R can now swap OpenBLAS and APPLE vecLib dynamically. &lt;br&gt;
+Dynamically control number of cores used in OpenBLAS. &lt;br&gt;
 Control vecLib threads with VECLIB_MAXIMUM_THREADS before starting R.
 
 ---
@@ -755,6 +803,169 @@ Control vecLib threads with VECLIB_MAXIMUM_THREADS before starting R.
 
 Assessing R performance with optimized BLAS across three operating systems   [link](https://thomasmcrow.com/blog/2021-08-optimized-blas-in-r/)
 
-<br>
+&lt;br&gt;
 
 Building R 4+ for Windows with OpenBLAS    [link](https://www.r-bloggers.com/2020/05/building-r-4-for-windows-with-openblas/)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+  .logo {
+    background-image: url(pics/ORNL_Two-line_color.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    bottom: -1em;
+    left: 1em;
+    width: 110px;
+    height: 64px;
+    z-index: 0;
+  }
+</style>
+  
+  <script>
+  document
+.querySelectorAll(
+  '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+  // ':not(.inverse)' +
+    ':not(.hide-logo)'
+)
+.forEach(el => {
+  el.innerHTML += '<div class="logo"></div>';
+});
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
