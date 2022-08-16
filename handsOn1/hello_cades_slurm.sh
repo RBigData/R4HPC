@@ -3,6 +3,7 @@
 #SBATCH -A ccsd
 #SBATCH -p burst
 #SBATCH --nodes=4
+#SBATCH --ntasks-per-node=4
 #SBATCH --mem=0
 #SBATCH -t 00:00:10
 #SBATCH -e ./hello.e
@@ -38,4 +39,4 @@ module list
 # NOTE: center policies may require dfferent parameters
 #
 # runs 4 R sessions per node
-mpirun --map-by ppr:4:node --oversubscribe Rscript hello_balance.R
+mpirun --map-by ppr:4:node Rscript hello_balance.R
