@@ -3,6 +3,7 @@
 #SBATCH -A ccsd
 #SBATCH -p burst
 #SBATCH --nodes=4
+#SBATCH --oversubscribe
 #SBATCH --mem=0
 #SBATCH -t 00:00:10
 #SBATCH -e ./hello.e

@@ -1,3 +1,11 @@
+## This script describes two levels of parallelism:
+## Top level: Distributed MPI runs several copies of this entire script.
+##            Instances differ by their comm.rank() designation.
+## Inner level: The unix fork (copy-on-write) shared memory parallel execution
+##            of the mc.function() managed by parallel::mclapply()
+## Further levels are possible: multithreading in compiled code and communicator
+## splitting at the distributed MPI level.
+
 suppressMessages(library(pbdMPI))
 comm.print(sessionInfo())
 
