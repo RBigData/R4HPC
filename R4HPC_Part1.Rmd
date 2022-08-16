@@ -586,11 +586,18 @@ background-size: 20%
 `mcMap(f, ...)`
 
 ---
+## Hands-on Session 2 - Multicore Random Forest
+
+* Go to `R4HPC/code_2` directory
+
+* Look at the `rf_serial.R` and `rf_mc.R` codes
+
+---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
 background-position: top right
 background-size: 20%
 
-# Example Random forest Code
+## Hands-on Session 2 - Example Random forest Code
 #### Letter recognition data ( $20\,000 \times 17$ )
 ```{r echo=FALSE, out.height=350, fig.align='center'}
 knitr::include_graphics("pics/MC/ML_FreySlate1991.png")
@@ -602,7 +609,7 @@ background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
 background-position: top right
 background-size: 20%
 
-# Random Forest Classification
+## Hands-on Session 2 - Random Forest Classification
 
 ### Build many decision trees
 
@@ -615,20 +622,19 @@ background-size: 20%
 ### Use their majority votes to classify
 
 ---
-### `R4HPC/code_2/rf_serial.r`
-```{r eval=FALSE, code = readLines("code_2/rf_serial.r")}
+### Hands-on Session 2 - `R4HPC/code_2/rf_serial.R`
+```{r eval=FALSE, code = readLines("code_2/rf_serial.R")}
 ```
 
 ---
-### `R4HPC/code_2/rf_mc.r`
-```{r eval=FALSE, code = readLines("code_2/rf_mc.r")}
+### Hands-on Session 2 - `R4HPC/code_2/rf_mc.R`
+```{r eval=FALSE, code = readLines("code_2/rf_mc.R")}
 ```
+
 ---
-## Hands-on Session 2 - Multicore Random Forest
+## Hands-on Session 2 - Assignment
 
-* Go to `R4HPC/code_2` directory
-
-
+Time the random forest code `rf_mc.R` for 1 through 32 cores by modifying the `rf_MACHINE_slurm.sh` script.
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
 background-position: bottom
