@@ -202,7 +202,7 @@ background-size: 20%
 * R (>= 4.0)
 
 **Packages:** <br>
-Day 1: `flexiblas`, `remotes`, `RBigData/pbdMPI` <br>
+Day 1: `flexiblas`, `remotes`, `RBigData/pbdMPI`, `randomForest`, `mlbench` <br>
 Day 2: `RBigData/kazaam`, `RBigData/pbdDMAT`
 
 #### R vs conda-R Deployment
@@ -352,7 +352,7 @@ knitr::include_graphics("pics/01-intro/BatchRonCluster.jpg")
 
 ---
 ## Hands-on Session 1 - On Login Node
-* Go to `R4HPC/handsOn_1` directory
+* Go to `R4HPC/code_1` directory
 
 * `cat hello_MACHINE_slurm.sh` to see what modules to load and do so
 
@@ -604,7 +604,9 @@ background-size: 20%
 
 # Random Forest Classification
 
-### Build many decision trees. Each tree built from
+### Build many decision trees
+
+### Each tree built from
 
 * random subset of variables: subset of columns
 
@@ -613,24 +615,20 @@ background-size: 20%
 ### Use their majority votes to classify
 
 ---
-background-image: url(pics/MC/benchmark_mc.png)
-background-position: bottom
-background-size: 80%
-
-# Example Random Forest Classification Code
-#### Letter recognition data ( $20\,000 \times 17$ ) - Scaling graph example
-
----
-### `ROBUST2022/code/rf_serial.r`
-```{r eval=FALSE, code = readLines("code/rf_serial.r")}
+### `R4HPC/code_2/rf_serial.r`
+```{r eval=FALSE, code = readLines("code_2/rf_serial.r")}
 ```
 
 ---
-### `ROBUST2022/code/rf_mc.r`
-```{r eval=FALSE, code = readLines("code/rf_mc.r")}
+### `R4HPC/code_2/rf_mc.r`
+```{r eval=FALSE, code = readLines("code_2/rf_mc.r")}
 ```
 ---
-# Demo ... <br><br> Random Forest via mclapply
+## Hands-on Session 2 - Multicore Random Forest
+
+* Go to `R4HPC/code_2` directory
+
+
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
 background-position: bottom
@@ -684,7 +682,7 @@ background-size: 20%
 ### FlexiBLAS
 
 `flexiblas_setup.r`
-```{r eval=FALSE, code = readLines("code/flexiblas_setup.r", n = 19)}
+```{r eval=FALSE, code = readLines("code_3/flexiblas_setup.r", n = 19)}
 ```
 
 .footnote[

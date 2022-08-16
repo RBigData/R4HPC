@@ -1,4 +1,4 @@
-suppressMessages(library(randomForest))
+library(randomForest)
 data(LetterRecognition, package = "mlbench")
 set.seed(seed = 123)
 
