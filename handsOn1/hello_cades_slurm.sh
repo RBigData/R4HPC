@@ -26,7 +26,7 @@ module list
 ## but matrix computation is not used in the R illustration below
 
 ## prevent warning when fork is used with MPI
-export OMPI_MCA_mpi_warn_on_fork=0
+#export OMPI_MCA_mpi_warn_on_fork=0
 
 # An illustration of fine control of R scripts and cores on several nodes
 # This runs 4 R sessions on each of 4 nodes (for a total of 16).
