@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -J hello
 #SBATCH -A ccsd
-#SBATCH -p burst
+#SBATCH -p batch
 #SBATCH --nodes=4
 #SBATCH --ntasks-per-node=4
 #SBATCH --mem=0
