@@ -25,8 +25,11 @@ echo "loaded R"
 module list
 
 time Rscript rf_serial.r
+echo "start 1"
 time Rscript rf_mc.r --args 1
+echo "start 2"
 time Rscript rf_mc.r --args 2
+echo "start 3"
 time Rscript rf_mc.r --args 4
 time Rscript rf_mc.r --args 8
 time Rscript rf_mc.r --args 16
