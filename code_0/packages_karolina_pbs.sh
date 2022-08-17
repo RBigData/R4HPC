@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -N package
 #PBS -A DD-21-42
-#PBS -l select=4:mpiprocs=16
+#PBS -l select=1
 #PBS -l walltime=00:05:00
 #PBS -q qprod
 #PBS -e package.e

@@ -2,8 +2,7 @@
 #SBATCH -J package
 #SBATCH -A ccsd
 #SBATCH -p burst
-#SBATCH --nodes=4
-#SBATCH --ntasks-per-node=4
+#SBATCH --nodes=1
 #SBATCH --mem=0
 #SBATCH -t 00:05:00
 #SBATCH -e ./package.e

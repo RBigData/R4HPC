@@ -3,7 +3,6 @@
 #SBATCH -A ccsd
 #SBATCH -p batch
 #SBATCH --nodes=1
-#SBATCH -c 32
 #SBATCH --mem=0
 #SBATCH -t 00:15:00
 #SBATCH -e ./flexiblas.e
