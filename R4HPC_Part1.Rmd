@@ -210,17 +210,14 @@ background-size: 20%
 * OpenMPI
 * HDF5 (for parallel I/O)
 * R (>= 4.0)
+* And various packages, including `RBigData/pbdMPI` (GitHub version)
 
-**Packages:** <br>
-Day 1: `flexiblas`, `remotes`, `RBigData/pbdMPI`, `randomForest`, `mlbench` <br>
-Day 2: `RBigData/kazaam`, `RBigData/pbdDMAT`
 
 #### R vs conda-R Deployment
 * Direct R is preferred
 * CRAN and Anaconda differ in package management philosophy
 * Can end up with conflicts if mixing
-* Conda adds a layer of complexity
-* If already used to Conda, you may find it useful
+* Adds a layer of complexity for the R user
 
 ???
 * Complexity without obvious benefit if using current CRAN packages
@@ -364,20 +361,17 @@ knitr::include_graphics("pics/01-intro/BatchRonCluster.jpg")
 
 ---
 ## Hands-on Session 1 - On Login Node
-* Go to `R4HPC/code_1` directory
+* Below, replace `MACHINE` with your cluster name (andes, cades are available)
+* Go to `R4HPC/code_0` directory and run
+   * `./packages_MACHINE.sh` to install all R packages that will be used
 
-* `cat hello_MACHINE_slurm.sh` to see what modules to load and do so
-
-* Start R and install needed packages:
-  * `install.pacages("remotes")`
-  * `install.packages("flexiblas")`
-  * `remotes::install_github("RBigData/pbdMPI")`
-
-* Submit the hello_MACHINE_slurm.sh
+* Go to `R$HPC/code_1` directory and run
+   * `sbatch hello_MACHINE_slurm.sh` to run a script that illustrates a basic two-level parallelism
+   * We will return to this script throughout the workshop as we learn its components
 
 * Examine output in `hello.e` and `hello.o` and notice that:
   * 4 nodes are involved
-  * 4 R sessions were running on each node
+  * 4 R sessions were running on each node for a total of 16
   * Each R session ran `mclapply` on several cores
   * All `mclapply` process id's are reported
   * The code figured out how many cores in total
@@ -586,7 +580,7 @@ background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
 background-position: top right
 background-size: 20%
 
-### `R`: Parallel Drop-in replacements (almost) <br> for `lapply`, `mapply`, and `Map`
+# Parallel Drop-in replacements (almost) <br> for `lapply`, `mapply`, and `Map`
 <mark>
 `mclapply(X, FUN, ...,`
 `         mc.preschedule = TRUE, mc.set.seed = TRUE,`
