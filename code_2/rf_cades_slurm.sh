@@ -11,7 +11,7 @@
 #SBATCH -e ./rf.e
 #SBATCH -o ./rf.o
 
-cd ~/ROBUST2022/code
+cd ~/R4HPC/code_2
 pwd
 
 module load PE-gnu/4.0
