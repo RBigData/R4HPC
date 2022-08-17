@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH -J hello
+#SBATCH -J package
 #SBATCH -A ccsd
 #SBATCH -p burst
 #SBATCH --nodes=4
 #SBATCH --ntasks-per-node=4
 #SBATCH --mem=0
-#SBATCH -t 00:00:10
-#SBATCH -e ./hello.e
-#SBATCH -o ./hello.o
+#SBATCH -t 00:05:00
+#SBATCH -e ./package.e
+#SBATCH -o ./package.o
 
 ## above we request 4 nodes and all memory on the nodes
 

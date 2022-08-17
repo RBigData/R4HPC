@@ -1,11 +1,11 @@
 #!/bin/bash
-#PBS -N hello
+#PBS -N package
 #PBS -A DD-21-42
 #PBS -l select=4:mpiprocs=16
-#PBS -l walltime=00:00:10
+#PBS -l walltime=00:05:00
 #PBS -q qprod
-#PBS -e hello.e
-#PBS -o hello.o
+#PBS -e package.e
+#PBS -o package.o
 
 cat $BASH_SOURCE 
 cd ~/R4HPC/code_1
