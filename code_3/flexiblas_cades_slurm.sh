@@ -8,6 +8,7 @@
 #SBATCH -t 00:15:00
 #SBATCH -e ./flexiblas.e
 #SBATCH -o ./flexiblas.o
+## Note: burst queue seems faster in the evenings, batch in the day
 
 ## above we request 4 nodes and all memory on the nodes
 
