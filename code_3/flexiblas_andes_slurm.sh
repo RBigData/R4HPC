@@ -10,7 +10,7 @@
 #SBATCH --open-mode=truncate
 
 ## assumes this repository was cloned in your home area
-cd ~/R4HPC/handsOn_1
+cd ~/R4HPC/code_3
 pwd
 
 ## modules are specific to andes.olcf.ornl.gov
