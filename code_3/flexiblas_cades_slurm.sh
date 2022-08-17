@@ -10,8 +10,6 @@
 #SBATCH -o ./flexiblas.o
 ## Note: burst queue seems faster in the evenings, batch in the day
 
-## above we request 4 nodes and all memory on the nodes
-
 cd ~/R4HPC/code_3
 pwd
 
