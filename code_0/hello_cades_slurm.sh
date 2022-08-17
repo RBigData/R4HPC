@@ -11,7 +11,7 @@
 
 ## above we request 4 nodes and all memory on the nodes
 
-cd ~/R4HPC/code_1
+cd ~/R4HPC/code_0
 pwd
 
 ## modules are specific to or-slurm-login.ornl.gov (CADES SHPC condos)
@@ -23,20 +23,4 @@ module load r/4.1.0-py3-X-flexiblas
 echo "loaded R with flexiblas"
 module list
 
-## above supplies your R code with FlexiBLAS-OpenBLAS on Andes
-## but matrix computation is not used in the R illustration below
-
-## prevent warning when fork is used with MPI
-#export OMPI_MCA_mpi_warn_on_fork=0
-
-# An illustration of fine control of R scripts and cores on several nodes
-# This runs 4 R sessions on each of 4 nodes (for a total of 16).
-#
-# Each of the 16 hello_world.R scripts will calculate how many cores are
-# available per R session from environment variables and use that many
-# in mclapply.
-# 
-# NOTE: center policies may require dfferent parameters
-#
-# runs 4 R sessions per node
-mpirun --map-by ppr:4:node Rscript hello_balance.R
+Rscript package_installs.R
