@@ -2,10 +2,9 @@
 #SBATCH -J rf
 #SBATCH -A ccsd
 #SBATCH -p burst
-#SBATCH --nodes=4
-#SBATCH --ntasks-per-node=4
+#SBATCH --nodes=1
 #SBATCH --mem=0
-#SBATCH -t 00:00:10
+#SBATCH -t 00:10:00
 #SBATCH -e ./rf.e
 #SBATCH -o ./rf.o
 
