@@ -29,13 +29,13 @@ for(i in 0:4) {
 }
 
 # crossprod --------------------------------------
-for(i in 0:7) {
+for(i in 0:5) {
   setthreads(2^i, "crossprod")
   print(system.time((crossprod(x))))
 }
 
 # %*% --------------------------------------------
-for(i in 0:7) {
+for(i in 0:5) {
   setthreads(2^i, "%*%")
   print(system.time((t(x) %*% x)))
 }
