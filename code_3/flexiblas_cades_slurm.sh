@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -J flexiblas
 #SBATCH -A ccsd
-#SBATCH -p burst
+#SBATCH -p batch
 #SBATCH --nodes=1
 #SBATCH -c 32
 #SBATCH --mem=0
