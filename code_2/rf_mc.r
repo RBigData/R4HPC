@@ -10,7 +10,6 @@ train = LetterRecognition[-i_test, ]
 test = LetterRecognition[i_test, ]
 
 nc = as.numeric(commandArgs(TRUE)[2])                    #<<
-cat("cores:", nc, "\n")
 ntree = lapply(splitIndices(500, nc), length)            #<<
 rf = function(x, train) randomForest(lettr ~ ., train, ntree=x, #<<
                                      norm.votes = FALSE)        #<<
