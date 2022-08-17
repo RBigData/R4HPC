@@ -17,13 +17,13 @@ for(i in 0:4) {
 }
 
 # prcomp --------------------------------------
-for(i in 0:5) {
+for(i in 0:4) {
   setthreads(2^i, "prcomp")
   print(system.time((prcomp(x))))
 }
 
 # princomp --------------------------------------
-for(i in 0:6) {
+for(i in 0:4) {
   setthreads(2^i, "princomp")
   print(system.time((princomp(x))))
 }
