@@ -683,35 +683,13 @@ background-size: 20%
 * Optimizes algorithm to chip microarchitecture details 
    * memory hierarchies (L1 cache, L2 cache, etc.) and 
    * register vector length
-
-
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
-background-position: top right
-background-size: 20%
-
-### # Hands-on Session 3 - FlexiBLAS
-
-`code_3/flexiblas_setup.r`
-```{r eval=FALSE, code = readLines("code_3/flexiblas_setup.r", n = 19)}
-```
-
-.footnote[
-[https://github.com/Enchufa2/r-flexiblas](https://github.com/Enchufa2/r-flexiblas)  
-[https://cran.r-project.org/package=flexiblas](https://cran.r-project.org/package=flexiblas)
-]
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
-background-position: top right
-background-size: 20%
-
-# Hands-on Session 3 - FlexiBLAS
-
-* Go to `code_3` directory
+   
+* FlexiBLAS Standardization of API for BLAS core control
+   * C, C++, R, Python/numpy, Julia
 
 ---
 
-## Appendix: Faster BLAS For Faster R on your macOS Laptop
+## Faster BLAS For Faster R on your Laptop (macOS)
 
 ```{r eval=FALSE}
 ## Default BLAS from Netlib
@@ -721,19 +699,19 @@ background-size: 20%
   6.752   0.023   6.801 
 ```
 ```{r eval=FALSE}
-## vecLib
+## vecLib (4 cores)
 > system.time(crossprod(x))
    user  system elapsed 
-  0.666   0.003   0.120 
+  0.420   0.003   0.078 
 ```
 ```{r eval=FALSE}
-## OpenBLAS
-   > system.time(crossprod(x))
-      user  system elapsed 
-     0.822   0.042   0.121 
+## OpenBLAS (4 cores)
+> system.time(crossprod(x))
+   user  system elapsed 
+  0.457   0.028   0.075 
 ```
 ---
-## Appendix: FlexiBLAS For BLAS Control on your macOS Laptop
+## Install FlexiBLAS For BLAS Control on macOS Laptop
 
 * Install Xcode and command line tools
 * Install Homebrew: https://brew.sh/
@@ -754,12 +732,47 @@ R can now swap OpenBLAS and APPLE vecLib dynamically. <br>
 Dynamically control number of cores used in OpenBLAS. <br>
 Control vecLib threads with VECLIB_MAXIMUM_THREADS before starting R.
 
----
-## Appendix: For faster R on your Windows laptop
+???
+Long Install
 
+Eases transition to cluster if practiced on laptop
+
+Brings more portability to parallel codes
+
+---
+## For faster R on your Windows laptop
 
 Assessing R performance with optimized BLAS across three operating systems   [link](https://thomasmcrow.com/blog/2021-08-optimized-blas-in-r/)
 
 <br>
 
 Building R 4+ for Windows with OpenBLAS    [link](https://www.r-bloggers.com/2020/05/building-r-4-for-windows-with-openblas/)
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
+background-position: top right
+background-size: 20%
+
+## Hands-on Session 3 - FlexiBLAS
+
+`code_3/flexiblas_setup.R`
+```{r eval=FALSE, code = readLines("code_3/flexiblas_setup.r", n = 19)}
+```
+
+.footnote[
+[https://github.com/Enchufa2/r-flexiblas](https://github.com/Enchufa2/r-flexiblas)  
+[https://cran.r-project.org/package=flexiblas](https://cran.r-project.org/package=flexiblas)
+]
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
+background-position: top right
+background-size: 20%
+
+# Hands-on Session 3 - FlexiBLAS
+
+* Go to `code_3` directory
+* Submit `flexiblas_MACHINE_slurm.sh`
+* Examine output to notice:
+  * Maximum cores can be slow
+  * Optimal cores can depend on matrix size and shape
+

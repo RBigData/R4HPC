@@ -11,5 +11,5 @@ pwd
 module load R
 echo "loaded R"
 
-time Rscript flexiblas_bench2.r
+time Rscript flexiblas_bench2.R
 

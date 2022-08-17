@@ -1,4 +1,4 @@
-source("flexiblas_setup.r")
+source("flexiblas_setup.R")
 memuse::howbig(5e4, 2e3)
 parallel::detectCores()
 

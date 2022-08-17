@@ -38,15 +38,21 @@ class: right, inverse, title-slide
 # Get this presentation: 
 `git clone https://github.com/RBigData/R4HPC.git`
 
-* Open &lt;br&gt;&lt;br&gt;`R4HPC_Part1.html` &lt;br&gt;&lt;br&gt; in your web browser
-
-* Navigation help is the question mark: ?
-
+* Open &lt;br&gt;&lt;br&gt;`R4HPC_Part1.html` &lt;br&gt;&lt;br&gt; in your web browser (help ? toggle)
 &lt;br&gt;
 
-Many thanks to my colleagues and former colleagues who contributed to the software and ideas presented here and who are listed in the RBigData Organization on Github: https://github.com/RBigData. Also, many thanks to all R developers of packages used in this presentation.
+Slack workspace link for this workshop was emailed to you. 
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
 
-Any errors are mine alone.
+*Many thanks to my colleagues and former colleagues who contributed to the software and ideas presented here. See the RBigData Organization on Github: https://github.com/RBigData. Also, many thanks to all R developers of packages used in this presentation.*
+
+*Slides are made with the xaringan R package. It is an R Markdown extension based on the JavaScript library remark.js.*
+
+???
+The first hands-on session will do this also
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+Of course, any mistakes are mine alone!!
 
 ---
 # Using R on HPC Clusters Webinar
@@ -92,12 +98,12 @@ ORNL CADES SHPC Condos
 * ~650 nodes, a mix of x86_64 processors with 32 to 128 cores
 * New LMOD software stack (see https://docs.cades.ornl.gov/#condos/software/bash-env/#new-software-stack)
 
-LBL NERSC Cori
-* 9,688 nodes, each an Intel Xeon Phi with 64 cores 
-* 2,388 nodes, Intel Xeon "Haswell" processor with 32 cores
+LBL NERSC Perlmutter 
+* 3,072 CPU-only nodes, AMD EPYC Milan, each with 64 cores
+* 1,536 GPU-accelerated nodes, AMD EPYC Milan + 4 NVIDIA A100 GPU
 
-ANL ACLF Theta KNL- Intel-Cray XC40
-* 4,392 nodes, each with a 64-core, 1.3-GHz Intel Xeon Phi 7230
+ANL ACLF Polaris
+* 560 nodes, each with AMD EPYC Milan (32 cores)  + 4 NVIDIA A100 GPU
 
 ---
 # Access to HPC Clusters
@@ -109,9 +115,11 @@ ANL ACLF Theta KNL- Intel-Cray XC40
 * DOE NERSC https://www.nersc.gov/users/accounts/allocations/
 * NSF XSEDE to ACCESS https://www.xsede.org/
 
-* EU PRACE https://prace-ri.eu/hpc-access/ (for example IT4I.cz https://www.it4i.cz/en/for-users/computing-resources-allocation) 
+* A cluster at your institution  
 
-* Institutional Clusters 
+* International:
+   * EU PRACE https://prace-ri.eu/hpc-access/ (for example IT4I.cz https://www.it4i.cz/en/for-users/computing-resources-allocation) 
+   * UK, Switzerland, Japan, and many others have similar programs
 
  
 ---
@@ -288,9 +296,8 @@ background-size: 20%
 * There are many resources on the web to learn Linux basics
 
 ???
-Just some things to know
+* A few unix things to explain scripts you will see
 
-We will not cover these
 ---
 background-image: url(pics/01-intro/WorkflowCluster.jpg)
 background-position: top right
@@ -302,7 +309,7 @@ background-size: 20%
 * Shell script submission (preferred)
 
 .pull-left[
-#### Slurm (Andes, CADES, )
+#### Slurm (Andes, CADES, Perlmutter)
 &lt;mark&gt;sbatch  *your-shell-script.sh* &lt;/mark&gt;
 
 &lt;mark&gt;squeue  -u *uid*&lt;/mark&gt;
@@ -310,7 +317,7 @@ background-size: 20%
 &lt;mark&gt;scancel  *jobnumber*&lt;/mark&gt;
 ]
 .pull-right[
-#### PBS (Theta, )
+#### Cobalt - PBS (Polaris)
 &lt;mark&gt;qsub   *your-shell-script.sh* 
 
 &lt;mark&gt;qstat -u *uid*
@@ -323,13 +330,16 @@ background-size: 20%
   * &lt;mark&gt;*module avail*&lt;/mark&gt; - list what is available
   * &lt;mark&gt;*module load r*&lt;/mark&gt;
   
+???
+* More explanation for scripts you will see
+  
 ---
 ## Hands-on Session 1 - Fork and clone your R4HPC
 * Fork R4HPC to your GitHub account
-   * Login to GitHub
+   * Login to GitHub (or GitLab)
    * Navigate to RBigData/R4HPC repository
-   * Click Fork button near top-right
-   * Copy forked repo green Code url
+   * GitHub: Fork button near top-right and copy forked repo url
+   * GitLab: See https://docs.gitlab.com/ee/api/import.html
 * Clone to New Project in RStudio
 * Open Terminal window (ssh or putty)
 * Login to cluster
@@ -364,6 +374,11 @@ background-size: 20%
   * All `mclapply` process id's are reported
   * The code figured out how many cores in total
   * Only one R session wrote the output
+
+???
+#SBATCH -A your-group-account
+
+`group` will show what groups you are in
 
 ---
 # Section II:  &lt;br&gt; &lt;br&gt; Parallel Hardware
@@ -557,7 +572,7 @@ background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
 background-position: top right
 background-size: 20%
 
-### `R`: Drop-in replacements (almost) &lt;br&gt; for `lapply`, `mapply`, and `Map`
+### `R`: Parallel Drop-in replacements (almost) &lt;br&gt; for `lapply`, `mapply`, and `Map`
 &lt;mark&gt;
 `mclapply(X, FUN, ...,`
 `         mc.preschedule = TRUE, mc.set.seed = TRUE,`
@@ -690,32 +705,86 @@ background-size: 20%
    * Great for benchmarking implementations
    * Great for dynamic core assignment
 
+???
+* Optimizes algorithm to chip microarchitecture details 
+   * memory hierarchies (L1 cache, L2 cache, etc.) and 
+   * register vector length
+   
+* FlexiBLAS Standardization of API for BLAS core control
+   * C, C++, R, Python/numpy, Julia
+
+---
+
+## Faster BLAS For Faster R on your Laptop (macOS)
+
+
+```r
+## Default BLAS from Netlib
+&gt; x = matrix(rnorm(1e7), nrow = 1e4)
+&gt; system.time(crossprod(x))
+   user  system elapsed 
+  6.752   0.023   6.801 
+```
+
+```r
+## vecLib (4 cores)
+&gt; system.time(crossprod(x))
+   user  system elapsed 
+  0.420   0.003   0.078 
+```
+
+```r
+## OpenBLAS (4 cores)
+&gt; system.time(crossprod(x))
+   user  system elapsed 
+  0.457   0.028   0.075 
+```
+---
+## Install FlexiBLAS For BLAS Control on macOS Laptop
+
+* Install Xcode and command line tools
+* Install Homebrew: https://brew.sh/
+* In a terminal window:
+  * `brew install cmake`
+  * `brew install openblas`
+* cmake needs to be told about OpenBLAS: 
+     * `export CMAKE_PREFIX_PATH=/usr/local/opt/openblas:$CMAKE_PREFIX_PATH`
+* Install FlexiBLAS: https://www.mpi-magdeburg.mpg.de/projects/flexiblas
+  * See Install section in its README.md
+* After installation, link to R (terminal window):
+  * `ln -sf /usr/local/lib/libflexiblas.dylib /Library/Frameworks/R.framework/Resources/lib/libRblas.dylib`
+* In R, `install.packages("flexiblas")` and test if it works:
+  * `flexiblas_avail()`
+  * `flexiblas_list()`
+
+R can now swap OpenBLAS and APPLE vecLib dynamically. &lt;br&gt;
+Dynamically control number of cores used in OpenBLAS. &lt;br&gt;
+Control vecLib threads with VECLIB_MAXIMUM_THREADS before starting R.
+
+???
+Long Install
+
+Eases transition to cluster if practiced on laptop
+
+Brings more portability to parallel codes
+
+---
+## For faster R on your Windows laptop
+
+Assessing R performance with optimized BLAS across three operating systems   [link](https://thomasmcrow.com/blog/2021-08-optimized-blas-in-r/)
+
+&lt;br&gt;
+
+Building R 4+ for Windows with OpenBLAS    [link](https://www.r-bloggers.com/2020/05/building-r-4-for-windows-with-openblas/)
+
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
 background-position: top right
 background-size: 20%
 
-# OpenBLAS
+## Hands-on Session 3 - FlexiBLAS
 
-OpenBLAS is an optimized BLAS library based on GotoBLAS2 (2010, Kazushige Goto).
-
-* [openblas.net](https://www.openblas.net)
-
-* Optimizes algorithm to chip microarchitecture details of memory hierarchies (L1 cache, L2 cache, etc.) and register vector length
-
-* IT4I FlexiBLAS: "OPENBLAS" backend
-
-.footnote[
-Wang Qian, Zhang Xianyi, Zhang Yunquan, Qing Yi, AUGEM: Automatically Generate High Performance Dense Linear Algebra Kernels on x86 CPUs, In the International Conference for High Performance Computing, Networking, Storage and Analysis (SC'13), Denver CO, November 2013.
-]
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7libs.jpg)
-background-position: top right
-background-size: 20%
-
-### FlexiBLAS
-
-`flexiblas_setup.r`
+`code_3/flexiblas_setup.R`
 
 ```r
 library(flexiblas)
@@ -750,64 +819,11 @@ background-size: 20%
 # Hands-on Session 3 - FlexiBLAS
 
 * Go to `code_3` directory
+* Submit `flexiblas_MACHINE_slurm.sh`
+* Examine output to notice:
+  * Maximum cores can be slow
+  * Optimal cores can depend on matrix size and shape
 
----
-
-## Appendix: Faster BLAS For Faster R on your macOS Laptop
-
-
-```r
-## Default BLAS from Netlib
-&gt; x = matrix(rnorm(1e7), nrow = 1e4)
-&gt; system.time(crossprod(x))
-   user  system elapsed 
-  6.752   0.023   6.801 
-```
-
-```r
-## vecLib
-&gt; system.time(crossprod(x))
-   user  system elapsed 
-  0.666   0.003   0.120 
-```
-
-```r
-## OpenBLAS
-   &gt; system.time(crossprod(x))
-      user  system elapsed 
-     0.822   0.042   0.121 
-```
----
-## Appendix: FlexiBLAS For BLAS Control on your macOS Laptop
-
-* Install Xcode and command line tools
-* Install Homebrew: https://brew.sh/
-* In a terminal window:
-  * `brew install cmake`
-  * `brew install openblas`
-* cmake needs to be told about OpenBLAS: 
-     * `export CMAKE_PREFIX_PATH=/usr/local/opt/openblas:$CMAKE_PREFIX_PATH`
-* Install FlexiBLAS: https://www.mpi-magdeburg.mpg.de/projects/flexiblas
-  * See Install section in its README.md
-* After installation, link to R (terminal window):
-  * `ln -sf /usr/local/lib/libflexiblas.dylib /Library/Frameworks/R.framework/Resources/lib/libRblas.dylib`
-* In R, `install.packages("flexiblas")` and test if it works:
-  * `flexiblas_avail()`
-  * `flexiblas_list()`
-
-R can now swap OpenBLAS and APPLE vecLib dynamically. &lt;br&gt;
-Dynamically control number of cores used in OpenBLAS. &lt;br&gt;
-Control vecLib threads with VECLIB_MAXIMUM_THREADS before starting R.
-
----
-## Appendix: For faster R on your Windows laptop
-
-
-Assessing R performance with optimized BLAS across three operating systems   [link](https://thomasmcrow.com/blog/2021-08-optimized-blas-in-r/)
-
-&lt;br&gt;
-
-Building R 4+ for Windows with OpenBLAS    [link](https://www.r-bloggers.com/2020/05/building-r-4-for-windows-with-openblas/)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

@@ -1,4 +1,4 @@
-source("flexiblas_setup.r")
+source("flexiblas_setup.R")
 
 x = matrix(rnorm(1e7), nrow = 1e4, ncol = 1e3)
 memuse::howbig(1e4, 1e3)
