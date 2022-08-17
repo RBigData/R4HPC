@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -J rf
-#SBATCH -A ccsd
-#SBATCH -p burst
+#SBATCH -A CSC143
+#SBATCH -p batch
 #SBATCH --nodes=1
 #SBATCH --ncores-per-task=32
 #SBATCH -t 00:40:00

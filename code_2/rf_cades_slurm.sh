@@ -21,7 +21,7 @@ module load gcc
 module load openmpi
 #module load r/4.1.0-py3-X-flexiblas 
 module load r/4.1.0-py3-X
-echo "loaded R with flexiblas"
+echo "loaded R"
 module list
 
 time Rscript rf_serial.r
