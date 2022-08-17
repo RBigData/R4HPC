@@ -18,7 +18,8 @@ source /software/cades-open/spack-envs/base/root/linux-centos7-x86_64/gcc-6.3.0/
 export MODULEPATH=/software/cades-open/spack-envs/base/modules/site/Core:/software/cades-open/modulefiles/core
 module load gcc
 module load openmpi
-module load r/4.1.0-py3-X-flexiblas 
+#module load r/4.1.0-py3-X-flexiblas 
+module load r/4.1.0-py3-X
 echo "loaded R with flexiblas"
 module list
 
