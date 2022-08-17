@@ -3,7 +3,6 @@
 #SBATCH -A CSC143
 #SBATCH -p batch
 #SBATCH --nodes=1
-#SBATCH --ncores-per-task=32
 #SBATCH -t 00:40:00
 #SBATCH --mem=0
 #SBATCH -e ./rf.e
