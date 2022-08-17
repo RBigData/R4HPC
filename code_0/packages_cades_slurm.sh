@@ -4,7 +4,7 @@
 #SBATCH -p burst
 #SBATCH --nodes=1
 #SBATCH --mem=0
-#SBATCH -t 00:05:00
+#SBATCH -t 00:10:00
 #SBATCH -e ./package.e
 #SBATCH -o ./package.o
 
