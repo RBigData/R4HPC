@@ -5,7 +5,7 @@
 #PBS -e fx.e
 #PBS -o fx.o
 
-cd ~/ROBUST2022/code
+cd ~/R4HPC/code_3
 pwd
 
 module load R
