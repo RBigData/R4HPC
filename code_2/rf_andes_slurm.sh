@@ -8,6 +8,8 @@
 #SBATCH -e ./rf.e
 #SBATCH -o ./rf.o
 #SBATCH --open-mode=truncate
+#SBATCH --reservation=ost_96
+## above reservation valid only during workshop on andes (remove elsewhere)
 
 cd ~/R4HPC/code_2
 pwd

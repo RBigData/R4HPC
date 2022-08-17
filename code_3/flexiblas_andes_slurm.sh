@@ -8,6 +8,8 @@
 #SBATCH -e ./flexiblas.e
 #SBATCH -o ./flexiblas.o
 #SBATCH --open-mode=truncate
+#SBATCH --reservation=ost_96
+## above reservation valid only during workshop on andes (remove elsewhere)
 
 ## assumes this repository was cloned in your home area
 cd ~/R4HPC/code_3

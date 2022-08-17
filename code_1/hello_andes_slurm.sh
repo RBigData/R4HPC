@@ -8,6 +8,8 @@
 #SBATCH -e ./hello.e
 #SBATCH -o ./hello.o
 #SBATCH --open-mode=truncate
+#SBATCH --reservation=ost_96
+## above reservation valid only during workshop on andes (remove elsewhere)
 
 ## above we request 4 nodes and all memory on the nodes
 
