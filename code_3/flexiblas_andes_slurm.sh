@@ -4,7 +4,7 @@
 #SBATCH -p batch
 #SBATCH --nodes=1
 #SBATCH --mem=0
-#SBATCH -t 00:00:10
+#SBATCH -t 00:05:00
 #SBATCH -e ./flexiblas.e
 #SBATCH -o ./flexiblas.o
 #SBATCH --open-mode=truncate
