@@ -1,14 +1,3 @@
-#!/bin/bash
-#SBATCH -J package
-#SBATCH -A ccsd
-#SBATCH -p burst
-#SBATCH --nodes=1
-#SBATCH --mem=0
-#SBATCH -t 00:10:00
-#SBATCH -e ./package.e
-#SBATCH -o ./package.o
-
-## above we request 4 nodes and all memory on the nodes
 
 cd ~/R4HPC/code_0
 pwd
