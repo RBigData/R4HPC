@@ -2,8 +2,8 @@
 #SBATCH -J rf
 #SBATCH -A ccsd
 #SBATCH -p burst
-#SBATCH -N=1
-#SBATCH -c=32
+#SBATCH -N 1
+#SBATCH -c 32
 #SBATCH --mem=0
 #SBATCH -t 00:10:00
 #SBATCH -e ./rf.e
