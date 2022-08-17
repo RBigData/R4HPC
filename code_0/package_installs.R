@@ -1,5 +1,5 @@
 
-install.pacages("remotes")
+install.packages("remotes")
 install.packages("flexiblas")
 install.packages("randomForest")
 install.packages("mlbench")
