@@ -178,8 +178,8 @@ background-size: 20%
 
 ## Hands on Session 5: Hello MPI Ranks
 
-`code_5-mpi/hello_world.R`
-```{r eval = FALSE, code = readLines("code_5-mpi/hello_world.R")}
+`code_5/hello_world.R`
+```{r eval = FALSE, code = readLines("code_5/hello_world.R")}
 ```
 
 ### **Rank** distinguishes the parallel copies of the same code
@@ -190,8 +190,8 @@ background-size: 20%
 
 ## Hands on Session 5: Random Forest with MPI
 
-`code_5-mpi/rf_mpi.R`
-```{r eval = FALSE, code = readLines("code_5-mpi/rf_mpi.R")}
+`code_5/rf_mpi.R`
+```{r eval = FALSE, code = readLines("code_5/rf_mpi.R")}
 ```
 
 ---

@@ -11,7 +11,7 @@
 
 ## above we request 4 nodes and all memory on the nodes
 
-cd ~/R4HPC/code_2
+cd ~/R4HPC/code_5
 pwd
 
 ## modules are specific to or-slurm-login.ornl.gov (CADES SHPC condos)

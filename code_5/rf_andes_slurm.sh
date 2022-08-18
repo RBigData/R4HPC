@@ -11,7 +11,7 @@
 #SBATCH --reservation=ost_96
 ## above reservation valid only during workshop on andes (remove elsewhere)
 
-cd ~/R4HPC/code_2
+cd ~/R4HPC/code_5
 pwd
 
 ## modules are specific to andes.olcf.ornl.gov
