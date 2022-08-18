@@ -23,10 +23,10 @@ module load r
 echo -e "loaded R with FlexiBLAS"
 module list
 
-time Rscript rf_serial.r
-time Rscript rf_mpi.r --args 1
-time Rscript rf_mpi.r --args 2
-time Rscript rf_mpi.r --args 4
-time Rscript rf_mpi.r --args 8
-time Rscript rf_mpi.r --args 16
-time Rscript rf_mpi.r --args 32
+time Rscript ../code_2/rf_serial.R
+time Rscript rf_mpi.R --args 1
+time Rscript rf_mpi.R --args 2
+time Rscript rf_mpi.R --args 4
+time Rscript rf_mpi.R --args 8
+time Rscript rf_mpi.R --args 16
+time Rscript rf_mpi.R --args 32
