@@ -1,4 +1,4 @@
-suppressMessages(library(randomForest))
+suppressPackageStartupMessages(library(randomForest))
 data(LetterRecognition, package = "mlbench")
 suppressMessages(library(pbdMPI))                #<<
 comm.set.seed(seed = 7654321, diff = FALSE)      #<<
