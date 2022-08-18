@@ -149,6 +149,7 @@ background-size: 20%
 ```{r eval = FALSE, code = readLines("code_5-mpi/hello_world.R")}
 ```
 
+### **Rank** distinguishes the parallel copies of the same code
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
@@ -157,10 +158,20 @@ background-size: 20%
 ## Hands on Session 5: <br> Single Program Multiple Data (SPMD)
 
 * One code and a parallel mindset
+
 * A generalization of a serial code
+
 * Many rank-aware operations are automated
-* No manager, it is all cooperation
+
+* Collective operations are high level and easy to learn
+
 * Explicit point-to-point communications are an advanced topic
+
+* No manager, it is all cooperation
+
+<br><br>
+Compare an MPI reimplementation of the serial random forest code: <br>
+`code_5-mpi/rf_mpi.R`
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)

@@ -1,9 +1,9 @@
 suppressMessages(library(pbdMPI))
 
 my_rank = comm.rank()
-ranks = comm.size()
+nranks = comm.size()
 msg = paste0("Hello World! My name is Rank", my_rank,
-             ". We are ", ranks, " identical siblings.")
+             ". We are ", nranks, " identical siblings.")
 cat(msg, "\n")
 
 finalize()
