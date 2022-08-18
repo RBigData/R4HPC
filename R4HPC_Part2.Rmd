@@ -78,48 +78,89 @@ background-size: 90%
 
 # Message Passing Interface (MPI)
 ---
-background-image: url(pics/Mangalore/ParallelSoftware/Slide6.png)
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: bottom
 background-size: 90%
 
-## Distributed Programming Works in Shared Memory
+# Distributed Computing and MPI
+
+* Must be 
+
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
-
-# Single Program Multiple Data (SPMD)
-#### Hello world!
-
-```{r eval = FALSE, code = readLines("mpi/hello_world.R")}
-```
-
-#### One code and a parallel mindset
-#### A generalization of a serial code
-#### Many rank-aware operations are automated
-#### No manager, it is all cooperation
-#### Explicit point-to-point communications are an advanced topic
-
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-# pbdR - MPI
-```{r echo=FALSE, out.height=100, fig.align='left'}
+# pbdR Project
+```{r echo=FALSE, out.height=180, fig.align='left'}
 knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
 ```
+* Bridge HPC with high-productivity of R: Expressive for data and modern statistics
 
-* MPI: Message Passing Interface - *de facto* standard for distributed communication in supercomputing
+* Keep syntax identical to R, when possible
 
-   * Used for data mostly via collective communication - high level
+* Software reuse philosophy:
 
-   * `pbdMPI`, `kazaam`, and `cop` R packages
+   * Don't reinvent the wheel when possible
+   * Introduce HPC standards with R flavor
+   * Use scalable HPC libraries with R convenience
+
+* Simplify and use R intelligence where possible
+???
+Using HPC concepts and libraries 
+* Benefits the R user by knowing standard components of HPC
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+```{r echo=FALSE, out.height=80, fig.align='left'}
+knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
+```
+# Package `pbdMPI`
+
+* Specializes in SPMD programming for HPC clusters
+   * Manages printing from ranks
+   * Provides chunking options
+   * Provides communicator splits for multilevel parallelism
+   * In situ capability to process data from other MPI codes without copy 
+
+* A derivation and rethinking of the `Rmpi` package aimed at HPC clusters
+
+   * Simplified interface with fewer parameters (using R's S4 methods)
+   * Faster for matrix and array data - no serialization
+
+
 ???
 
 * Prefer pbdMPI over Rmpi due to simplification and speed
    * No serialization for arrays and vectors
-* Drops spawning a cluster because a client-server relationship is better
+* Drops spawning a cluster
+  * Because a client-server relationship is more appropriate
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
+## Hands on Session 5: Hello MPI Ranks
+
+`code_5-mpi/hello_world.R`
+```{r eval = FALSE, code = readLines("code_5-mpi/hello_world.R")}
+```
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
+## Hands on Session 5: <br> Single Program Multiple Data (SPMD)
+
+* One code and a parallel mindset
+* A generalization of a serial code
+* Many rank-aware operations are automated
+* No manager, it is all cooperation
+* Explicit point-to-point communications are an advanced topic
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
@@ -166,6 +207,13 @@ knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
    * PBLAS: BLAS - distributed BLAS (uses shared memory BLAS within blocks)
 
    * `pbdDMAT` and `pbdML` R packages - most matrix operations identical to serial through overloading operators and `ddmatrix` class
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide6.png)
+background-position: bottom
+background-size: 90%
+
+## Distributed Programming Works in Shared Memory
+
 ---
 # Shared Memory - MPI or fork?
 ```{r echo=FALSE, out.height=150}
