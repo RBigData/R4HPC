@@ -1,21 +1,21 @@
 #!/bin/bash
 #PBS -N rf
-#PBS -l select=1:ncpus=128
+#PBS -l select=1:ncpus=32
 #PBS -l walltime=00:05:00
 #PBS -q qexp
 #PBS -e rf.e
 #PBS -o rf.o
 
-cd ~/R4HPC/code_2
+cd ~/R4HPC/code_5
 pwd
 
 module load R
 echo "loaded R"
 
-time Rscript rf_serial.r
-time Rscript rf_mpi.r --args 1
-time Rscript rf_mpi.r --args 2
-time Rscript rf_mpi.r --args 4
-time Rscript rf_mpi.r --args 8
-time Rscript rf_mpi.r --args 16
-time Rscript rf_mpi.r --args 32
+time Rscript ../code_2/rf_serial.R
+time mpirun --map-by ppr:1:node Rscript rf_mpi.R
+time mpirun --map-by ppr:2:node Rscript rf_mpi.R
+time mpirun --map-by ppr:4:node Rscript rf_mpi.R
+time mpirun --map-by ppr:8:node Rscript rf_mpi.R
+time mpirun --map-by ppr:16:node Rscript rf_mpi.R
+time mpirun --map-by ppr:32:node Rscript rf_mpi.R
