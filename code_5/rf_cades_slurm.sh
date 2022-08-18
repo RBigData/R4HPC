@@ -24,10 +24,10 @@ module load r/4.1.0-py3-X
 echo "loaded R"
 module list
 
-time Rscript rf_serial.r
-time Rscript rf_mpi.r --args 1
-time Rscript rf_mpi.r --args 2
-time Rscript rf_mpi.r --args 4
-time Rscript rf_mpi.r --args 8
-time Rscript rf_mpi.r --args 16
-time Rscript rf_mpi.r --args 32
+time Rscript ../code_2/rf_serial.R
+time mpirun --map-by ppr:1:node Rscript rf_mpi.R
+time mpirun --map-by ppr:2:node Rscript rf_mpi.R
+time mpirun --map-by ppr:4:node Rscript rf_mpi.R
+time mpirun --map-by ppr:8:node Rscript rf_mpi.R
+time mpirun --map-by ppr:16:node Rscript rf_mpi.R
+time mpirun --map-by ppr:32:node Rscript rf_mpi.R
