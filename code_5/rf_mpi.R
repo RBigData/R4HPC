@@ -4,7 +4,7 @@ suppressMessages(library(pbdMPI))                #<<
 comm.set.seed(seed = 7654321, diff = FALSE)      #<<
 
 n = nrow(LetterRecognition)
-n_test = floor(0.5 * n)
+n_test = floor(0.2 * n)
 i_test = sample.int(n, n_test)
 train = LetterRecognition[-i_test, ]
 test = LetterRecognition[i_test, ][comm.chunk(n_test, form = "vector"), ]    #<<
@@ -15,7 +15,7 @@ rf.all = allgather(my.rf)                  #<<
 rf.all = do.call(combine, rf.all)          #<<
 pred = as.vector(predict(rf.all, test))
 
-correct = allreduce(sum(pred == test$lettr))
+correct = allreduce(sum(pred == test$lettr))  #<<
 comm.cat("Proportion Correct:", correct/(n_test), "\n")
 
 finalize()          #<<
