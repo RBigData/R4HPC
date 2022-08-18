@@ -24,9 +24,9 @@ echo -e "loaded R with FlexiBLAS"
 module list
 
 time Rscript ../code_2/rf_serial.R
-time Rscript rf_mpi.R --args 1
-time Rscript rf_mpi.R --args 2
-time Rscript rf_mpi.R --args 4
-time Rscript rf_mpi.R --args 8
-time Rscript rf_mpi.R --args 16
-time Rscript rf_mpi.R --args 32
+time mpirun --map-by ppr:1:node Rscript rf_mpi.R
+time mpirun --map-by ppr:2:node Rscript rf_mpi.R
+time mpirun --map-by ppr:4:node Rscript rf_mpi.R
+time mpirun --map-by ppr:8:node Rscript rf_mpi.R
+time mpirun --map-by ppr:16:node Rscript rf_mpi.R
+time mpirun --map-by ppr:32:node Rscript rf_mpi.R
