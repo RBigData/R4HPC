@@ -1,6 +1,6 @@
-library(randomForest)
+suppressMessages(library(randomForest))
 data(LetterRecognition, package = "mlbench")
-library(pbdMPI)                                  #<<
+suppressMessages(library(pbdMPI))                #<<
 comm.set.seed(seed = 7654321, diff = FALSE)      #<<
 
 n = nrow(LetterRecognition)
