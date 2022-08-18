@@ -3,6 +3,7 @@
 #SBATCH -A ccsd
 #SBATCH -p batch
 #SBATCH -N 1
+#SBATCH --ntasks-per-node=32
 #SBATCH -c 32
 #SBATCH --mem=0
 #SBATCH -t 00:10:00
