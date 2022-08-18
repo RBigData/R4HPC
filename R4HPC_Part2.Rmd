@@ -143,19 +143,7 @@ background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
 
-## Hands on Session 5: Hello MPI Ranks
-
-`code_5-mpi/hello_world.R`
-```{r eval = FALSE, code = readLines("code_5-mpi/hello_world.R")}
-```
-
-### **Rank** distinguishes the parallel copies of the same code
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-
-## Hands on Session 5: <br> Single Program Multiple Data (SPMD)
+## Single Program Multiple Data (SPMD)
 
 * One code and a parallel mindset
 
@@ -169,9 +157,6 @@ background-size: 20%
 
 * No manager, it is all cooperation
 
-<br><br>
-Compare an MPI reimplementation of the serial random forest code: <br>
-`code_5-mpi/rf_mpi.R`
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
@@ -179,15 +164,38 @@ background-position: top right
 background-size: 20%
 
 # High-level Collective Communications
-
 $$\bf A = \sum_{i=1}^nX_i$$
-
-#### `pbdMPI`: $\qquad$ **reduce(X)** $\qquad$ $\qquad$ $\qquad$ **allreduce(X**)
+#### `pbdMPI`: $\qquad$ **A = reduce(X)** $\qquad$ $\qquad$ $\qquad$ **A = allreduce(X**)
 $$\bf A = \left[ X_1 | X_2 | \cdots | X_n \right]$$
-#### `pbdMPI`: $\qquad$ **gather(X)** $\qquad$ $\qquad$ $\qquad$ **allgather(X**)
+#### `pbdMPI`: $\qquad$ **A = gather(X)** $\qquad$ $\qquad$ $\qquad$ **A = allgather(X**)
 ```{r echo=FALSE, out.height=250, fig.align='left'}
 knitr::include_graphics("pics/01-intro/RHistory3sub.png")
 ```
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
+## Hands on Session 5: Hello MPI Ranks
+
+`code_5-mpi/hello_world.R`
+```{r eval = FALSE, code = readLines("code_5-mpi/hello_world.R")}
+```
+
+### **Rank** distinguishes the parallel copies of the same code
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
+## Hands on Session 5: Random Forest with MPI
+
+`code_5-mpi/rf_mpi.R`
+```{r eval = FALSE, code = readLines("code_5-mpi/rf_mpi.R")}
+```
+
+---
+# comm.chunk()
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
