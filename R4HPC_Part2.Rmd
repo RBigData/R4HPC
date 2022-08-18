@@ -102,53 +102,6 @@ background-size: 20%
 #### Explicit point-to-point communications are an advanced topic
 
 ---
-## Truncated SVD as Regression Basis Vectors
-
-Suppose we have $n$ images, each with $p$ pixel values. The well known MNIST data set of digit images is an example with $n = 60\, 000$ and $p = 784\,\, (28\times 28)$.
-
-```{r echo=FALSE, out.height=300}
-knitr::include_graphics("mnist/RplotsDigits.png")
-```
-
-Let $A$ be the matrix of $n_A$ images of a single digit, say digit zero, the pixel values of each image as a column.
-
----
-## Truncated SVD as Regression Basis Vectors
-
-Let $A$ be the matrix of $n_A$ images of a single digit, the pixel values of each image as a column.
-
-The SVD of $A = UDV^T$.
-If $u_i$ and $v_i$ are the columns of $U$ and $V$, respectively, 
-then 
-$$A = \sum_{i=1}^p d_i u_iv_i^T.$$
-and image $j$ in column $a_j = \sum_{i=1}^p (d_i v_{ij})u_i.$
-
-From matrix approximation, we know that this SVD can be truncated to some $k \ll p$ components and still represent each image well. 
----
-## Truncated SVD as Regression Basis Vectors
-
-For some $k \ll p$, we have $a_j = \sum_{i=1}^k (d_iv_{ij})u_i.$
-
-The $u_i$ are basis functions constructed from data, a set of orthogonalized "images", which are the regressors and the $d_iv_{ij}$ are the regression coefficients.
-
-We can now look at classification of a new image of a digit by regressing it onto each of the 10 digit bases and classifying it into the category that fits best.
-
-The tuning parameter $k$ can be optimized with crossvalidation.
-
----
-# Demo ... MNIST svd regression
-
-.pull-left[
-```{r echo=FALSE, out.height=400, fig.align='left'}
-knitr::include_graphics("mnist/one_basis95.png")
-```
-]
-.pull-right[
-```{r echo=FALSE, out.height=400, fig.align='left'}
-knitr::include_graphics("mnist/five_basis95.png")
-```
-]
----
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
@@ -167,7 +120,6 @@ knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
 * Prefer pbdMPI over Rmpi due to simplification and speed
    * No serialization for arrays and vectors
 * Drops spawning a cluster because a client-server relationship is better
-
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
