@@ -15,7 +15,7 @@ rf.all = allgather(my.rf)                  #<<
 rf.all = do.call(combine, rf.all)          #<<
 pred = as.vector(predict(rf.all, test))
 
-correct = sum(pred == test$lettr)
-cat("Proportion Correct:", correct/(n_test), "\n")
+correct = allreduce(sum(pred == test$lettr))
+comm.cat("Proportion Correct:", correct/(n_test), "\n")
 
 finalize()          #<<
