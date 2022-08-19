@@ -1,6 +1,6 @@
 suppressMessages(library(rhdf5))
-suppressMessages(library(pbdIO))
-file = "/scratch/project/dd-21-42/data/mnist/train.hdf5"
+suppressMessages(library(pbdMPI))
+file = "/gpfs/alpine/world-shared/gen011/mnist/train.hdf5"
 dat1  = "image"
 dat2  = "label"
 
@@ -27,18 +27,18 @@ dim(my_train) = c(prod(dims[-length(dims)]), length(my_ind))
 my_train = t(my_train)  # row-major write and column-major read
 
 ## plot for debugging
-# if(comm.rank() == 0) {
-#   ivals = sample(nrow(train), 36)
-#   library(ggplot2)
-#   image = rep(ivals, 28*28)
-#   lab = rep(train_lab[ivals], 28*28)
-#   image = factor(paste(image, lab, sep = ": "))
-#   col = rep(rep(1:28, 28), each = length(ivals))
-#   row = rep(rep(1:28, each = 28), each = length(ivals))
-#   im = data.frame(image = image, row = row, col = col, 
-#                   val = as.numeric(unlist(train[ivals, ])))
-#   ggplot(im, aes(row, col, fill = val)) + geom_tile() + facet_wrap(~ image)
-# }
+ if(comm.rank() == 0) {
+   ivals = sample(nrow(train), 36)
+   library(ggplot2)
+   image = rep(ivals, 28*28)
+   lab = rep(train_lab[ivals], 28*28)
+   image = factor(paste(image, lab, sep = ": "))
+   col = rep(rep(1:28, 28), each = length(ivals))
+   row = rep(rep(1:28, each = 28), each = length(ivals))
+   im = data.frame(image = image, row = row, col = col, 
+                   val = as.numeric(unlist(train[ivals, ])))
+   ggplot(im, aes(row, col, fill = val)) + geom_tile() + facet_wrap(~ image)
+ }
 
 ## remove finalize if sourced in another script
-# finalize()
+finalize()
