@@ -26,6 +26,7 @@ module load r
 echo -e "loaded R with FlexiBLAS"
 module list
 
+time Rscript mnist_rsvd.R
 time mpirun --map-by ppr:1:node Rscript mnist_rsvd.R
 time mpirun --map-by ppr:2:node Rscript mnist_rsvd.R
 time mpirun --map-by ppr:4:node Rscript mnist_rsvd.R
