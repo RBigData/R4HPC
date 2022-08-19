@@ -39,6 +39,11 @@ Slack workspace link for this workshop was emailed to you.
 *Slides are made with the xaringan R package. It is an R Markdown extension based on the JavaScript library remark.js.*
 
 ---
+# Today's Package Installs
+
+## See `R4HPC/code_4` R script and shell scripts for your machine
+
+---
 ## Running MPI on a Laptop
 
 macOS in a Terminal window:
@@ -311,7 +316,7 @@ Guarantees are given with probability statements instead of classical error anal
 Martinsson, P., & Tropp, J. (2020). Randomized numerical linear algebra: Foundations and algorithms. Acta Numerica, 29, 403-572. [https://doi.org/10.48550/arXiv.2002.01387](https://doi.org/10.48550/arXiv.2002.01387)
 ---
 `mnist_rsvd.R`
-```{r eval=FALSE, code = readLines("mpi/mnist_rsvd.R")}
+```{r eval=FALSE, code = readLines("rsvd/mnist_rsvd.R")}
 ```
 
 ---
