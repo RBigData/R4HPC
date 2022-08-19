@@ -37,8 +37,8 @@ my_train = t(my_train)  # row-major write and column-major read
    row = rep(rep(1:28, each = 28), each = length(ivals))
    im = data.frame(image = image, row = row, col = col, 
                    val = as.numeric(unlist(my_train[ivals, ])))
-   ggplot(im, aes(row, col, fill = val)) + geom_tile() + facet_wrap(~ image)
+   print(ggplot(im, aes(row, col, fill = val)) + geom_tile() + facet_wrap(~ image))
  }
-
+barrier()
 ## remove finalize if sourced in another script
 #finalize()
