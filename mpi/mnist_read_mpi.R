@@ -41,4 +41,4 @@ my_train = t(my_train)  # row-major write and column-major read
  }
 
 ## remove finalize if sourced in another script
-finalize()
+#finalize()
