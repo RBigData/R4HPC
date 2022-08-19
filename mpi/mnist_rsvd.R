@@ -1,7 +1,6 @@
 source("mnist_read_mpi.R") # reads blocks of rows
-source("../code_3/flexiblas_setup.R")
-setback("OPENBLAS")
-setthreads(2)
+flexiblas::flexiblas_switch(flexiblas_load_backend(backend))
+flexiblas::flexiblas_set_num_threads(2)
 suppressMessages(library(pbdDMAT))
 suppressMessages(library(pbdML))
 init.grid()
