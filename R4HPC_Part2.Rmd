@@ -214,6 +214,13 @@ background-size: 20%
 * **comm.print()** and **comm.cat()** print by default from rank 0 only, with options to print from any or all ranks.
 
 ---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide6.png)
+background-position: bottom
+background-size: 90%
+
+## Distributed Programming Works in Shared Memory
+
+---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
@@ -257,13 +264,6 @@ bcast.r  chunk.r  cov.r  gather-named.r  gather.r  gather-unequal.r  hello-p.r  
 .footnote[
 $^*$ Note that running long or large jobs on login nodes is strongly discouraged
 ]
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide6.png)
-background-position: bottom
-background-size: 90%
-
-## Distributed Programming Works in Shared Memory
-
 ---
 # Shared Memory - MPI or fork?
 
