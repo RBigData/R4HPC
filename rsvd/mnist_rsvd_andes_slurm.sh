@@ -12,7 +12,7 @@
 ## above reservation valid only during workshop on andes (remove elsewhere)
 
 ## assumes this repository was cloned in your home area
-cd ~/R4HPC/mpi
+cd ~/R4HPC/rsvd
 pwd
 
 ## modules are specific to andes.olcf.ornl.gov
