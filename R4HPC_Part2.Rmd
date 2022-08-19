@@ -253,7 +253,7 @@ background-size: 20%
 ---
 ## Hands on Session 5: other short MPI codes
 
-bcast.r  chunk.r  cov.r  gather-named.r  gather.r  gather-unequal.r  hello-p.r  hello.r  map-reduce.r  mcsim.r  ols.r  qr-cop.r  rank.r  reduce-mat.r  timer.r
+bcast.r  chunk.r comm_split.R  cov.r  gather-named.r  gather.r  gather-unequal.r  hello-p.r  hello.r  map-reduce.r  mcsim.r  ols.r  qr-cop.r  rank.r  reduce-mat.r  timer.r
 
 * These short codes only use `pbdMPI` and can run on a laptop in a terminal window if you installed OpenMPI
 * On the clusters these can run on a login node with a small $^*$ number of ranks
@@ -317,7 +317,7 @@ knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
     from https://arxiv.org/pdf/0912.3599.pdf
 
 ---
-## Randomized sketching algorithms
+## Hands on Session rsvd: Randomized sketching algorithms
 <br><br>
 Fast new alternatives to classical numerical linear algebra computations. 
 
@@ -327,16 +327,11 @@ Guarantees are given with probability statements instead of classical error anal
 <br> <br>
 Martinsson, P., & Tropp, J. (2020). Randomized numerical linear algebra: Foundations and algorithms. Acta Numerica, 29, 403-572. [https://doi.org/10.48550/arXiv.2002.01387](https://doi.org/10.48550/arXiv.2002.01387)
 ---
-`mnist_rsvd.R`
-```{r eval=FALSE, code = readLines("rsvd/mnist_rsvd.R")}
-```
-
----
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
 
-## Randomized SVD via subspace embedding
+## Hands on Session rsvd: Randomized SVD via subspace embedding
 Given an $n\times p$ matrix $X$ and $k = r + 10$, where $r$ is the *effective rank* of $X$:  
 1. Construct a $p\times k$ random matrix $\Omega$
 2. Form $Y = X \Omega$
@@ -349,24 +344,9 @@ $Q$ is an orthogonal basis for the columnspace of $Y$, which with high probabili
 4. Truncate factorization to $r$ columns
 
 ---
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-
-## Randomized SVD via subspace embedding
-Given an $n\times p$ matrix $X$ and $k = r + 10$, where $r$ is the *effective rank* of $X$:  
-1. Construct a $p\times k$ random matrix $\Omega$
-2. Let $Y_0 = \Omega$
-3. For $i$ in $1:q$
-   2. Decompose $Y_{i-1} = Q_{i}R_{i}$
-   1. $Y_i = X(X^TQ_i)$
-4. Decompose $Y_q = QR$
-
-$Q$ is an orthogonal basis for the columnspace of $Y$, which with high probability is the columnspace of $X$. To get the SVD of $X$:  
-1. Compute $C= Q^TX$
-2. Decompose $C = \hat{U}\Sigma V^T$
-3. Compute $U = Q\hat{U}$
-4. Truncate factorization to $r$ columns
+`mnist_rsvd.R`
+```{r eval=FALSE, code = readLines("rsvd/mnist_rsvd.R")}
+```
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
@@ -386,4 +366,7 @@ knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
 .footnote[
 Naming is a "tongue-in-cheek" play on 'Shaquille' 'ONeal' ('Shaq') and the film 'Kazaam'
 ]
+
+---
+# Hands on Session `kazaam`
 
