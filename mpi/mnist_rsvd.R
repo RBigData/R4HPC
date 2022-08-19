@@ -1,5 +1,5 @@
 source("mnist_read_mpi.R") # reads blocks of rows
-flexiblas::flexiblas_switch(flexiblas_load_backend(backend))
+flexiblas::flexiblas_switch(flexiblas::flexiblas_load_backend("OPENBLAS"))
 flexiblas::flexiblas_set_num_threads(2)
 suppressMessages(library(pbdDMAT))
 suppressMessages(library(pbdML))
