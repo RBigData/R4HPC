@@ -2,7 +2,7 @@
 #SBATCH -J hello
 #SBATCH -A CSC489
 #SBATCH -p batch
-#SBATCH --nodes=2
+#SBATCH --nodes=4
 #SBATCH --mem=0
 #SBATCH -t 00:00:10
 #SBATCH -e ./hello.e
@@ -31,6 +31,7 @@ time mpirun --map-by ppr:2:node Rscript mnist_rsvd.R
 time mpirun --map-by ppr:4:node Rscript mnist_rsvd.R
 time mpirun --map-by ppr:8:node Rscript mnist_rsvd.R
 time mpirun --map-by ppr:16:node Rscript mnist_rsvd.R
+time mpirun --map-by ppr:32:node Rscript mnist_rsvd.R
 
 
 
