@@ -31,7 +31,7 @@ time mpirun --map-by ppr:2:node Rscript mnist_rsvd.R
 time mpirun --map-by ppr:4:node Rscript mnist_rsvd.R
 time mpirun --map-by ppr:8:node Rscript mnist_rsvd.R
 time mpirun --map-by ppr:16:node Rscript mnist_rsvd.R
-time mpirun --map-by ppr:32:node Rscript mnist_rsvd.R
+
 
 
 
