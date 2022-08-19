@@ -1,9 +1,3 @@
-#!/bin/bash
-
-## assumes this repository was cloned in your home area
-cd ~/R4HPC/code_4
-pwd
-
 ## modules are specific to andes.olcf.ornl.gov
 module load openblas/0.3.17-omp
 module load hdf5

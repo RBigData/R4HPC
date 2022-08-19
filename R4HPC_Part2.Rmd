@@ -87,7 +87,7 @@ knitr::include_graphics("pics/01-intro/BatchRonCluster.jpg")
 ## Section I: Environment and Workflow
 ## Section II: Parallel Hardware and Software Overview
 ## Section III: Shared Memory Tools
-## Section IV: **Distributed Memory Tools**
+## <mark>Section IV:</mark> **Distributed Memory Tools**
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7distributed.jpg)
@@ -243,8 +243,20 @@ background-size: 20%
 `mpi_shorts/chunk.r`
 ```{r eval = FALSE, code = readLines("mpi_shorts/chunk.r")}
 ```
+---
+## Hands on Session 5: other short MPI codes
 
+bcast.r  chunk.r  cov.r  gather-named.r  gather.r  gather-unequal.r  hello-p.r  hello.r  map-reduce.r  mcsim.r  ols.r  qr-cop.r  rank.r  reduce-mat.r  timer.r
 
+* These short codes only use `pbdMPI` and can run on a laptop in a terminal window if you installed OpenMPI
+* On the clusters these can run on a login node with a small $^*$ number of ranks
+* Wile in the `mpi_shorts` directory, run the following
+   * `source ../code_4/modules_MACHINE.sh`
+   * `mpirun -np 4 Rscript your_script.r`
+
+.footnote[
+$^*$ Note that running long or large jobs on login nodes is strongly discouraged
+]
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide6.png)
 background-position: bottom
