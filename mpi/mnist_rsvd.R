@@ -1,4 +1,7 @@
 source("mnist_read_mpi.R") # reads blocks of rows
+source("../code_3/flexiblas_setup.R")
+setback("OPENBLAS")
+setthreads(2)
 suppressMessages(library(pbdDMAT))
 suppressMessages(library(pbdML))
 init.grid()
