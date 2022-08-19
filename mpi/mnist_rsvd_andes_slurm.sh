@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -J hello
-#SBATCH -A CSC489
+#SBATCH -A gen011
 #SBATCH -p batch
 #SBATCH --nodes=4
 #SBATCH --mem=0
