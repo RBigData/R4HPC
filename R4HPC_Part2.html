@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Using R on HPC Clusters      Part 2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="George Ostrouchov" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="my-theme.css" type="text/css" />
+    <link rel="stylesheet" href="widths.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: right, inverse, title-slide
+
+.title[
+# Using R on HPC Clusters      Part 2
+]
+.author[
+### George Ostrouchov
+]
+.institute[
+### Oak Ridge National Laboratory
+]
+.date[
+### <br><br><br><br><br><br> August 19, 2022 <br><br><span style="font-size: 50%;"> Background Image: FRONTIER, First Top500 exascale system, announced June 2022</span>
+]
+
+---
+
+
+
+# Get this presentation: 
+`git clone https://github.com/RBigData/R4HPC.git`
+
+* Open &lt;br&gt;&lt;br&gt;`R4HPC_Part2.html` &lt;br&gt;&lt;br&gt; in your web browser (help ? toggle)
+&lt;br&gt;
+
+Slack workspace link for this workshop was emailed to you. 
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+
+*Many thanks to my colleagues and former colleagues who contributed to the software and ideas presented here. See the RBigData Organization on Github: https://github.com/RBigData. Also, many thanks to all R developers of packages used in this presentation.*
+
+*Slides are made with the xaringan R package. It is an R Markdown extension based on the JavaScript library remark.js.*
+
+---
+# Today's Package Installs
+
+## See `R4HPC/code_4` R script and shell scripts for your machine
+
+---
+## Running MPI on a Laptop
+
+macOS in a Terminal window:
+
+* `brew install openmpi`
+* `mpirun -np 4 Rscript your_spmd_code.R`
+
+Windows
+
+* Web Page: https://docs.microsoft.com/en-us/message-passing-interface/microsoft-mpi
+* Download: https://www.microsoft.com/en-us/download/details.aspx?id=100593
+* `pbdMPI` has a Windows binary on CRAN
+
+---
+## Revisit `hello_balance.R` in `code_1`
+
+
+```r
+suppressMessages(library(pbdMPI))
+comm.print(sessionInfo())
+
+## get node name
+host = system("hostname", intern = TRUE)
+
+mc.function = function(x) {
+    Sys.sleep(1) # replace with your function for mclapply cores here
+    Sys.getpid() # returns process id
+}
+
+## Compute how many cores per R session are on this node
+local_ranks_query = "echo $OMPI_COMM_WORLD_LOCAL_SIZE"
+ranks_on_my_node = as.numeric(system(local_ranks_query, intern = TRUE))
+cores_on_my_node = parallel::detectCores()
+cores_per_R = floor(cores_on_my_node/ranks_on_my_node)
+cores_total = allreduce(cores_per_R)  # adds up over ranks
+
+## Run mclapply on allocated cores to demonstrate fork pids
+my_pids = parallel::mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
+my_pids = do.call(paste, my_pids) # combines results from mclapply
+##
+## Same cores are shared with OpenBLAS (see flexiblas package)
+##            or for other OpenMP enabled codes outside mclapply.
+## If BLAS functions are called inside mclapply, they compete for the
+##            same cores: avoid or manage appropriately!!!
+
+## Now report what happened and where
+msg = paste0("Hello World from rank ", comm.rank(), " on host ", host,
+             " with ", cores_per_R, " cores allocated\n",
+             "            (", ranks_on_my_node, " R sessions sharing ",
+             cores_on_my_node, " cores on this host node).\n",
+             "      pid: ", my_pids, "\n")
+comm.cat(msg, quiet = TRUE, all.rank = TRUE)
+
+
+comm.cat("Total R sessions:", comm.size(), "Total cores:", cores_total, "\n",
+         quiet = TRUE)
+comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
+         "       ranks (R sessions) per node: OMPI_COMM_WORLD_LOCAL_SIZE\n",
+         "       pid to core map changes frequently during mclapply\n",
+         quiet = TRUE)
+
+finalize()
+```
+
+---
+
+## Working with a remote cluster using R
+
+&lt;img src="pics/01-intro/Workflow.jpg" height="500" /&gt;
+
+---
+background-image: url(pics/01-intro//WorkflowRunning.jpg)
+background-position: top right
+background-size: 20%
+
+## Running Distributed on a Cluster
+
+&lt;img src="pics/01-intro/BatchRonCluster.jpg" height="500" /&gt;
+
+---
+
+## Section I: Environment and Workflow
+## Section II: Parallel Hardware and Software Overview
+## Section III: Shared Memory Tools
+## &lt;mark&gt;Section IV:&lt;/mark&gt; **Distributed Memory Tools**
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7distributed.jpg)
+background-position: bottom
+background-size: 90%
+
+# Distributed Memory Tools
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: bottom
+background-size: 90%
+
+# Message Passing Interface (MPI)
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: bottom
+background-size: 90%
+
+# Distributed Computing and MPI
+
+* Must be 
+
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+# pbdR Project
+&lt;img src="pics/01-intro/pbdRlib.jpg" height="180" style="display: block; margin: auto auto auto 0;" /&gt;
+* Bridge HPC with high-productivity of R: Expressive for data and modern statistics
+
+* Keep syntax identical to R, when possible
+
+* Software reuse philosophy:
+
+   * Don't reinvent the wheel when possible
+   * Introduce HPC standards with R flavor
+   * Use scalable HPC libraries with R convenience
+
+* Simplify and use R intelligence where possible
+???
+Using HPC concepts and libraries 
+* Benefits the R user by knowing standard components of HPC
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+&lt;img src="pics/01-intro/pbdRlib.jpg" height="80" style="display: block; margin: auto auto auto 0;" /&gt;
+# Package `pbdMPI`
+
+* Specializes in SPMD programming for HPC clusters
+   * Manages printing from ranks
+   * Provides chunking options
+   * Provides communicator splits for multilevel parallelism
+   * In situ capability to process data from other MPI codes without copy 
+
+* A derivation and rethinking of the `Rmpi` package aimed at HPC clusters
+
+   * Simplified interface with fewer parameters (using R's S4 methods)
+   * Faster for matrix and array data - no serialization
+
+
+???
+
+* Prefer pbdMPI over Rmpi due to simplification and speed
+   * No serialization for arrays and vectors
+* Drops spawning a cluster
+  * Because a client-server relationship is more appropriate
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
+## Single Program Multiple Data (SPMD)
+
+* One code and a parallel mindset
+
+* A generalization of a serial code
+
+* Many rank-aware operations are automated
+
+* Collective operations are high level and easy to learn
+
+* Explicit point-to-point communications are an advanced topic
+
+* No manager, it is all cooperation
+
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
+# High-level Collective Communications
+`$$\bf A = \sum_{i=1}^nX_i$$`
+#### `pbdMPI`: `\(\qquad\)` **A = reduce(X)** `\(\qquad\)` `\(\qquad\)` `\(\qquad\)` **A = allreduce(X**)
+`$$\bf A = \left[ X_1 | X_2 | \cdots | X_n \right]$$`
+#### `pbdMPI`: `\(\qquad\)` **A = gather(X)** `\(\qquad\)` `\(\qquad\)` `\(\qquad\)` **A = allgather(X**)
+&lt;img src="pics/01-intro/RHistory3sub.png" height="250" style="display: block; margin: auto auto auto 0;" /&gt;
+???
+* Powerful: communication and reduction is highly parallel
+   * that's why it beats Spark/MapReduce
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
+## Functions to Facilitate SPMD Programming
+
+* **comm.chunk()** splits a number into chunks in various ways and various formats. Tailored for SPMD programming, returning correct (usually different) results to each rank. 
+
+* **comm.set.seed()** sets the seed of a parallel RNG. If diff = FALSE, then all ranks generate the same stream. Otherwise, ranks generate different streams.
+
+* **comm.print()** and **comm.cat()** print by default from rank 0 only, with options to print from any or all ranks.
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
+## Hands on Session 5: Hello MPI Ranks
+
+`code_5/hello_world.R`
+
+```r
+suppressMessages(library(pbdMPI))
+
+my_rank = comm.rank()
+nranks = comm.size()
+msg = paste0("Hello World! My name is Rank", my_rank,
+             ". We are ", nranks, " identical siblings.")
+cat(msg, "\n")
+
+finalize()
+```
+
+### **Rank** distinguishes the parallel copies of the same code
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
+## Hands on Session 5: Random Forest with MPI
+
+`code_5/rf_mpi.R`
+
+```r
+suppressPackageStartupMessages(library(randomForest))
+data(LetterRecognition, package = "mlbench")
+*library(pbdMPI, quiet = TRUE)
+*comm.set.seed(seed = 7654321, diff = FALSE)
+
+n = nrow(LetterRecognition)
+n_test = floor(0.2 * n)
+i_test = sample.int(n, n_test)
+train = LetterRecognition[-i_test, ]
+*test = LetterRecognition[i_test, ][comm.chunk(n_test, form = "vector"), ]
+
+*comm.set.seed(seed  = 1234, diff = TRUE)
+*my.rf = randomForest(lettr ~ ., train, ntree = comm.chunk(500), norm.votes = FALSE)
+*rf.all = allgather(my.rf)
+*rf.all = do.call(combine, rf.all)
+pred = as.vector(predict(rf.all, test))
+
+*correct = allreduce(sum(pred == test$lettr))
+comm.cat("Proportion Correct:", correct/(n_test), "\n")
+
+*finalize()
+```
+
+
+---
+## Hands on Session 5: `comm.chunk()`
+
+`mpi_shorts/chunk.r`
+
+```r
+library( pbdMPI, quiet = TRUE )
+
+my.rank = comm.rank( )
+
+k = comm.chunk( 10 )
+comm.cat( my.rank, ":", k, "\n", all.rank = TRUE, quiet = TRUE)
+
+k = comm.chunk( 10 , form = "vector")
+comm.cat( my.rank, ":", k, "\n", all.rank = TRUE, quiet = TRUE)
+
+k = comm.chunk( 10 , form = "vector", type = "equal")
+comm.cat( my.rank, ":", k, "\n", all.rank = TRUE, quiet = TRUE)
+
+finalize( )
+```
+---
+## Hands on Session 5: other short MPI codes
+
+bcast.r  chunk.r  cov.r  gather-named.r  gather.r  gather-unequal.r  hello-p.r  hello.r  map-reduce.r  mcsim.r  ols.r  qr-cop.r  rank.r  reduce-mat.r  timer.r
+
+* These short codes only use `pbdMPI` and can run on a laptop in a terminal window if you installed OpenMPI
+* On the clusters these can run on a login node with a small `\(^*\)` number of ranks
+* Wile in the `mpi_shorts` directory, run the following
+   * `source ../code_4/modules_MACHINE.sh`
+   * `mpirun -np 4 Rscript your_script.r`
+
+.footnote[
+`\(^*\)` Note that running long or large jobs on login nodes is strongly discouraged
+]
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide6.png)
+background-position: bottom
+background-size: 90%
+
+## Distributed Programming Works in Shared Memory
+
+---
+# Shared Memory - MPI or fork?
+
+*  fork via `mclapply()` + `do.call()` combine  
+&lt;img src="pics/mpi/fork.jpg" height="150" /&gt;
+* MPI replicated data + `allreduce()`  
+&lt;img src="pics/mpi/mpi-replicate.png" height="150" /&gt;
+
+* MPI chunked data + `allreduce()`  
+&lt;img src="pics/mpi/mpi-partition.png" height="58" /&gt;
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+&lt;img src="pics/01-intro/pbdRlib.jpg" height="100" style="display: block; margin: auto auto auto 0;" /&gt;
+# Package `pbdDMAT`
+
+* ScaLAPACK: Scalable LAPACK - Distributed version of LAPACK (uses PBLAS/BLAS but not LAPACK)
+
+   * 2d Block-Cyclic data layout - mostly automated in `pbdDMAT` package
+   
+   * BLACS: Communication collectives for distributed matrix computation
+   * PBLAS: BLAS - distributed BLAS (uses shared memory BLAS within blocks)
+
+* Most matrix operations in R code are identical to serial through overloading operators and `ddmatrix` class
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+&lt;img src="pics/01-intro/pbdRlib.jpg" height="100" style="display: block; margin: auto auto auto 0;" /&gt;
+# Package `pbdML`
+
+* A demonstration of `pbdDMAT` package capabilities
+
+* Includes
+  * Randomized SVD
+  * Randomized principal components analysis
+  * Robust Principal Component Analysis?" 
+    from https://arxiv.org/pdf/0912.3599.pdf
+
+---
+## Randomized sketching algorithms
+&lt;br&gt;&lt;br&gt;
+Fast new alternatives to classical numerical linear algebra computations. 
+
+&lt;br&gt;
+Guarantees are given with probability statements instead of classical error analysis.
+
+&lt;br&gt; &lt;br&gt;
+Martinsson, P., &amp; Tropp, J. (2020). Randomized numerical linear algebra: Foundations and algorithms. Acta Numerica, 29, 403-572. [https://doi.org/10.48550/arXiv.2002.01387](https://doi.org/10.48550/arXiv.2002.01387)
+---
+`mnist_rsvd.R`
+
+```r
+source("mnist_read_mpi.R") # reads blocks of rows
+suppressMessages(library(pbdDMAT))
+suppressMessages(library(pbdML))
+init.grid()
+
+## construct block-cyclic ddmatrix
+bldim = c(allreduce(nrow(my_train), op = "max"), ncol(my_train))
+gdim = c(allreduce(nrow(my_train), op = "sum"), ncol(my_train))
+dmat_train = new("ddmatrix", Data = my_train, dim = gdim, 
+                 ldim = dim(my_train), bldim = bldim, ICTXT = 2)
+cyclic_train = as.blockcyclic(dmat_train)
+
+comm.print(comm.size())
+t1 = as.numeric(Sys.time())
+rsvd_train = rsvd(cyclic_train, k = 10, q = 3, retu = FALSE, retv = FALSE)
+t2 = as.numeric(Sys.time())
+t1 = allreduce(t1, op = "min")
+t2 = allreduce(t2, op = "max")
+comm.cat("Time:", t2 - t1, "seconds\n")
+
+comm.cat("rsvd top 10 singular values:", rsvd_train$d, "\n")
+
+finalize()
+```
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
+## Randomized SVD via subspace embedding
+Given an `\(n\times p\)` matrix `\(X\)` and `\(k = r + 10\)`, where `\(r\)` is the *effective rank* of `\(X\)`:  
+1. Construct a `\(p\times k\)` random matrix `\(\Omega\)`
+2. Form `\(Y = X \Omega\)`
+3. Decompose `\(Y = QR\)`
+
+`\(Q\)` is an orthogonal basis for the columnspace of `\(Y\)`, which with high probability is the columnspace of `\(X\)`. To get the SVD of `\(X\)`:  
+1. Compute `\(C= Q^TX\)`
+2. Decompose `\(C = \hat{U}\Sigma V^T\)`
+3. Compute `\(U = Q\hat{U}\)`
+4. Truncate factorization to `\(r\)` columns
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
+## Randomized SVD via subspace embedding
+Given an `\(n\times p\)` matrix `\(X\)` and `\(k = r + 10\)`, where `\(r\)` is the *effective rank* of `\(X\)`:  
+1. Construct a `\(p\times k\)` random matrix `\(\Omega\)`
+2. Let `\(Y_0 = \Omega\)`
+3. For `\(i\)` in `\(1:q\)`
+   2. Decompose `\(Y_{i-1} = Q_{i}R_{i}\)`
+   1. `\(Y_i = X(X^TQ_i)\)`
+4. Decompose `\(Y_q = QR\)`
+
+`\(Q\)` is an orthogonal basis for the columnspace of `\(Y\)`, which with high probability is the columnspace of `\(X\)`. To get the SVD of `\(X\)`:  
+1. Compute `\(C= Q^TX\)`
+2. Decompose `\(C = \hat{U}\Sigma V^T\)`
+3. Compute `\(U = Q\hat{U}\)`
+4. Truncate factorization to `\(r\)` columns
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+&lt;img src="pics/01-intro/pbdRlib.jpg" height="100" style="display: block; margin: auto auto auto 0;" /&gt;
+# Package `kazaam`
+
+* Distributed methods for tall matrices (and some for wide matrices) that exploit the short dimension for speed and long dimension for parallelism
+
+* Tall matrices, `shaq` class, are chunked by blocks of rows adn wide matrices, `tshaq` class, by blocks of columns
+
+* Much like `pbdDMAT`, most matrix operations in R code are identical to serial through overloading operators and `shaq` `S4` class
+
+.footnote[
+Naming is a "tongue-in-cheek" play on 'Shaquille' 'ONeal' ('Shaq') and the film 'Kazaam'
+]
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+<style>
+  .logo {
+    background-image: url(pics/ORNL_Two-line_color.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    bottom: -1em;
+    left: 1em;
+    width: 110px;
+    height: 64px;
+    z-index: 0;
+  }
+</style>
+  
+  <script>
+  document
+.querySelectorAll(
+  '.remark-slide-content' +
+    ':not(.title-slide)' +
+    // add additional classes to exclude here, e.g.
+  // ':not(.inverse)' +
+    ':not(.hide-logo)'
+)
+.forEach(el => {
+  el.innerHTML += '<div class="logo"></div>';
+});
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
