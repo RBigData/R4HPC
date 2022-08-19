@@ -39,6 +39,22 @@ Slack workspace link for this workshop was emailed to you.
 *Slides are made with the xaringan R package. It is an R Markdown extension based on the JavaScript library remark.js.*
 
 ---
+## Running MPI on a Laptop
+
+macOS in a Terminal window:
+
+* `brew install openmpi`
+* `mpirun -np 4 Rscript your_spmd_code.R`
+
+Windows
+
+* Web Page: https://docs.microsoft.com/en-us/message-passing-interface/microsoft-mpi
+* Download: https://www.microsoft.com/en-us/download/details.aspx?id=100593
+* `pbdMPI` has a Windows binary on CRAN
+
+
+
+---
 
 ## Working with a remote cluster using R
 
@@ -171,6 +187,23 @@ $$\bf A = \left[ X_1 | X_2 | \cdots | X_n \right]$$
 ```{r echo=FALSE, out.height=250, fig.align='left'}
 knitr::include_graphics("pics/01-intro/RHistory3sub.png")
 ```
+???
+* Powerful: communication and reduction is highly parallel
+   * that's why it beats Spark/MapReduce
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+
+## Functions to Facilitate SPMD Programming
+
+* **comm.chunk()** splits a number into chunks in various ways and various formats. Tailored for SPMD programming, returning correct (usually different) results to each rank. 
+
+* **comm.set.seed()** sets the seed of a parallel RNG. If diff = FALSE, then all ranks generate the same stream. Otherwise, ranks generate different streams.
+
+* **comm.print()** and **comm.cat()** print by default from rank 0 only, with options to print from any or all ranks.
+
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
@@ -194,38 +227,15 @@ background-size: 20%
 ```{r eval = FALSE, code = readLines("code_5/rf_mpi.R")}
 ```
 
----
-# comm.chunk()
 
 ---
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
+## Hands on Session 5: `comm.chunk()`
 
-# Demo ... <br><br> MPI communication in SPMD programming
-
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-# pbdR - ScaLAPACK - MPI
-.pull-left[
-```{r echo=FALSE, out.height=100, fig.align='left'}
-knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
+`mpi_shorts/chunk.r`
+```{r eval = FALSE, code = readLines("mpi_shorts/chunk.r")}
 ```
-]
-.pull-right[
-**pbdr.org**
-]
 
-* ScaLAPACK: Scalable LAPACK - Distributed version of LAPACK (uses PBLAS/BLAS but not LAPACK)
 
-   * 2d Block-Cyclic data layout - mostly automated in `pbdDMAT` package
-   
-   * BLACS: Communication collectives for distributed matrix computation
-   * PBLAS: BLAS - distributed BLAS (uses shared memory BLAS within blocks)
-
-   * `pbdDMAT` and `pbdML` R packages - most matrix operations identical to serial through overloading operators and `ddmatrix` class
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide6.png)
 background-position: bottom
@@ -235,17 +245,55 @@ background-size: 90%
 
 ---
 # Shared Memory - MPI or fork?
-```{r echo=FALSE, out.height=150}
-knitr::include_graphics("pics/mpi/mpi-replicate.png")
-```
-```{r echo=FALSE, out.height=58}
-knitr::include_graphics("pics/mpi/mpi-partition.png")
-```
-<br>
+
+*  fork via `mclapply()` + `do.call()` combine  
 ```{r echo=FALSE, out.height=150}
 knitr::include_graphics("pics/mpi/fork.jpg")
 ```
+* MPI replicated data + `allreduce()`  
+```{r echo=FALSE, out.height=150}
+knitr::include_graphics("pics/mpi/mpi-replicate.png")
+```
 
+* MPI chunked data + `allreduce()`  
+```{r echo=FALSE, out.height=58} 
+knitr::include_graphics("pics/mpi/mpi-partition.png")
+```
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+```{r echo=FALSE, out.height=100, fig.align='left'}
+knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
+```
+# Package `pbdDMAT`
+
+* ScaLAPACK: Scalable LAPACK - Distributed version of LAPACK (uses PBLAS/BLAS but not LAPACK)
+
+   * 2d Block-Cyclic data layout - mostly automated in `pbdDMAT` package
+   
+   * BLACS: Communication collectives for distributed matrix computation
+   * PBLAS: BLAS - distributed BLAS (uses shared memory BLAS within blocks)
+
+* Most matrix operations R code identical to serial through overloading operators and `ddmatrix` class
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+```{r echo=FALSE, out.height=100, fig.align='left'}
+knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
+```
+# Package `pbdML`
+
+* A demonstration of the capabilities of the pbdDMAT package
+
+* Includes
+  * Randomized SVD
+  * Randomized principal components analysis
+  * Robust Principal Component Analysis?" 
+    from https://arxiv.org/pdf/0912.3599.pdf
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)

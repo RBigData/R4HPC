@@ -1,6 +1,6 @@
 suppressPackageStartupMessages(library(randomForest))
 data(LetterRecognition, package = "mlbench")
-suppressMessages(library(pbdMPI))                #<<
+library(pbdMPI, quiet = TRUE)                #<<
 comm.set.seed(seed = 7654321, diff = FALSE)      #<<
 
 n = nrow(LetterRecognition)
