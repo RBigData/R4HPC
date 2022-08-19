@@ -52,7 +52,11 @@ Windows
 * Download: https://www.microsoft.com/en-us/download/details.aspx?id=100593
 * `pbdMPI` has a Windows binary on CRAN
 
+---
+## Revisit `hello_balance.R` in `code_1`
 
+```{r eval = FALSE, code = readr::read_lines("code_1/hello_balance.R", skip=8),  }
+```
 
 ---
 
