@@ -25,7 +25,7 @@ H5close()
 
 dim(my_train) = c(prod(dims[-length(dims)]), length(my_ind))
 my_train = t(my_train)  # row-major write and column-major read
-my_train = rbind(my_train, my_train, my_train, my_train)
+for(i in 1:4) my_train = rbind(my_train, my_train) # quick larger data
 comm.cat("Local dim at rank", comm.rank(), ":", dim(my_train), "\n")
 total_rows = allreduce(nrow(my_train))
 comm.cat("Total dim :", total_rows, ncol(my_train), "\n")
