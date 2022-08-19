@@ -276,7 +276,7 @@ knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
    * BLACS: Communication collectives for distributed matrix computation
    * PBLAS: BLAS - distributed BLAS (uses shared memory BLAS within blocks)
 
-* Most matrix operations R code identical to serial through overloading operators and `ddmatrix` class
+* Most matrix operations in R code are identical to serial through overloading operators and `ddmatrix` class
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
@@ -287,49 +287,13 @@ knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
 ```
 # Package `pbdML`
 
-* A demonstration of the capabilities of the pbdDMAT package
+* A demonstration of `pbdDMAT` package capabilities
 
 * Includes
   * Randomized SVD
   * Randomized principal components analysis
   * Robust Principal Component Analysis?" 
     from https://arxiv.org/pdf/0912.3599.pdf
-
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-
-## Constructing a Distributed Matrix from Data
-
-* Each MPI rank reads different data in a contiguous block
-
-.pull-left[
-$$\large\left[\begin{array}{ccc}a_{11}&a_{12}&a_{13}\\[1ex]a_{21}&a_{22}&a_{23}\\[1ex] a_{31}&a_{32}&a_{33}\end{array}\right]$$  
-$$\large\left[\begin{array}{ccc}a_{11}&a_{12}&a_{13}\\[1ex]a_{21}&a_{22}&a_{23}\\[1ex] a_{31}&a_{32}&a_{33}\end{array}\right]$$
-]
-.pull-right[
-$$\qquad$$  
-
-$\large a_{11}\;a_{12}\;a_{13}\;a_{21}\;a_{22}\;a_{23}\;a_{31}\;a_{32}\;a_{33}$  
-
-C, C++, NumPy $\quad$ **Row-Block**
-
-$$\qquad$$  
-$$\qquad$$  
-$\large a_{11}\;a_{21}\;a_{31}\;a_{12}\;a_{22}\;a_{32}\;a_{13}\;a_{23}\;a_{33}$  
-
-Fortran, R, Matlab  $\quad$ **Column-Block**
-]
-
-* Each MPI rank adds attributes for global context
-
----
-background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: top right
-background-size: 20%
-
-# Demo ... <br><br> ScaLAPACK via pbdDMAT
 
 ---
 ## Randomized sketching algorithms
@@ -383,5 +347,22 @@ $Q$ is an orthogonal basis for the columnspace of $Y$, which with high probabili
 3. Compute $U = Q\hat{U}$
 4. Truncate factorization to $r$ columns
 
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+```{r echo=FALSE, out.height=100, fig.align='left'}
+knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
+```
+# Package `kazaam`
 
+* Distributed methods for tall matrices (and some for wide matrices) that exploit the short dimension for speed and long dimension for parallelism
+
+* Tall matrices, `shaq` class, are chunked by blocks of rows adn wide matrices, `tshaq` class, by blocks of columns
+
+* Much like `pbdDMAT`, most matrix operations in R code are identical to serial through overloading operators and `shaq` `S4` class
+
+.footnote[
+Naming is a "tongue-in-cheek" play on 'Shaquille' 'ONeal' ('Shaq') and the film 'Kazaam'
+]
 
