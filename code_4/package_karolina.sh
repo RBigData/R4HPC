@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd ~/R4HPC/code_0
+cd ~/R4HPC/code_4
 pwd
 
 ## module names can vary on different platforms

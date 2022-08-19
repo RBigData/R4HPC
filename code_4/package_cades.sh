@@ -1,5 +1,5 @@
 
-cd ~/R4HPC/code_0
+cd ~/R4HPC/code_4
 pwd
 
 ## modules are specific to or-slurm-login.ornl.gov (CADES SHPC condos)

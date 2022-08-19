@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## assumes this repository was cloned in your home area
-cd ~/R4HPC/code_0
+cd ~/R4HPC/code_4
 pwd
 
 ## modules are specific to andes.olcf.ornl.gov
