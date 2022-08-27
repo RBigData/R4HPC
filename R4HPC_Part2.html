@@ -153,16 +153,27 @@ background-position: bottom
 background-size: 90%
 
 # Message Passing Interface (MPI)
+
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
-background-position: bottom
-background-size: 90%
+background-position: top right
+background-size: 20%
 
-# Distributed Computing and MPI
+## Single Program Multiple Data (SPMD)
 
-* Must be 
+* N instances of the same code cooperate
+  * Each of the N instances has `rank`, {0, . . ., N-1}
+  * The `rank` determines any differences in work
+  * Instances run asynchronously 
 
+* SPMD parallelization is a generalization of the serial code
+  * Many rank-aware operations are automated
+  * Collective operations are high level and easy to learn
+  * Explicit point-to-point communications are an advanced topic
+  * Multilevel parallelism is possible
 
+* Typically no manager, it is all cooperation
+  
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
@@ -209,38 +220,39 @@ background-size: 20%
    * No serialization for arrays and vectors
 * Drops spawning a cluster
   * Because a client-server relationship is more appropriate
-
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
 
-## Single Program Multiple Data (SPMD)
+## `pbdMPI`: High-level Collective Communications
 
-* One code and a parallel mindset
+Each of these operations is performed across a `communicator` of ranks. Simplest one is all ranks but rank arrays can be used for multilevel collectives.
 
-* A generalization of a serial code
+* **`reduce()`** Reduces a set of same-size distributed vectors or arrays with an operation (+ is default). Fast because both communication and reduction are parallel and no serialization is needed.
 
-* Many rank-aware operations are automated
+* **`allreduce()`** Same as `reduce()` except all ranks in a `comm` get the result
 
-* Collective operations are high level and easy to learn
+* **`gather()`** Gathers a set of distributed objects 
 
-* Explicit point-to-point communications are an advanced topic
+* **`allgather()`** Same as `gather()` except all ranks in a `comm` get the result
 
-* No manager, it is all cooperation
+* **`bcast()`** Broadcasts an object from one rank to all in its `comm`
 
+* **`scatter()`** Broadcasts different pieces of an object from one rank to all in its `comm`
 
+* **`barrier()`** Waits on all ranks in a `comm` before proceeding 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
 
-# High-level Collective Communications
-`$$\bf A = \sum_{i=1}^nX_i$$`
-#### `pbdMPI`: `\(\qquad\)` **A = reduce(X)** `\(\qquad\)` `\(\qquad\)` `\(\qquad\)` **A = allreduce(X**)
-`$$\bf A = \left[ X_1 | X_2 | \cdots | X_n \right]$$`
-#### `pbdMPI`: `\(\qquad\)` **A = gather(X)** `\(\qquad\)` `\(\qquad\)` `\(\qquad\)` **A = allgather(X**)
-&lt;img src="pics/01-intro/RHistory3sub.png" height="250" style="display: block; margin: auto auto auto 0;" /&gt;
+## `pbdMPI`: High-level Collective Operations
+`\(\small \bf A = \sum_{i=1}^nX_i\)` `\(\quad\)` `\(\qquad\)` `\(\qquad\)` **`A = reduce(X)`** `\(\qquad\)` `\(\qquad\)` **`A = allreduce(X)`**  
+
+`\(\small \bf A = \left[ X_1 | X_2 | \cdots | X_n \right]\)` `\(\qquad\)` **`A = gather(X)`** `\(\qquad\)` `\(\qquad\)` **`A = allgather(X)`**
+
+&lt;img src="pics/01-intro/RHistory3sub.png" height="250" style="display: block; margin: auto 0 auto auto;" /&gt;
 ???
 * Powerful: communication and reduction is highly parallel
    * that's why it beats Spark/MapReduce
@@ -250,13 +262,13 @@ background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
 
-## Functions to Facilitate SPMD Programming
+## `pbdMPI`: Functions to Facilitate SPMD Programming
 
-* **comm.chunk()** splits a number into chunks in various ways and various formats. Tailored for SPMD programming, returning correct (usually different) results to each rank. 
+* **`comm.chunk()`** splits a number into chunks in various ways and various formats. Tailored for SPMD programming, returning rank-specific results.
 
-* **comm.set.seed()** sets the seed of a parallel RNG. If diff = FALSE, then all ranks generate the same stream. Otherwise, ranks generate different streams.
+* **`comm.set.seed()`** sets the seed of a parallel RNG. If diff = FALSE, then all ranks generate the same stream. Otherwise, ranks generate different streams.
 
-* **comm.print()** and **comm.cat()** print by default from rank 0 only, with options to print from any or all ranks.
+* **`comm.print()`** and **`comm.cat()`** print by default from rank 0 only, with options to print from any or all ranks.
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide6.png)
@@ -287,6 +299,26 @@ finalize()
 ```
 
 ### **Rank** distinguishes the parallel copies of the same code
+---
+### Hands-on Session 5 - `R4HPC/code_2/rf_serial.R`
+
+```r
+suppressMessages(library(randomForest))
+data(LetterRecognition, package = "mlbench")
+set.seed(seed = 123)
+
+n = nrow(LetterRecognition)
+n_test = floor(0.2 * n)
+i_test = sample.int(n, n_test)
+train = LetterRecognition[-i_test, ]
+test = LetterRecognition[i_test, ]
+
+rf.all = randomForest(lettr ~ ., train, ntree = 500, norm.votes = FALSE)
+pred = predict(rf.all, test)
+
+correct = sum(pred == test$lettr)
+cat("Proportion Correct:", correct/(n_test), "\n")
+```
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
@@ -426,6 +458,8 @@ Given an `\(n\times p\)` matrix `\(X\)` and `\(k = r + 10\)`, where `\(r\)` is t
 4. Truncate factorization to `\(r\)` columns
 
 ---
+# 
+---
 `mnist_rsvd.R`
 
 ```r
@@ -454,6 +488,63 @@ comm.cat("rsvd top 10 singular values:", rsvd_train$d, "\n")
 finalize()
 ```
 
+---
+### Hands-on Sessionrsvd
+
+```r
+rsvd &lt;- function(x, k=1, q=3, retu=TRUE, retvt=TRUE) {
+  
+  n &lt;- ncol(x)
+  
+  if (class(x) == "matrix")
+    Omega &lt;- matrix(runif(n*2L*k), nrow=n, ncol=2L*k)
+* else if (class(x) == "ddmatrix")
+*   Omega &lt;- ddmatrix("runif", nrow=n, ncol=2L*k, bldim=x@bldim, ICTXT=x@ICTXT)
+  
+  Y &lt;- x %*% Omega
+  Q &lt;- qr.Q(qr(Y))
+  
+  for (i in 1:q) {
+    Y &lt;- crossprod(x, Q)
+    Q &lt;- qr.Q(qr(Y))
+    Y &lt;- x %*% Q
+    Q &lt;- qr.Q(qr(Y))
+  }
+  
+  B &lt;- crossprod(Q, x)
+  
+  if (!retu) nu &lt;- 0
+  else nu &lt;- min(nrow(B), ncol(B))
+  
+  if (!retvt) nv &lt;- 0
+  else nv &lt;- min(nrow(B), ncol(B))
+  
+  svd.B &lt;- La.svd(x=B, nu=nu, nv=nv)
+  
+  d &lt;- svd.B$d
+  d &lt;- d[1L:k]
+  
+  # Produce u/vt as desired
+  if (retu) {
+    u &lt;- svd.B$u
+    u &lt;- Q %*% u
+    u &lt;- u[, 1L:k, drop=FALSE]
+  }
+  
+  if (retvt) vt &lt;- svd.B$vt[1L:k, , drop=FALSE]
+  
+  # wrangle return
+  if (retu) {
+    if (retvt) svd &lt;- list(d=d, u=u, vt=vt)
+    else svd &lt;- list(d=d, u=u)
+  } else {
+    if (retvt) svd &lt;- list(d=d, vt=vt)
+    else svd &lt;- list(d=d)
+  }
+  
+  return( svd )
+}
+```
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right

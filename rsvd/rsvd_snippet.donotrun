@@ -1,0 +1,52 @@
+rsvd <- function(x, k=1, q=3, retu=TRUE, retvt=TRUE) {
+  
+  n <- ncol(x)
+  
+  if (class(x) == "matrix")
+    Omega <- matrix(runif(n*2L*k), nrow=n, ncol=2L*k)
+  else if (class(x) == "ddmatrix")  #<<
+    Omega <- ddmatrix("runif", nrow=n, ncol=2L*k, bldim=x@bldim, ICTXT=x@ICTXT) #<<
+  
+  Y <- x %*% Omega
+  Q <- qr.Q(qr(Y))
+  
+  for (i in 1:q) {
+    Y <- crossprod(x, Q)
+    Q <- qr.Q(qr(Y))
+    Y <- x %*% Q
+    Q <- qr.Q(qr(Y))
+  }
+  
+  B <- crossprod(Q, x)
+  
+  if (!retu) nu <- 0
+  else nu <- min(nrow(B), ncol(B))
+  
+  if (!retvt) nv <- 0
+  else nv <- min(nrow(B), ncol(B))
+  
+  svd.B <- La.svd(x=B, nu=nu, nv=nv)
+  
+  d <- svd.B$d
+  d <- d[1L:k]
+  
+  # Produce u/vt as desired
+  if (retu) {
+    u <- svd.B$u
+    u <- Q %*% u
+    u <- u[, 1L:k, drop=FALSE]
+  }
+  
+  if (retvt) vt <- svd.B$vt[1L:k, , drop=FALSE]
+  
+  # wrangle return
+  if (retu) {
+    if (retvt) svd <- list(d=d, u=u, vt=vt)
+    else svd <- list(d=d, u=u)
+  } else {
+    if (retvt) svd <- list(d=d, vt=vt)
+    else svd <- list(d=d)
+  }
+  
+  return( svd )
+}
