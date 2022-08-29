@@ -1,15 +1,13 @@
 #!/bin/bash
-#SBATCH -J hello
+#SBATCH -J rsve
 #SBATCH -A gen011
 #SBATCH -p batch
 #SBATCH --nodes=4
 #SBATCH --mem=0
 #SBATCH -t 00:00:10
-#SBATCH -e ./hello.e
-#SBATCH -o ./hello.o
+#SBATCH -e ./rsve.e
+#SBATCH -o ./rsve.o
 #SBATCH --open-mode=truncate
-#SBATCH --reservation=ost_96
-## above reservation valid only during workshop on andes (remove elsewhere)
 
 ## assumes this repository was cloned in your home area
 cd ~/R4HPC/rsvd
