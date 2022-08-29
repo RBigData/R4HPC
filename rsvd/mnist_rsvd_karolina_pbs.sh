@@ -1,9 +1,9 @@
 #!/bin/bash
-#PBS -N mnist_rsvd
+#PBS -N rsvd
 #PBS -l select=1:mpiprocs=64,walltime=00:10:00
 #PBS -q qexp
-#PBS -e mnist_rsvd.e
-#PBS -o mnist_rsvd.o
+#PBS -e rsvd.e
+#PBS -o rsvd.o
 
 cd ~/ROBUST2022/mpi
 pwd

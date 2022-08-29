@@ -389,8 +389,8 @@ bcast.r  chunk.r comm_split.R  cov.r  gather-named.r  gather.r  gather-unequal.r
 `\(^*\)` Note that running long or large jobs on login nodes is strongly discouraged
 ]
 ---
-# Shared Memory - MPI or fork?
-
+## Shared Memory - MPI or fork?
+.w80.pull-left[
 *  fork via `mclapply()` + `do.call()` combine  
 &lt;img src="pics/mpi/fork.jpg" height="150" /&gt;
 * MPI replicated data + `allreduce()`  
@@ -398,7 +398,12 @@ bcast.r  chunk.r comm_split.R  cov.r  gather-named.r  gather.r  gather-unequal.r
 
 * MPI chunked data + `allreduce()`  
 &lt;img src="pics/mpi/mpi-partition.png" height="58" /&gt;
+]
+.w20.pull-right[
+`do.call()` is serial
 
+`allreduce()` is parallel
+]
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
@@ -406,14 +411,14 @@ background-size: 20%
 &lt;img src="pics/01-intro/pbdRlib.jpg" height="100" style="display: block; margin: auto auto auto 0;" /&gt;
 # Package `pbdDMAT`
 
-* ScaLAPACK: Scalable LAPACK - Distributed version of LAPACK (uses PBLAS/BLAS but not LAPACK)
+* ScaLAPACK: Distributed version of LAPACK (uses PBLAS/BLAS but not LAPACK)
 
    * 2d Block-Cyclic data layout - mostly automated in `pbdDMAT` package
    
    * BLACS: Communication collectives for distributed matrix computation
-   * PBLAS: BLAS - distributed BLAS (uses shared memory BLAS within blocks)
+   * PBLAS: Distributed BLAS (uses standard BLAS within blocks)
 
-* Most matrix operations in R code are identical to serial through overloading operators and `ddmatrix` class
+* R code is identical for most matrix operations by overloading operators and `ddmatrix` class
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
@@ -431,9 +436,10 @@ background-size: 20%
     from https://arxiv.org/pdf/0912.3599.pdf
 
 ---
-## Hands on Session rsvd: Randomized sketching algorithms
+## Hands on Session `\(\quad\)` rsvd:
+#### Singular value decomposition via randomized sketching
 &lt;br&gt;&lt;br&gt;
-Fast new alternatives to classical numerical linear algebra computations. 
+Randomized sketching produces fast new alternatives to classical numerical linear algebra computations. 
 
 &lt;br&gt;
 Guarantees are given with probability statements instead of classical error analysis.
@@ -445,7 +451,8 @@ background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
 
-## Hands on Session rsvd: Randomized SVD via subspace embedding
+## Hands on Session `\(\quad\)` rsvd:
+#### Randomized SVD via subspace embedding
 Given an `\(n\times p\)` matrix `\(X\)` and `\(k = r + 10\)`, where `\(r\)` is the *effective rank* of `\(X\)`:  
 1. Construct a `\(p\times k\)` random matrix `\(\Omega\)`
 2. Form `\(Y = X \Omega\)`
@@ -458,7 +465,13 @@ Given an `\(n\times p\)` matrix `\(X\)` and `\(k = r + 10\)`, where `\(r\)` is t
 4. Truncate factorization to `\(r\)` columns
 
 ---
-# 
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
+background-position: top right
+background-size: 20%
+## MNIST Data
+
+&lt;img src="pics/mnist/Rplots.png" height="500" style="display: block; margin: auto auto auto 0;" /&gt;
+
 ---
 `mnist_rsvd.R`
 
