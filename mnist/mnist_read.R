@@ -1,4 +1,4 @@
-dir = "/scratch/project/dd-21-42/data/mnist/"
+dir = "/gpfs/alpine/world-shared/gen011/mnist"
 ## Data from:
 ## https://www.kaggle.com/benedictwilkinsai/mnist-hd5f0
 ## There is also a csv version
