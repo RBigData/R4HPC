@@ -578,7 +578,9 @@ knitr::include_graphics("pics/WSC/iDVTstR_theory.jpg")
 knitr::include_graphics("pics/WSC/iDVTstR_reality.jpg")
 ```
 ]
-
+<font size="-2">
+Images from Reddit https://www.reddit.com/r/aww/comments/2oagj8/multithreaded_programming_theory_and_practice/
+<font size="+2">
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
 background-position: top right
