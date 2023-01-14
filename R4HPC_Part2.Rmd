@@ -14,6 +14,7 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+    self_contained: true
 ---
 
 ```{r setup, include=FALSE}
@@ -28,15 +29,17 @@ knitr::knit_hooks$set(source = function(x, options) {
 # Get this presentation: 
 `git clone https://github.com/RBigData/R4HPC.git`
 
-* Open <br><br>`R4HPC_Part2.html` <br><br> in your web browser (help ? toggle)
+* Open `R4HPC_Part2.html` in your web browser
+* `?` toggles help
 <br>
 
 Slack workspace link for this workshop was emailed to you. 
-<br><br><br><br>
+<br><br><br>
 
+<small>
 *Many thanks to my colleagues and former colleagues who contributed to the software and ideas presented here. See the RBigData Organization on Github: https://github.com/RBigData. Also, many thanks to all R developers of packages used in this presentation.*
 
-*Slides are made with the xaringan R package. It is an R Markdown extension based on the JavaScript library remark.js.*
+*This manuscript has been authored by UT-Battelle, LLC under Contract No. DE-AC05-00OR22725 with the U.S. Department of Energy. The United States Government retains and the publisher, by accepting the article for publication, acknowledges that the United States Government retains a non-exclusive, paid-up, irrevocable, world-wide license to publish or reproduce the published form of this manuscript, or allow others to do so, for United States Government purposes. The Department of Energy will provide public access to these results of federally sponsored research in accordance with the DOE Public Access Plan (http://energy.gov/downloads/doe-public-access-plan).*</small>
 
 ---
 # Today's Package Installs
@@ -128,7 +131,7 @@ background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
 # pbdR Project
-```{r echo=FALSE, out.height=180, fig.align='left'}
+```{r echo=FALSE, out.height=180, out.width=800, fig.align='left'}
 knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
 ```
 * Bridge HPC with high-productivity of R: Expressive for data and modern statistics
@@ -150,7 +153,7 @@ Using HPC concepts and libraries
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
-```{r echo=FALSE, out.height=80, fig.align='left'}
+```{r echo=FALSE, out.height=80, out.width=300, fig.align='left'}
 knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
 ```
 # Package `pbdMPI`
@@ -284,7 +287,7 @@ $^*$ Note that running long or large jobs on login nodes is strongly discouraged
 ## Shared Memory - MPI or fork?
 .w80.pull-left[
 *  fork via `mclapply()` + `do.call()` combine  
-```{r echo=FALSE, out.height=150}
+```{r echo=FALSE, out.height=150, out.width=130}
 knitr::include_graphics("pics/mpi/fork.jpg")
 ```
 * MPI replicated data + `allreduce()`  
@@ -306,7 +309,7 @@ knitr::include_graphics("pics/mpi/mpi-partition.png")
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
-```{r echo=FALSE, out.height=100, fig.align='left'}
+```{r echo=FALSE, out.height=100, out.width=300, fig.align='left'}
 knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
 ```
 # Package `pbdDMAT`
@@ -324,7 +327,7 @@ knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
-```{r echo=FALSE, out.height=100, fig.align='left'}
+```{r echo=FALSE, out.height=100, out.width=300, fig.align='left'}
 knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
 ```
 # Package `pbdML`
@@ -389,14 +392,15 @@ knitr::include_graphics("pics/mnist/Rplots.png")
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7mpi.jpg)
 background-position: top right
 background-size: 20%
-```{r echo=FALSE, out.height=100, fig.align='left'}
+```{r echo=FALSE, out.height=100, out.width=300, fig.align='left'}
 knitr::include_graphics("pics/01-intro/pbdRlib.jpg")
 ```
 # Package `kazaam`
 
 * Distributed methods for tall matrices (and some for wide matrices) that exploit the short dimension for speed and long dimension for parallelism
 
-* Tall matrices, `shaq` class, are chunked by blocks of rows adn wide matrices, `tshaq` class, by blocks of columns
+* Tall matrices, `shaq` class, are chunked by blocks of rows
+* Wide matrices, `tshaq` class, are chunked by blocks of columns
 
 * Much like `pbdDMAT`, most matrix operations in R code are identical to serial through overloading operators and `shaq` `S4` class
 
@@ -407,4 +411,12 @@ Naming is a "tongue-in-cheek" play on 'Shaquille' 'ONeal' ('Shaq') and the film 
 ---
 # Hands on Session `kazaam`
 
-To be added
+---
+# Acknowledgments
+
+*This research used resources of the Oak Ridge Leadership Computing Facility, which is a DOE Office of Science User Facility supported under Contract DE-AC05-00OR22725.*
+
+*This research used resources of the Compute and Data Environment for Science (CADES) at the Oak Ridge National Laboratory, which is supported by the Office of Science of the U.S. Department of Energy under Contract No. DE-AC05-00OR22725"*
+
+*Slides are made with the xaringan R package. It is an R Markdown extension based on the JavaScript library remark.js.*
+

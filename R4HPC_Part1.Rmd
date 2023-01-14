@@ -124,7 +124,7 @@ ANL ACLF Polaris
 ---
 ## Working with a remote cluster using R
 
-```{r echo=FALSE, out.height=500}
+```{r echo=FALSE, out.height=500, fig.retina=1}
 knitr::include_graphics("pics/01-intro/Workflow.jpg")
 ```
 ???
@@ -172,7 +172,7 @@ background-size: 20%
 
 ## Running Distributed on a Cluster
 
-```{r echo=FALSE, out.height=500}
+```{r echo=FALSE, out.height=500, fig.retina=1}
 knitr::include_graphics("pics/01-intro/BatchRonCluster.jpg")
 ```
 ???
@@ -232,20 +232,20 @@ background-size: 20%
 # <font size="+2">2</font> $\qquad$ GitHub and git (laptop to cluster)
 
 .w80.pull-left[
-```{r echo=FALSE, out.height=400}
+```{r echo=FALSE, out.height=400, fig.retina=1}
 knitr::include_graphics("pics/01-intro/Git_operations.svg")
 ```
 <font size="-6">*By Daniel Kinzler - Own work, CC BY 3.0, https://commons.wikimedia.org/w/index.php?curid=25223536</font>
 ]
 .w20.pull-right[
 <br>
-```{r echo=FALSE, out.height=80}
+```{r echo=FALSE, out.height=80, fig.retina=1}
 knitr::include_graphics("pics/01-intro/WorkflowCluster.jpg")
 ```
 3
 <br><br><br><br><br><br><br><br><br><br>
 
-```{r echo=FALSE, out.height=80}
+```{r echo=FALSE, out.height=80, fig.retina=1}
 knitr::include_graphics("pics/01-intro/WorkflowLaptop.jpg")
 ```
 1
@@ -349,12 +349,12 @@ background-size: 20%
    * edit -> commit -> push -> pull -> run -> examine output
    
 .pull-left[
-```{r echo=FALSE, out.height=250}
+```{r echo=FALSE, out.height=250, fig.retina=1}
 knitr::include_graphics("pics/01-intro/Workflow.jpg")
 ```
 ]
 .pull-right[
-```{r echo=FALSE, out.height=250}
+```{r echo=FALSE, out.height=250, fig.retina=1}
 knitr::include_graphics("pics/01-intro/BatchRonCluster.jpg")
 ```
 ]
@@ -548,7 +548,7 @@ background-size: 20%
 
 # Copy-on-write
 
-```{r echo=FALSE, out.height=500, fig.align='center'}
+```{r echo=FALSE, out.height=500, fig.retina=1, fig.align='center'}
 knitr::include_graphics("pics/MC/Fork/Slide1.png")
 ```
 ???
@@ -606,7 +606,7 @@ background-size: 20%
 
 ## Hands-on Session 2 - Example Random forest Code
 #### Letter recognition data ( $20\,000 \times 17$ )
-```{r echo=FALSE, out.height=350, fig.align='center'}
+```{r echo=FALSE, out.height=350, fig.retina=1, fig.align='center'}
 knitr::include_graphics("pics/MC/ML_FreySlate1991.png")
 ```
 
