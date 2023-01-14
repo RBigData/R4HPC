@@ -563,24 +563,14 @@ background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
 background-position: top right
 background-size: 20%
 
-# Mapping Threads to Cores
-### Theory and Reality
-* Operating system manages core affinity
-* OS tasks can compete and core switching occurs frequently
+# Mapping (Forked) Processes to Cores
 
-.pull-left[
-```{r echo=FALSE, out.height=300, fig.align='center', fig.alt="Photo used in many HPC presentations and seems to originate on Reddit"}
-knitr::include_graphics("pics/WSC/iDVTstR_theory.jpg")
+* Operating system manages core affinity
+* OS tasks compete and core switching occurs frequently
+```{r echo=FALSE, fig.retina=1, fig.align='center'}
+knitr::include_graphics("pics/MC/Fork/Fork.png")
 ```
-]
-.pull-right[
-```{r echo=FALSE, out.height=300, fig.align='center', fig.align='center', fig.alt="Photo used in many HPC presentations and seems to originate on Reddit"}
-knitr::include_graphics("pics/WSC/iDVTstR_reality.jpg")
-```
-]
-<font size="-2">
-Images from Reddit https://www.reddit.com/r/aww/comments/2oagj8/multithreaded_programming_theory_and_practice/
-<font size="+2">
+* Shows as separate process with `top`
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
 background-position: top right
