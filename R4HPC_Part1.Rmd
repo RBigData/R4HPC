@@ -14,6 +14,7 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
+    self_contained: true
 ---
 
 ```{r setup, include=FALSE}
@@ -28,15 +29,17 @@ knitr::knit_hooks$set(source = function(x, options) {
 # Get this presentation: 
 `git clone https://github.com/RBigData/R4HPC.git`
 
-* Open <br><br>`R4HPC_Part1.html` <br><br> in your web browser (help ? toggle)
+* Open `R4HPC_Part1.html` in your web browser  
+* `?` toggles help  
 <br>
 
 Slack workspace link for this workshop was emailed to you. 
-<br><br><br><br>
+<br><br><br>
 
+<small>
 *Many thanks to my colleagues and former colleagues who contributed to the software and ideas presented here. See the RBigData Organization on Github: https://github.com/RBigData. Also, many thanks to all R developers of packages used in this presentation.*
 
-*Slides are made with the xaringan R package. It is an R Markdown extension based on the JavaScript library remark.js.*
+*This manuscript has been authored by UT-Battelle, LLC under Contract No. DE-AC05-00OR22725 with the U.S. Department of Energy. The United States Government retains and the publisher, by accepting the article for publication, acknowledges that the United States Government retains a non-exclusive, paid-up, irrevocable, world-wide license to publish or reproduce the published form of this manuscript, or allow others to do so, for United States Government purposes. The Department of Energy will provide public access to these results of federally sponsored research in accordance with the DOE Public Access Plan (http://energy.gov/downloads/doe-public-access-plan).*</small>
 
 ???
 The first hands-on session will do this also
@@ -254,26 +257,23 @@ background-size: 20%
 
 # Making **git** easy: set ssh keys
 
-.w80.pull-left[
-```{r echo=FALSE, out.height=400, out.width=450}
-knitr::include_graphics("pics/01-intro/ssh-key-based-authentication.png")
-```
-<font size="-4">Graphic from </font>
-```{r echo=FALSE, out.height=10, out.width=280}
-knitr::include_graphics("pics/01-intro/ssh-credit.png")
-```
-]
-.w20.pull-right[
-A message encrypted by public key is decrypted by private key
-<br><br><br>
-Works like a single-use password generator and authenticator
-<br><br><br>
-Your private keys are protected in your account (laptop and cluster)
+* Private and Public key pairs for Client and Server
 
-<br><br><br><br>
+  * Git repository (GitHub, GigLab) is the server
+  * Your laptop or remote cluster are clients
 
-Put your public key on GitHub to enable easy access
-]
+* Each client has own key-pair
+
+  * Private key stays on the client
+  * Public key is copied to the server
+
+* Works like a single-use password generator and authentication
+
+  * Client contacts server
+  * Server sends a random string encrypted by client's public key
+  * Client decrypts with own private key and sends to server
+  * Server verifies agreement and opens secure connection
+  
 ---
 background-image: url(pics/01-intro//WorkflowCluster.jpg)
 background-position: top right
@@ -564,13 +564,13 @@ background-position: top right
 background-size: 20%
 
 # Mapping (Forked) Processes to Cores
-
 * Operating system manages core affinity
 * OS tasks compete and core switching occurs frequently
 ```{r echo=FALSE, fig.retina=1, fig.align='center'}
 knitr::include_graphics("pics/MC/Fork/Fork.png")
 ```
-* Shows as separate process with `top`
+* Works extremely well unless very large new memory allocation is needed by each process
+* Forking can be nested but be careful not to oversubscribe available cores
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
 background-position: top right
@@ -765,4 +765,13 @@ background-size: 20%
 * Examine output to notice:
   * Maximum cores can be slow
   * Optimal cores can depend on matrix size and shape
+
+---
+# Acknowledgments
+
+*This research used resources of the Oak Ridge Leadership Computing Facility, which is a DOE Office of Science User Facility supported under Contract DE-AC05-00OR22725.*
+
+*This research used resources of the Compute and Data Environment for Science (CADES) at the Oak Ridge National Laboratory, which is supported by the Office of Science of the U.S. Department of Energy under Contract No. DE-AC05-00OR22725"*
+
+*Slides are made with the xaringan R package. It is an R Markdown extension based on the JavaScript library remark.js.*
 
