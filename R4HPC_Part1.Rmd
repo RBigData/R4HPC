@@ -606,11 +606,32 @@ background-size: 20%
 
 ## Hands-on Session 2 - Example Random forest Code
 #### Letter recognition data ( $20\,000 \times 17$ )
-```{r echo=FALSE, out.height=350, fig.retina=1, fig.align='center'}
-knitr::include_graphics("pics/MC/ML_FreySlate1991.png")
-```
 
-.footnote[*Parallel Statistical Computing with R: An Illustration on Two Architectures [ 	arXiv:1709.01195](https://arxiv.org/abs/1709.01195)]
+```{r eval=FALSE}
+library(mlbench)
+data(LetterRecognition)
+```
+<small>
+```
+[,1] lettr capital letter   
+[,2] x.box horizontal position of box  
+[,3] y.box vertical position of box  
+[,4] width width of box   
+[,5] high height of box   
+[,6] onpix total number of on pixels  
+[,7] x.bar mean x of on pixels in box  
+[,8] y.bar mean y of on pixels in box  
+[,9] x2bar mean x variance  
+[,10] y2bar mean y variance  
+[,11] xybar mean x y correlation  
+[,12] x2ybr mean of x2y  
+[,13] xy2br mean of xy2  
+[,14] x.ege mean edge count left to right  
+[,15] xegvy correlation of x.ege with y  
+[,16] y.ege mean edge count bottom to top  
+[,17] yegvx correlation of y.ege with x  
+```
+</small>
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7fork.jpg)
 background-position: top right
