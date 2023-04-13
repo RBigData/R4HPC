@@ -33,30 +33,24 @@ knitr::knit_hooks$set(source = function(x, options) {
 * `?` toggles help  
 <br>
 
-Slack workspace link for this workshop was emailed to you. 
 <br><br><br>
 
-<small>
-*Many thanks to my colleagues and former colleagues who contributed to the software and ideas presented here. See the RBigData Organization on Github: https://github.com/RBigData. Also, many thanks to all R developers of packages used in this presentation.*
-
-*This manuscript has been authored by UT-Battelle, LLC under Contract No. DE-AC05-00OR22725 with the U.S. Department of Energy. The United States Government retains and the publisher, by accepting the article for publication, acknowledges that the United States Government retains a non-exclusive, paid-up, irrevocable, world-wide license to publish or reproduce the published form of this manuscript, or allow others to do so, for United States Government purposes. The Department of Energy will provide public access to these results of federally sponsored research in accordance with the DOE Public Access Plan (http://energy.gov/downloads/doe-public-access-plan).*</small>
-
-???
-The first hands-on session will do this also
+The first hands-on session will get this presentation
 <br><br><br><br><br><br><br><br>
-
-Of course, any mistakes are mine alone!!
 
 ---
 # Using R on HPC Clusters Webinar
 
 * A basic workflow for how to use R on an HPC cluster
+
 * Speed up R scripts with parallel computing concepts
+
 * Many packages in R offer parallel computing abstractions, yet they use a much smaller set of underlying approaches: 
+
    * multithreading in compiled code, the unix fork, and MPI
+
 * We take a narrow path to focus on the direct approaches
-* Targeted for current users of OLCF, CADES, ALCF and NERSC
-* Others are welcome to the lecture portions but will not be able to participate in all of the hands-on activities
+
 
 #### Objectives 
 
@@ -77,44 +71,6 @@ Of course, any mistakes are mine alone!!
 
 * Some of the exercises can be done on a laptop but miss the important workflow socialization
 
----
-background-image: url(pics/01-intro/WorkflowCluster.jpg)
-background-position: top right
-background-size: 20%
-
-## The Clusters
-
-ORNL OLCF Andes
-* 704 nodes, each with two 16-core 3.0 GHz AMD EPYC processors
-
-ORNL CADES SHPC Condos
-* ~650 nodes, a mix of x86_64 processors with 32 to 128 cores
-* New LMOD software stack (see https://docs.cades.ornl.gov/#condos/software/bash-env/#new-software-stack)
-
-LBL NERSC Perlmutter 
-* 3,072 CPU-only nodes, AMD EPYC Milan, each with 64 cores
-* 1,536 GPU-accelerated nodes, AMD EPYC Milan + 4 NVIDIA A100 GPU
-
-ANL ACLF Polaris
-* 560 nodes, each with AMD EPYC Milan (32 cores)  + 4 NVIDIA A100 GPU
-
----
-# Access to HPC Clusters
-
-* DOE OLCF https://docs.olcf.ornl.gov/accounts/accounts_and_projects.html
-* DOE ORNL CADES https://cades.ornl.gov/
-* DOE ALCF https://www.alcf.anl.gov/support-center/account-and-project-management/allocations
-
-* DOE NERSC https://www.nersc.gov/users/accounts/allocations/
-* NSF XSEDE to ACCESS https://www.xsede.org/
-
-* A cluster at your institution  
-
-* International:
-   * EU PRACE https://prace-ri.eu/hpc-access/ (for example IT4I.cz https://www.it4i.cz/en/for-users/computing-resources-allocation) 
-   * UK, Switzerland, Japan, and many others have similar programs
-
- 
 ---
 
 ## <mark>Section I:</mark> **Environment and Workflow**
@@ -142,7 +98,7 @@ background-image: url(pics/01-intro//Workflow.jpg)
 background-position: top right
 background-size: 20%
 
-### Laptop RStudio (Posit in October, 2022)
+### Laptop RStudio
 * Familiar custom editing environment (Windows, Mac, Unix)
 * Interactive Syntax checking
 
@@ -310,7 +266,7 @@ background-size: 20%
 * Shell script submission (preferred)
 
 .pull-left[
-#### Slurm (Andes, CADES, Perlmutter)
+#### SLURM
 <mark>sbatch  *your-shell-script.sh* </mark>
 
 <mark>squeue  -u *uid*</mark>
@@ -318,7 +274,7 @@ background-size: 20%
 <mark>scancel  *jobnumber*</mark>
 ]
 .pull-right[
-#### Cobalt - PBS (Polaris)
+#### PBS
 <mark>qsub   *your-shell-script.sh* 
 
 <mark>qstat -u *uid*
@@ -687,8 +643,8 @@ background-size: 20%
 * Implementations: OpenBLAS, Intel MKL, Nvidia nvBLAS, Apple vecLib, AMD BLIS, Arm Performance Libraries
 
 * **FlexiBLAS**: A BLAS and LAPACK wrapper library with runtime exchangeable backends
-   * Great for benchmarking implementations
    * Great for dynamic core assignment
+   * Great for benchmarking implementations
 
 ???
 * Optimizes algorithm to chip microarchitecture details 
