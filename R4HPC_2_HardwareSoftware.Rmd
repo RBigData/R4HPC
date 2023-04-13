@@ -1,0 +1,136 @@
+---
+title: "Using R on HPC Clusters: Hardware and Software Overview"
+author: "George Ostrouchov"
+institute: "Oak Ridge National Laboratory"
+date: "<br><br><br><br><br><br> August 17, 2022 <br><br><span style = 'font-size: 50%;'> Background Image: FRONTIER, First Top500 exascale system, announced June 2022</span>"
+output:
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "my-theme.css", "widths.css"]
+    lib_dir: libs
+    includes:
+      after_body: insert-logo.html
+    nature:
+      titleSlideClass: ["right", "inverse"]
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"))
+hook_source <- knitr::knit_hooks$get('source')
+knitr::knit_hooks$set(source = function(x, options) {
+  x <- stringr::str_replace(x, "^[[:blank:]]?([^*].+?)[[:blank:]]*#<<[[:blank:]]*$", "*\\1")
+  hook_source(x, options)
+})
+```
+
+## Section I: Environment and Workflow
+## <mark>Section II:</mark> **Parallel Hardware and Software Overview**
+## Section III: Shared Memory Tools
+## Section IV: Distributed Memory Tools
+
+---
+background-image: url(pics/Mangalore/ParallelHardware/Slide7.png)
+background-position: bottom
+background-size: 90%
+
+# Three Basic Concepts in Hardware
+
+???
+# GPU - NVIDIA
+# MIC - Intel KNL - ARM
+
+* Manycore chip with memory on the chip instead of separate memory boards: https://www.youtube.com/watch?v=eXhlDt2SD8o
+  * A manycore that can act as a GPU
+  * Multocores are MIMD and can run anything
+  * GPU are SIMD and more limited
+---
+background-image: url(pics/Mangalore/ParallelHardware/Slide1.png)
+background-position: bottom
+background-size: 90%
+
+# Three Basic Concepts in Hardware
+
+???
+# GPU - NVIDIA
+# MIC - Intel KNL - ARM
+
+* Manycore chip with memory on the chip instead of separate memory boards: https://www.youtube.com/watch?v=eXhlDt2SD8o
+  * A manycore that can act as a GPU
+  * Multocores are MIMD and can run anything
+  * GPU are SIMD and more limited
+---
+background-image: url(pics/Mangalore/ParallelHardware/Slide2.png)
+background-position: bottom
+background-size: 90%
+
+???
+Graphics
+---
+background-image: url(pics/Mangalore/ParallelHardware/Slide3.png)
+background-position: bottom
+background-size: 90%
+
+???
+GPU - NVIDIA
+MIC - Intel KNL
+---
+background-image: url(pics/Mangalore/ParallelHardware/Slide4.png)
+background-position: bottom
+background-size: 90%
+
+---
+background-image: url(pics/Mangalore/ParallelHardware/Slide5.png)
+background-position: bottom
+background-size: 90%
+
+---
+background-image: url(pics/Mangalore/ParallelHardware/Slide6.png)
+background-position: bottom
+background-size: 90%
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide2.png)
+background-position: bottom
+background-size: 90%
+
+# Native Programming Mindset
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide3.png)
+background-position: bottom
+background-size: 90%
+
+# Native Programming Models and Tools
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide4.png)
+background-position: bottom
+background-size: 90%
+
+# 35+ Years of Practical Parallel Computing
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide5.png)
+background-position: bottom
+background-size: 90%
+
+# Last 15+ years of Advances
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide6.png)
+background-position: bottom
+background-size: 90%
+
+## Distributed Programming Works in Shared Memory
+
+---
+background-image: url(pics/Mangalore/ParallelSoftware/Slide7.png)
+background-position: bottom
+background-size: 90%
+
+# R Interfaces to Low-Level Native Tools
+
