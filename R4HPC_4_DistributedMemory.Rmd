@@ -71,10 +71,10 @@ knitr::include_graphics("pics/01-intro/BatchRonCluster.jpg")
 
 ---
 
-## Section I: Environment and Workflow
-## Section II: Parallel Hardware and Software Overview
-## Section III: Shared Memory Tools
-## <mark>Section IV:</mark> **Distributed Memory Tools**
+## Section 1: Environment and Workflow
+## Section 2: Parallel Hardware and Software Overview
+## Section 3: Shared Memory Tools
+## <mark>Section 4:</mark> **Distributed Memory Tools**
 
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7distributed.jpg)

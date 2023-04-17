@@ -27,10 +27,10 @@ knitr::knit_hooks$set(source = function(x, options) {
 })
 ```
 
-## Section I: Environment and Workflow
-## Section II: Parallel Hardware and Software Overview
-## <mark>Section III:</mark> **Shared Memory Tools**
-## Section IV: Distributed Memory Tools
+## Section 1: Environment and Workflow
+## Section 2: Parallel Hardware and Software Overview
+## <mark>Section 3:</mark> **Shared Memory Tools**
+## Section 4: Distributed Memory Tools
 ---
 background-image: url(pics/Mangalore/ParallelSoftware/Slide7shared.jpg)
 background-position: bottom

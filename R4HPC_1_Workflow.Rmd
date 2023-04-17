@@ -39,7 +39,7 @@ The first hands-on session will get this presentation
 <br><br><br><br><br><br><br><br>
 
 ---
-# Using R on HPC Clusters Webinar
+# Using R on HPC Clusters Workshop
 
 * A basic workflow for how to use R on an HPC cluster
 
@@ -73,10 +73,10 @@ The first hands-on session will get this presentation
 
 ---
 
-## <mark>Section I:</mark> **Environment and Workflow**
-## Section II: Parallel Hardware and Software Overview
-## Section III: Shared Memory Tools
-## Section IV: Distributed Memory Tools
+## <mark>Section 1:</mark> **Environment and Workflow**
+## Section 2: Parallel Hardware and Software Overview
+## Section 3: Shared Memory Tools
+## Section 4: Distributed Memory Tools
 ---
 ## Working with a remote cluster using R
 
@@ -317,7 +317,7 @@ knitr::include_graphics("pics/01-intro/BatchRonCluster.jpg")
 
 ---
 ## Hands-on Session 1 - On Login Node
-* Below, replace `MACHINE` with your cluster name (andes, cades are available)
+* Below, replace `MACHINE` with your cluster name
 * Go to `R4HPC/code_0` directory and run
    * `./packages_MACHINE.sh` to install all R packages that will be used
 
